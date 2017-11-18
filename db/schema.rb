@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117041450) do
+ActiveRecord::Schema.define(version: 20171117125408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "armies", force: :cascade do |t|
-    t.boolean "passive", default: false
-    t.bigint "country_id"
-    t.bigint "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_armies_on_country_id"
-    t.index ["region_id"], name: "index_armies_on_region_id"
-  end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
@@ -33,19 +23,19 @@ ActiveRecord::Schema.define(version: 20171117041450) do
     t.index ["player_id"], name: "index_countries_on_player_id"
   end
 
-  create_table "fleets", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pieces", force: :cascade do |t|
     t.boolean "passive", default: false
     t.bigint "country_id"
     t.bigint "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_fleets_on_country_id"
-    t.index ["region_id"], name: "index_fleets_on_region_id"
-  end
-
-  create_table "games", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_pieces_on_country_id"
+    t.index ["region_id"], name: "index_pieces_on_region_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -63,6 +53,7 @@ ActiveRecord::Schema.define(version: 20171117041450) do
 
   create_table "regions", force: :cascade do |t|
     t.string "name"
+    t.boolean "land", default: true
     t.bigint "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
