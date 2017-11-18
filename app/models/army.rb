@@ -1,4 +1,3 @@
-class Army < ApplicationRecord
-  belongs_to :country
-  belongs_to :region
+class Army < Piece
+
 end
