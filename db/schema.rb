@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118121557) do
+ActiveRecord::Schema.define(version: 20171119212315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20171118121557) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["player_id"], name: "index_countries_on_player_id"
+  end
+
+  create_table "factories", force: :cascade do |t|
+    t.bigint "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["region_id"], name: "index_factories_on_region_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -66,6 +73,7 @@ ActiveRecord::Schema.define(version: 20171118121557) do
     t.bigint "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "has_factory"
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
