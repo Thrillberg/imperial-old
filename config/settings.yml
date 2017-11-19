@@ -134,4 +134,7 @@ neighbors:
   Western Mediterranean Sea: []
   Ionian Sea: []
   Black Sea: []
+factories:
+  armaments: ["Paris", "Berlin", "Moscow", "Vienna", "Budapest", "Rome"]
+  shipyards: ["Liverpool", "London", "Hamburg", "Bordeaux", "Naples", "Odessa"]
 

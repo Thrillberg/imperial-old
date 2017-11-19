@@ -1,6 +1,10 @@
 class Game < ApplicationRecord
   before_create :add_board
-  after_create :set_board_spaces
+  after_create :set_up_countries_and_regions
+  after_create :set_up_neutral_regions
+  after_create :set_up_sea_regions
+  after_create :set_up_neighbor_regions
+  after_create :set_up_factories
 
   has_one :board, dependent: :destroy
   has_many :players, dependent: :destroy
@@ -12,28 +16,48 @@ class Game < ApplicationRecord
     self.board = Board.create
   end
 
-  def set_board_spaces
+  def set_up_countries_and_regions
     Settings.countries.each do |country|
       new_country = Country.create(game_id: self.id, name: country[1].name)
       country[1].regions.each do |region|
         new_country.regions << Region.create(name: region)
       end
     end
+  end
 
+  def set_up_neutral_regions
     Settings.neutrals.each do |region|
       Region.create(name: region)
     end
+  end
 
+  def set_up_sea_regions
     Settings.sea_regions.each do |region|
       Region.create(name: region, land: false)
     end
+  end
 
+  def set_up_neighbor_regions
     Settings.neighbors.each do |region_data|
       region_data[1].each do |neighbor_name|
         region = Region.find_by(name: region_data[0].to_s)
         neighbor = Region.find_by(name: neighbor_name)
         region.neighbors << neighbor
       end
+    end
+  end
+
+  def set_up_factories
+    Settings.factories.armaments.each do |region_name|
+      region = Region.find_by(name: region_name)
+      region.has_factory = true
+      region.save
+    end
+
+    Settings.factories.shipyards.each do |region_name|
+      region = Region.find_by(name: region_name)
+      region.has_factory = true
+      region.save
     end
   end
 end
