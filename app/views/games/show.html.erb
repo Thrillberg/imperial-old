@@ -1,0 +1,7 @@
+Countries:
+<% @game.countries.each do |country| %>
+  <%= country.name %>
+  <% country.regions.each do |region| %>
+    <%= region.name %>
+  <% end %>
+<% end %>
