@@ -5,6 +5,7 @@ class Region < ApplicationRecord
     :foreign_key => "region_a_id",
     :association_foreign_key => "region_b_id"
   )
+  has_many :pieces
 
   alias_attribute :neighbors, :regions
 end
