@@ -10,16 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117125408) do
+ActiveRecord::Schema.define(version: 20171118121557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "boards", force: :cascade do |t|
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_boards_on_game_id"
+  end
+
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.bigint "player_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["player_id"], name: "index_countries_on_player_id"
   end
 

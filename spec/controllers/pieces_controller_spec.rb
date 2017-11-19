@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe PiecesController do
+  before do
+    Game.create
+  end
+
   describe '#move' do
     let(:country) { Country.find_by_name('Germany') }
 

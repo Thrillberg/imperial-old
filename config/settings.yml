@@ -1,0 +1,137 @@
+countries:
+  england:
+    name: England
+    regions: [
+      "Dublin",
+      "Edinburgh",
+      "Liverpool",
+      "Sheffield",
+      "London"
+    ]
+  france:
+    name: France
+    regions: [
+      "Brest",
+      "Paris",
+      "Dijon",
+      "Bordeaux",
+      "Marseille"
+    ]
+  germany:
+    name: Germany
+    regions: [
+      "Hamburg",
+      "Berlin",
+      "Danzig",
+      "Cologne",
+      "Munich"
+    ]
+  russia:
+    name: Russia
+    regions: [
+      "St. Petersburg",
+      "Moscow",
+      "Warsaw",
+      "Kiev",
+      "Odessa"
+    ]
+  austria_hungary:
+    name: Austria-Hungary
+    regions: [
+      "Prague",
+      "Lemberg",
+      "Vienna",
+      "Budapest",
+      "Trieste"
+    ]
+  italy:
+    name: Italy
+    regions: [
+      "Genoa",
+      "Venice",
+      "Florence",
+      "Rome",
+      "Naples"
+    ]
+neutrals: [
+  "Spain",
+  "Portugal",
+  "Morocco",
+  "Algeria",
+  "Tunisia",
+  "Belgium",
+  "Holland",
+  "Denmark",
+  "Norway",
+  "Sweden",
+  "West Balkan",
+  "Greece",
+  "Romania",
+  "Bulgaria",
+  "Turkey"
+]
+sea_regions: [
+  "Baltic Sea",
+  "North Sea",
+  "North Atlantic",
+  "English Channel",
+  "Bay of Biscay",
+  "Western Mediterranean Sea",
+  "Ionian Sea",
+  "Black Sea"
+]
+neighbors:
+  Dublin: ["North Atlantic"]
+  Edinburgh: ["North Sea", "Edinburgh", "Sheffield"]
+  Liverpool: ["North Atlantic", "Edinburgh", "Sheffield", "London"]
+  Sheffield: ["Edinburgh", "Liverpool", "London", "North Sea"]
+  London: ["Liverpool", "Sheffield", "English Channel"]
+  Brest: ["English Channel", "Paris", "Bordeaux", "Dijon"]
+  Paris: ["Brest", "Dijon", "Belgium"]
+  Dijon: ["Munich", "Marseille", "Bordeaux", "Brest", "Paris", "Belgium"]
+  Bordeaux: ["Bay of Biscay", "Brest", "Dijon", "Spain", "Marseille"]
+  Marseille: ["Spain", "Bordeaux", "Dijon", "Genoa", "Western Mediterranean Sea"]
+  Hamburg: ["Denmark", "North Sea", "Holland", "Berlin", "Cologne"]
+  Berlin: ["Hamburg", "Cologne", "Munich", "Prague", "Danzig"]
+  Danzig: ["Berlin", "Prague", "Baltic Sea", "Warsaw"]
+  Cologne: []
+  Munich: []
+  St. Petersburg: []
+  Moscow: []
+  Warsaw: []
+  Kiev: []
+  Odessa: []
+  Prague: []
+  Lemberg: []
+  Vienna: []
+  Budapest: []
+  Trieste: []
+  Genoa: []
+  Venice: []
+  Florence: []
+  Rome: []
+  Naples: []
+  Spain: ["Portugal", "Bordeaux", "Marseille"]
+  Portugal: []
+  Morocco: []
+  Algeria: []
+  Tunisia: []
+  Belgium: []
+  Holland: []
+  Denmark: []
+  Norway: []
+  Sweden: []
+  West Balkan: []
+  Greece: []
+  Romania: []
+  Bulgaria: []
+  Turkey: []
+  Baltic Sea: []
+  North Sea: []
+  North Atlantic: []
+  English Channel: []
+  Bay of Biscay: []
+  Western Mediterranean Sea: []
+  Ionian Sea: []
+  Black Sea: []
+
