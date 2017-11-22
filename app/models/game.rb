@@ -7,10 +7,22 @@ class Game < ApplicationRecord
   after_create :set_up_factories
 
   has_one :board, dependent: :destroy
-  has_many :players, dependent: :destroy
   has_many :countries, dependent: :destroy
+  has_many :players, dependent: :destroy
+  has_many :users, through: :players
 
   def start
+    assign_players_to_countries
+    assign_users_to_players
+  end
+
+  def assign_users_to_players
+    users.zip(players) do |pair|
+      pair[0].players << pair[1]
+    end
+  end
+
+  def assign_players_to_countries
     countries.zip(players.cycle) do |pair|
       pair[0].player = pair[1]
       pair[0].save
