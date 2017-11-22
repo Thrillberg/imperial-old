@@ -11,6 +11,7 @@ gem 'rails', '~> 5.1.4'
 gem 'pg'
 gem 'config'
 gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'devise'
 gem 'jquery-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -45,6 +46,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
+  gem "nyan-cat-formatter"
 end
 
 group :development do

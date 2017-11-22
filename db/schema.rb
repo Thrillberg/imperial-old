@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171119212315) do
+ActiveRecord::Schema.define(version: 20171122194646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,19 +24,12 @@ ActiveRecord::Schema.define(version: 20171119212315) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.bigint "player_id"
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "player_id"
     t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["player_id"], name: "index_countries_on_player_id"
-  end
-
-  create_table "factories", force: :cascade do |t|
-    t.bigint "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["region_id"], name: "index_factories_on_region_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -59,7 +52,9 @@ ActiveRecord::Schema.define(version: 20171119212315) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "region_neighbors", id: false, force: :cascade do |t|
@@ -73,8 +68,26 @@ ActiveRecord::Schema.define(version: 20171119212315) do
     t.bigint "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "has_factory"
+    t.boolean "has_factory", default: false
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "countries", "players"
 end
