@@ -10,6 +10,13 @@ class Game < ApplicationRecord
   has_many :players, dependent: :destroy
   has_many :countries, dependent: :destroy
 
+  def start
+    countries.zip(players.cycle) do |pair|
+      pair[0].player = pair[1]
+      pair[0].save
+    end
+  end
+
   private
 
   def add_board
