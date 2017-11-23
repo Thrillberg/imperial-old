@@ -5,6 +5,7 @@ class Game < ApplicationRecord
   after_create :set_up_sea_regions
   after_create :set_up_neighbor_regions
   after_create :set_up_factories
+  after_create_commit { GameBroadcastJob.perform_later self }
 
   has_one :board, dependent: :destroy
   has_many :countries, dependent: :destroy

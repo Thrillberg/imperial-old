@@ -1,7 +1,7 @@
 <div class="container">
-  <% @games.each do |game| %>
-    <%= link_to 'Here is a game.', game %>
-  <% end %>
+  <div id="games">
+    <%= render @games %>
+  </div>
 
   <%= render partial: 'form' %>
 </div>

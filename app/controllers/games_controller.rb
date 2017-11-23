@@ -7,10 +7,12 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new
-    if @game.save
-      redirect_to @game
-    end
+    # @game = Game.new
+    # if @game.save
+      ActionCable.server.broadcast 'games',
+        game: @game
+      head :ok
+    # end
   end
 
   def show
