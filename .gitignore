@@ -21,6 +21,7 @@
 /yarn-error.log
 
 .byebug_history
+dump.rdb
 
 config/settings.local.yml
 config/settings/*.local.yml
