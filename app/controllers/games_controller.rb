@@ -8,9 +8,10 @@ class GamesController < ApplicationController
   end
 
   def create
-    ActionCable.server.broadcast 'games',
-      game: @game
-    head :ok
+    @game = Game.new
+    if @game.save
+      redirect_to @game
+    end
   end
 
   def show

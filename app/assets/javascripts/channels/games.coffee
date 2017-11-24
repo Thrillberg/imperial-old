@@ -11,10 +11,3 @@ App.games = App.cable.subscriptions.create {
   received: (data) ->
     $('#games').append data['game']
 
-  new_game: (game) ->
-    @perform 'new_game', game: game
-
-  $('.create-game').on 'click', (event) ->
-    App.games.new_game event.target.value
-    event.target.value = ''
-    event.preventDefault()
