@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :players
   has_many :games, through: :players
+
+  def online?
+    !Redis.new.get("user_#{self.id}_online").nil?
+  end
 end
