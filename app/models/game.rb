@@ -5,7 +5,6 @@ class Game < ApplicationRecord
   after_create :set_up_sea_regions
   after_create :set_up_neighbor_regions
   after_create :set_up_factories
-  after_create_commit { GameBroadcastJob.perform_later self }
 
   has_one :board, dependent: :destroy
   has_many :countries, dependent: :destroy
@@ -28,6 +27,14 @@ class Game < ApplicationRecord
       pair[0].player = pair[1]
       pair[0].save
     end
+  end
+
+  def get_users
+    users_string = ''
+    users.each do |user|
+      users_string << user.username + ', '
+    end
+    users_string.chomp(', ') if users_string != ''
   end
 
   private

@@ -6,7 +6,7 @@
         <% if @games.count == 0 %>
           <p>Sorry, no games yet.<p>
         <% else %>
-          <%= render @games %>
+          <%= render @games, new: false %>
         <% end %>
       </div>
       <%= render partial: 'form' %>
