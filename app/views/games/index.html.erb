@@ -1,7 +1,22 @@
 <div class="container">
-  <div id="games">
-    <%= render @games %>
-  </div>
+  <div class="row">
+    <div class="col">
+      <div id="games">
+        <u>Games:</u>
+        <% if @games.count == 0 %>
+          <p>Sorry, no games yet.<p>
+        <% else %>
+          <%= render @games %>
+        <% end %>
+      </div>
+      <%= render partial: 'form' %>
+    </div>
 
-  <%= render partial: 'form' %>
+    <div class="col">
+      <div id="users">
+        <u>Users:</u>
+        <%= render @users %>
+      </div>
+    </div>
+  </div>
 </div>

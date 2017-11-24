@@ -24,7 +24,7 @@ describe Game do
   describe '#assign_players_to_countries' do
     context '6 players' do
       it 'assigns each player to one country' do
-        user = create(:user, email: "test@test.com", password: 'password')
+        user = create(:user, email: "test@test.com", username: 'test', password: 'password')
         create_list(:player, 6, game: @game, user: user)
         @game.assign_players_to_countries
         Country.all.each do |country|
@@ -35,7 +35,7 @@ describe Game do
 
     context '4 players' do
       it 'assigns 2 players to one country each, and 2 players to 2 countries' do
-        user = create(:user, email: "test@test.com", password: 'password')
+        user = create(:user, email: "test@test.com", username: 'test', password: 'password')
         create_list(:player, 4, game: @game, user: user)
         @game.assign_players_to_countries
         Country.all.each do |country|
@@ -49,7 +49,7 @@ describe Game do
     context '6 users' do
       it 'assigns each user to one player' do
         (1..6).each do |number|
-          @game.users << create(:user, email: "#{number}@test.com", password: 'password')
+          @game.users << create(:user, email: "#{number}@test.com", username: "#{number}-test", password: 'password')
         end
         @game.save
         @game.assign_users_to_players
@@ -63,7 +63,7 @@ describe Game do
     context '4 users' do
       it 'assigns each user to one player' do
         (1..4).each do |number|
-          @game.users << create(:user, email: "#{number}@test.com", password: 'password')
+          @game.users << create(:user, email: "#{number}@test.com", username: "#{number}-test", password: 'password')
         end
         @game.save
         @game.assign_users_to_players

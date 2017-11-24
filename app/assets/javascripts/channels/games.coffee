@@ -14,7 +14,7 @@ App.games = App.cable.subscriptions.create {
   new_game: (game) ->
     @perform 'new_game', game: game
 
-  $(document).on 'click', '[type="submit"]', (event) ->
+  $('.create-game').on 'click', (event) ->
     App.games.new_game event.target.value
     event.target.value = ''
     event.preventDefault()

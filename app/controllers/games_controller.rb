@@ -4,15 +4,13 @@ class GamesController < ApplicationController
   def index
     @games = Game.all
     @game = Game.new
+    @users = User.all
   end
 
   def create
-    # @game = Game.new
-    # if @game.save
-      ActionCable.server.broadcast 'games',
-        game: @game
-      head :ok
-    # end
+    ActionCable.server.broadcast 'games',
+      game: @game
+    head :ok
   end
 
   def show

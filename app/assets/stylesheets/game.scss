@@ -17,3 +17,9 @@
   border: brown solid 1px;
 }
 
+#users {
+  .online {
+    color: green;
+    font-weight: 900;
+  }
+}
