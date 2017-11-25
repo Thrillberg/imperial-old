@@ -8,7 +8,7 @@ class PreGamesController < ApplicationController
   end
 
   def create
-    @pre_game = PreGame.new(users: [current_user])
+    @pre_game = PreGame.new(users: [current_user], game: Game.new)
     if @pre_game.save
       warden = request.env["warden"]
       PreGameBroadcastJob.perform_now(@pre_game, warden)
@@ -26,6 +26,9 @@ class PreGamesController < ApplicationController
     user = User.find(params[:user_id])
     if pre_game.users.include? user
       pre_game.users.delete(user)
+      if pre_game.users.count == 0
+        pre_game.destroy
+      end
     else
       pre_game.users << user
       redirect_to pre_game
