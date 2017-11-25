@@ -65,11 +65,6 @@ ActiveRecord::Schema.define(version: 20171125182516) do
     t.index ["game_id"], name: "index_pre_games_on_game_id"
   end
 
-  create_table "region_neighbors", id: false, force: :cascade do |t|
-    t.integer "region_a_id", null: false
-    t.integer "region_b_id", null: false
-  end
-
   create_table "regions", force: :cascade do |t|
     t.string "name"
     t.boolean "land", default: true
