@@ -10,6 +10,15 @@
   </head>
 
   <body>
-    <%= yield %>
+  <% unless current_user %>
+    <div class="background">
+  <% else %>
+    <div>
+  <% end %>
+      <%= render 'shared/header' %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
