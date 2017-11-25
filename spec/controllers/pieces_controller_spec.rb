@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe PiecesController do
   before do
-    Game.create
+    Game.create(pre_game: PreGame.create)
   end
 
   describe '#move' do

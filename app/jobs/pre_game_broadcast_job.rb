@@ -1,7 +1,7 @@
-class GameBroadcastJob < ApplicationJob
+class PreGameBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(game, warden)
+  def perform(pre_game, warden)
     renderer = ApplicationController.renderer.new
     renderer.instance_variable_set(:@env, {
       "HTTP_HOST"=>"localhost:3000",
@@ -11,17 +11,17 @@ class GameBroadcastJob < ApplicationJob
       "warden" => warden
     })
     ActionCable.server.broadcast(
-      'games_channel',
-      game: render_game(game, renderer)
+      'pre_games_channel',
+      game: render_pre_game(pre_game, renderer)
     )
   end
 
   private
 
-  def render_game(game, renderer)
+  def render_pre_game(pre_game, renderer)
     renderer.render(
-      partial: 'games/game',
-      locals: { game: game, new: true }
+      partial: 'pre_games/pre_game',
+      locals: { game: pre_game, new: true }
     )
   end
 end

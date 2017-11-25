@@ -1,8 +1,0 @@
-<div id="game">
-  <%= link_to game.get_users, game_path(game) %>
-  <% if !game.users.include?(current_user) || new %>
-    <%= link_to "Join", game_path(game, user_id: current_user), method: :put, class: "toggle-game join" %>
-  <% else %>
-    <%= link_to "Leave", game_path(game, user_id: current_user), method: :put, class: "toggle-game leave" %>
-  <% end %>
-</div>

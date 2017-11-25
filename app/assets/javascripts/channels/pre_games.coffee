@@ -1,5 +1,5 @@
-App.games = App.cable.subscriptions.create {
-    channel: "GamesChannel"
+App.pre_games = App.cable.subscriptions.create {
+    channel: "PreGamesChannel"
     game_id: ''
   },
   connected: ->
@@ -9,5 +9,5 @@ App.games = App.cable.subscriptions.create {
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    $('#games').append data['game']
+    $('#pre_games').append data['pre_game']
 

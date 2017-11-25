@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :players
-  has_many :games, through: :players
+  has_many :pre_games, through: :players
 
   def online?
     !Redis.new.get("user_#{self.id}_online").nil?
