@@ -6,4 +6,12 @@
   padding-right: 100px;
   background-color: $light-blue;
   color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .icon {
+    height: 45px;
+    margin-right: 10px;
+  }
 }
