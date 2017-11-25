@@ -14,6 +14,7 @@ class Game < ApplicationRecord
   def start
     assign_players_to_countries
     assign_users_to_players
+    set_up_money
   end
 
   def assign_users_to_players
@@ -26,6 +27,20 @@ class Game < ApplicationRecord
     countries.zip(players.cycle) do |pair|
       pair[0].player = pair[1]
       pair[0].save
+    end
+  end
+
+  def set_up_money
+    amounts = {
+      2 => '35',
+      3 => '24',
+      4 => '13',
+      5 => '13',
+      6 => '13',
+    }
+    money = amounts[players.count].to_i
+    players.each do |player|
+      player.update(money: money)
     end
   end
 

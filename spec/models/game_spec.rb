@@ -74,4 +74,61 @@ describe Game do
       end
     end
   end
+
+  # describe "#reconcile_users_and_players" do
+  #   context 'first user' do
+  #     let(:user) { create(:user) }
+  #     let(:game) { create(:game_with_users, users_count: 1) }
+
+  #     fit 'creates a player' do
+  #       byebug
+  #       expect(game.players.count).to eql(1)
+  #     end
+  #   end
+
+  #   context 'add a user' do
+
+  #   end
+
+  #   context 'remove a user' do
+
+  #   end
+  # end
+
+  describe "#set_up_money" do
+    context '2 players' do
+      let(:game) { create(:game_with_users, users_count: 2) }
+
+      it 'gives each player 35 money' do
+        game.set_up_money
+        game.players.each do |player|
+          expect(player.money).to eql(35)
+        end
+      end
+    end
+
+    context '3 players' do
+      let(:game) { create(:game_with_users, users_count: 3) }
+
+      it 'gives each player 24 money' do
+        game.set_up_money
+        game.players.each do |player|
+          expect(player.money).to eql(24)
+        end
+      end
+    end
+
+    context '4-6 players' do
+      (4..6).each do |count|
+        let(:game) { create(:game_with_users, users_count: count) }
+
+        it 'gives each player 13 money' do
+          game.set_up_money
+          game.players.each do |player|
+            expect(player.money).to eql(13)
+          end
+        end
+      end
+    end
+  end
 end

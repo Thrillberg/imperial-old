@@ -1,3 +1,6 @@
 FactoryBot.define do
-  factory :player
+  factory :player do
+    game
+    user
+  end
 end
