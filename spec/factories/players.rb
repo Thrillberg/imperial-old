@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :player do
-    game
+    pre_game
     user
   end
 end

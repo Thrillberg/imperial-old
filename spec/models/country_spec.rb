@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Country do
   before do
-    Game.create
+    PreGame.create
   end
 
   it { should have_many :armies }

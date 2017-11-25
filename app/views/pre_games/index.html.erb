@@ -1,11 +1,13 @@
 <div class="row">
   <div class="col">
-    <div id="games">
+    <div id="pre_games">
       <u>Games:</u>
-      <% if @games.count == 0 %>
-        <p>Sorry, no games yet.<p>
+      <% if @pre_games.count == 0 %>
+        <p>Sorry, no pre_games yet.<p>
       <% else %>
-        <%= render @games, new: false %>
+        <% @pre_games.each do |game| %>
+          <%= render game, new: false, game: game %>
+        <% end %>
       <% end %>
     </div>
     <%= render partial: 'form' %>

@@ -10,27 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124223644) do
+ActiveRecord::Schema.define(version: 20171125182516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.bigint "game_id"
+    t.bigint "pre_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_boards_on_game_id"
+    t.index ["pre_game_id"], name: "index_boards_on_pre_game_id"
   end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.bigint "game_id"
+    t.bigint "pre_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "player_id"
     t.integer "money"
-    t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["player_id"], name: "index_countries_on_player_id"
+    t.index ["pre_game_id"], name: "index_countries_on_pre_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -49,13 +49,20 @@ ActiveRecord::Schema.define(version: 20171124223644) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.bigint "game_id"
+    t.bigint "pre_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "money"
-    t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["pre_game_id"], name: "index_players_on_pre_game_id"
     t.index ["user_id"], name: "index_players_on_user_id"
+  end
+
+  create_table "pre_games", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_pre_games_on_game_id"
   end
 
   create_table "region_neighbors", id: false, force: :cascade do |t|
