@@ -14,10 +14,30 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # config.before(:suite) do
+  #   DatabaseCleaner.strategy = :transaction
+  #   DatabaseCleaner.clean_with(:truncation)
+  #   Rails.application.load_seed
+  # end
+
   config.before(:suite) do
+    DatabaseCleaner.clean_with :deletion
+  end
+
+  config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-    Rails.application.load_seed
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :deletion
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 
   config.around(:each) do |example|

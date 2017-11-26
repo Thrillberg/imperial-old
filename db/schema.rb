@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20171126020729) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "government_id"
+    t.bigint "investor_id"
     t.integer "money"
     t.index ["game_id"], name: "index_countries_on_game_id"
-    t.index ["government_id"], name: "index_countries_on_government_id"
+    t.index ["investor_id"], name: "index_countries_on_investor_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -38,14 +38,14 @@ ActiveRecord::Schema.define(version: 20171126020729) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "governments", force: :cascade do |t|
+  create_table "investors", force: :cascade do |t|
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "money"
-    t.index ["game_id"], name: "index_governments_on_game_id"
-    t.index ["user_id"], name: "index_governments_on_user_id"
+    t.index ["game_id"], name: "index_investors_on_game_id"
+    t.index ["user_id"], name: "index_investors_on_user_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -104,5 +104,5 @@ ActiveRecord::Schema.define(version: 20171126020729) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "countries", "governments"
+  add_foreign_key "countries", "investors"
 end

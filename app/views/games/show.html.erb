@@ -1,3 +1,7 @@
+<% @current_investor.countries.each do |country| %>
+  <p>You control <%= country.name %></p>
+<% end %>
+
 <table>
   <% @countries.each do |country| %>
     <tr>

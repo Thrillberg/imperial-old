@@ -39,6 +39,7 @@ class PreGamesController < ApplicationController
   def destroy
     pre_game = PreGame.find(params[:id])
     game = pre_game.game
+    game.start(pre_game)
     if game.save
       pre_game.destroy
       redirect_to game

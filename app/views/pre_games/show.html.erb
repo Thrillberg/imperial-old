@@ -4,6 +4,6 @@
     <%= user.username %>
   <% end %>
   <% if @start_enabled %>
-    <%= button_to "Start Game", @pre_game, :method => :delete %>
+    <%= button_to "Start Game", games_path(:pre_game_id => @pre_game.id), :method => :post %>
   <% end %>
 </div>

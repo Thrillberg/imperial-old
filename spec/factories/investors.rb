@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :government do
+  factory :investor do
     game
     user
   end

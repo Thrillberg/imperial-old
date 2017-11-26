@@ -3,8 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :governments
-  has_many :games, through: :governments
+  has_many :games
+  has_one :investor, through: :games
   has_many :pre_games, through: :pre_game_users
 
   def online?
