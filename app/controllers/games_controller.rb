@@ -15,4 +15,15 @@ class GamesController < ApplicationController
     @countries = @game.countries
     @current_investor = @game.investors.find_by(user: current_user.id)
   end
+
+  def update
+    @game = Game.find(clean_params[:id])
+    @current_investor = @game.investors.find_by(user: current_user.id)
+    byebug
+    @current_investor.update(step: clean_params[:step])
+  end
+
+  def clean_params
+    params.require(:game).permit(:step, :id)
+  end
 end

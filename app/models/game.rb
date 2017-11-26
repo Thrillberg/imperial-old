@@ -44,6 +44,10 @@ class Game < ApplicationRecord
     end
   end
 
+  def get_rondel
+    TurnStep.new.get_steps
+  end
+
   private
 
   def turn_order

@@ -4,6 +4,15 @@
 
 It is now <%= @game.current_country.name %>'s turn. <%= @game.current_country.name %> is controlled by <%= @game.current_country.investor.user.username %>.
 
+<div>
+  <% if @game.current_country.investor.user == current_user %>
+    <%= @game.current_country.name %> may do one of the following actions:
+    <% @game.get_rondel.each do |step| %>
+      <%= button_to step, game_path(game: {id: @game, step: step}), method: :put %>
+    <% end %>
+  <% end %>
+</div>
+
 <table>
   <% @countries.each do |country| %>
     <tr>
