@@ -7,5 +7,5 @@ describe Country do
 
   it { should have_many :armies }
   it { should have_many :regions }
-  it { should belong_to :player }
+  it { should belong_to :government }
 end

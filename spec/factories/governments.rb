@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :player do
-    pre_game
+  factory :government do
+    game
     user
   end
 end

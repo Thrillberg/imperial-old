@@ -10,32 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125182516) do
+ActiveRecord::Schema.define(version: 20171126020729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.bigint "pre_game_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["pre_game_id"], name: "index_boards_on_pre_game_id"
+    t.index ["game_id"], name: "index_boards_on_game_id"
   end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.bigint "pre_game_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "player_id"
+    t.bigint "government_id"
     t.integer "money"
-    t.index ["player_id"], name: "index_countries_on_player_id"
-    t.index ["pre_game_id"], name: "index_countries_on_pre_game_id"
+    t.index ["game_id"], name: "index_countries_on_game_id"
+    t.index ["government_id"], name: "index_countries_on_government_id"
   end
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "governments", force: :cascade do |t|
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.integer "money"
+    t.index ["game_id"], name: "index_governments_on_game_id"
+    t.index ["user_id"], name: "index_governments_on_user_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -48,14 +58,13 @@ ActiveRecord::Schema.define(version: 20171125182516) do
     t.index ["region_id"], name: "index_pieces_on_region_id"
   end
 
-  create_table "players", force: :cascade do |t|
+  create_table "pre_game_users", force: :cascade do |t|
     t.bigint "pre_game_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.integer "money"
-    t.index ["pre_game_id"], name: "index_players_on_pre_game_id"
-    t.index ["user_id"], name: "index_players_on_user_id"
+    t.index ["pre_game_id"], name: "index_pre_game_users_on_pre_game_id"
+    t.index ["user_id"], name: "index_pre_game_users_on_user_id"
   end
 
   create_table "pre_games", force: :cascade do |t|
@@ -95,5 +104,5 @@ ActiveRecord::Schema.define(version: 20171125182516) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "countries", "players"
+  add_foreign_key "countries", "governments"
 end

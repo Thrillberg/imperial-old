@@ -4,55 +4,6 @@
     <%= user.username %>
   <% end %>
   <% if @start_enabled %>
-    <%= form_with model: Game.new, local: true do |form| %>
-      <%= form.hidden_field :pre_game_id, value: @pre_game.id %>
-      <%= form.submit 'Start Game' %>
-    <% end %>
+    <%= button_to "Start Game", @pre_game, :method => :delete %>
   <% end %>
-  <table>
-    <% @countries.each do |country| %>
-      <tr>
-        <td>
-          <strong><%= country.name %></strong>
-        </td>
-        <td>
-          <u>Home regions</u>
-        </td>
-        <td>
-          <u>Neighboring regions</u>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          <% country.regions.each do |region| %>
-            <tr>
-              <td></td>
-              <td>
-                <% if region.pieces.length > 0 %>
-                  <strong class="piece marker">X</strong>
-                  <strong><%= region.name %></strong>
-                <% elsif region.has_factory %>
-                  <strong class="factory marker">F</strong>
-                  <strong><%= region.name %></strong>
-                <% else %>
-                  <span><%= region.name %></span>
-                <% end %>
-              </td>
-              <td>
-                <% region.neighbors.each do |neighbor| %>
-                  <% if neighbor.pieces.length > 0 %>
-                    <strong class="piece">X</strong>
-                    <strong><%= neighbor.name %>, </strong>
-                  <% else %>
-                    <span><%= neighbor.name %>, </span>
-                  <% end %>
-                <% end %>
-                </td>
-            </tr>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
 </div>
