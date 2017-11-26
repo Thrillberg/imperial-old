@@ -5,7 +5,7 @@ class AddGames < ActiveRecord::Migration[5.1]
     end
 
     change_table :pre_games do |t|
-      t.belongs_to :game
+      t.belongs_to :game, index: true
     end
   end
 end

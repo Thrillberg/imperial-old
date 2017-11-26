@@ -6,6 +6,8 @@ class GamesController < ApplicationController
   end
 
   def show
+    @game = Game.find(params[:id])
+    @countries = @game.countries
   end
 
   def create_params

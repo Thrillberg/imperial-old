@@ -3,8 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :players
-  has_many :pre_games, through: :players
+  has_many :governments
+  has_many :games, through: :governments
+  has_many :pre_games, through: :pre_game_users
 
   def online?
     !Redis.new.get("user_#{self.id}_online").nil?
