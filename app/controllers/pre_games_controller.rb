@@ -8,7 +8,7 @@ class PreGamesController < ApplicationController
   end
 
   def create
-    @pre_game = PreGame.new(users: [current_user], game: Game.new)
+    @pre_game = PreGame.new(users: [current_user], game: Game.new, creator: current_user)
     if @pre_game.save
       warden = request.env["warden"]
       PreGameBroadcastJob.perform_now(@pre_game, warden)
@@ -19,6 +19,8 @@ class PreGamesController < ApplicationController
   def show
     @pre_game = PreGame.find(params[:id])
     @countries = @pre_game.countries
+    @start_enabled = @pre_game.users.count > 1 &&
+      current_user == @pre_game.creator
   end
 
   def update

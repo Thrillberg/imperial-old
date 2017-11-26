@@ -12,4 +12,8 @@ FactoryBot.define do
   sequence :username do |n|
     "username#{n}"
   end
+
+  trait :creator do
+    
+  end
 end

@@ -3,9 +3,11 @@
   <% @pre_game.users.each do |user| %>
     <%= user.username %>
   <% end %>
-  <%= form_with model: Game.new, local: true do |form| %>
-    <%= form.hidden_field :pre_game_id, value: @pre_game.id %>
-    <%= form.submit 'Start Game' %>
+  <% if @start_enabled %>
+    <%= form_with model: Game.new, local: true do |form| %>
+      <%= form.hidden_field :pre_game_id, value: @pre_game.id %>
+      <%= form.submit 'Start Game' %>
+    <% end %>
   <% end %>
   <table>
     <% @countries.each do |country| %>
