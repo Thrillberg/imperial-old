@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :game do
 
-    factory :game_with_users do
+    factory :game_with_investors do
       transient do
-        users_count 2
+        investors_count 2
       end
 
       after(:create) do |game, evaluator|
-        create_list(:user, evaluator.users_count, games: [game])
+        create_list(:investor, evaluator.investors_count, game: game)
       end
     end
   end

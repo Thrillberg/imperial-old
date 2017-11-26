@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 xdescribe PiecesController do
-  let(:pre_game) { create(:pre_game) }
+  let(:game) { create(:game) }
 
   describe '#move' do
     let(:country) { Country.find_by_name('Germany') }
@@ -12,7 +12,6 @@ xdescribe PiecesController do
       let(:piece) { Army.create(country: country, region: origin_region) }
 
       it 'changes region' do
-        byebug
         put :move, params: { id: piece.id, destination: destination_region, origin: origin_region }
 
         piece.reload

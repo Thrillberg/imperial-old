@@ -9,24 +9,24 @@ class Game < ApplicationRecord
   has_one :board, dependent: :destroy
   has_many :countries, dependent: :destroy
   has_many :users
-  has_many :governments
+  has_many :investors
 
   def start
-    assign_governments_to_countries
-    assign_users_to_governments
+    assign_investors_to_countries
+    assign_users_to_investors
     set_up_money
   end
 
-  def assign_users_to_governments
-    users.zip(governments) do |pair|
-      pair[0].governments << pair[1]
+  def assign_investors_to_countries
+    countries.zip(investors.cycle) do |pair|
+      pair[0].investor = pair[1]
+      pair[0].save
     end
   end
 
-  def assign_governments_to_countries
-    countries.zip(governments.cycle) do |pair|
-      pair[0].government = pair[1]
-      pair[0].save
+  def assign_users_to_investors
+    users.zip(investors) do |pair|
+      pair[0].investors << pair[1]
     end
   end
 
@@ -38,13 +38,13 @@ class Game < ApplicationRecord
       5 => '13',
       6 => '13',
     }
-    money = amounts[governments.count].to_i
-    governments.each do |government|
-      government.update(money: money)
+    money = amounts[investors.count].to_i
+    investors.each do |investor|
+      investor.update(money: money)
     end
   end
 
-  private
+   private
 
   def add_board
     self.board = Board.create
