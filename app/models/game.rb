@@ -1,19 +1,19 @@
 class Game < ApplicationRecord
-  before_create :add_board
+  before_save :add_board
   after_create :set_up_countries_and_regions
   after_create :set_up_neutral_regions
   after_create :set_up_sea_regions
   after_create :set_up_factories
 
-  has_one :pre_game
   has_one :board, dependent: :destroy
   has_many :countries, dependent: :destroy
+  belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
   has_many :users
-  has_many :investors
+  has_many :investors, dependent: :destroy
 
   def start
     assign_investors_to_countries
-    assign_users_to_investors
+    # assign_users_to_investors
     set_up_money
   end
 
@@ -44,7 +44,11 @@ class Game < ApplicationRecord
     end
   end
 
-   private
+  private
+
+  def turn_order
+    ["Austria-Hungary", "Italy", "France", "England", "Germany", "Russia"]
+  end
 
   def add_board
     self.board = Board.create

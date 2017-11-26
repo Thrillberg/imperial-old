@@ -8,7 +8,7 @@ class PreGamesController < ApplicationController
   end
 
   def create
-    @pre_game = PreGame.new(users: [current_user], game: Game.new, creator: current_user)
+    @pre_game = PreGame.new(users: [current_user], creator: current_user)
     if @pre_game.save
       warden = request.env["warden"]
       PreGameBroadcastJob.perform_now(@pre_game, warden)
@@ -37,12 +37,5 @@ class PreGamesController < ApplicationController
   end
 
   def destroy
-    pre_game = PreGame.find(params[:id])
-    game = pre_game.game
-    game.start(pre_game)
-    if game.save
-      pre_game.destroy
-      redirect_to game
-    end
   end
 end

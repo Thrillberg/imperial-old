@@ -2,6 +2,8 @@
   <p>You control <%= country.name %></p>
 <% end %>
 
+It is now <%= @game.current_country.name %>'s turn. <%= @game.current_country.name %> is controlled by <%= @game.current_country.investor.user.username %>.
+
 <table>
   <% @countries.each do |country| %>
     <tr>
