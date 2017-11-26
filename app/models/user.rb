@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def online?
     !Redis.new.get("user_#{self.id}_online").nil?
   end
+
+  def convert_users_to_investors(game)
+    Investor.create(user: self, game: game)
+  end
 end

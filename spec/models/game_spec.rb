@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Game do
-  it { should have_one :pre_game }
   it { should have_one :board }
   it { should have_many :countries }
 

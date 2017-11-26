@@ -1,10 +1,13 @@
 class GamesController < ApplicationController
   def create
     pre_game = PreGame.find params[:pre_game_id]
-    game = pre_game.game
-    game.update(users: pre_game.users)
-    game.start
-    redirect_to game
+    game = Game.new
+    if game.save
+      investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
+      game.update(investors: investors, current_country: game.countries.find_by(name: "Austria-Hungary"))
+      game.start
+      redirect_to game
+    end
   end
 
   def show
