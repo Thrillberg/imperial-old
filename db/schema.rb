@@ -59,10 +59,12 @@ ActiveRecord::Schema.define(version: 20171125182516) do
   end
 
   create_table "pre_games", force: :cascade do |t|
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "game_id"
     t.index ["game_id"], name: "index_pre_games_on_game_id"
+    t.index ["user_id"], name: "index_pre_games_on_user_id"
   end
 
   create_table "regions", force: :cascade do |t|

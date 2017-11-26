@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :pre_game do
     game
+    creator { create(:user) }
 
     factory :pre_game_with_users do
       transient do
