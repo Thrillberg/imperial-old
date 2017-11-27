@@ -40,3 +40,33 @@
     color: red;
   }
 }
+
+.your-countries {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  width: 35%;
+  padding: 10px;
+  margin: 30px auto;
+  background-color: $light-blue;
+  border: 5px $dark-blue solid;
+  color: white;
+  
+  .header {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 1px $dark-blue solid;
+    margin: 20px 0;
+    padding: 0 0 20px 0;
+  }
+
+  .country {
+    width: 100%;
+  }
+
+  svg {
+    height: 1.5em;
+    width: 2em;
+    display: block;
+    margin: 0 auto;
+  }
+}

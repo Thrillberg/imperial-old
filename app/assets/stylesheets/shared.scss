@@ -1,4 +1,4 @@
-.header {
+a.header {
   font-family: 'Cormorant Garamond', serif;
   font-size: 40px;
   text-align: right;
@@ -9,6 +9,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  text-decoration: none;
+
+  :hover {
+    color: white;
+  }
 
   .icon {
     height: 45px;

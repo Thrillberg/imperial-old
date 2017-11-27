@@ -1,8 +1,18 @@
-<% @current_investor.countries.each do |country| %>
-  <p>You control <%= country.name %></p>
-<% end %>
-
-It is now <%= @game.current_country.name %>'s turn. <%= @game.current_country.name %> is controlled by <%= @game.current_country.investor.user.username %>.
+<div class="row your-countries card">
+  <strong class='header'>You control the governments of these countries</strong>
+  <% @current_investor.countries.each do |country| %>
+    <span class="row country">
+      <span class="col-md-3"><%= render :partial => "svg/" + @flags[country.name.to_sym] %></span>
+      <p class="col-md-9">
+        <% if country == @game.current_country %>
+          <strong><%= country.name %>'s turn</strong>
+        <% else %>
+          <%= country.name %>
+        <% end %>
+      </p>
+    </span>
+  <% end %>
+</div>
 
 <div>
   <% if @game.current_country.investor.user == current_user %>

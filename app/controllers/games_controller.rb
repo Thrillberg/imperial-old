@@ -14,6 +14,14 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @countries = @game.countries
     @current_investor = @game.investors.find_by(user: current_user.id)
+    @flags = {
+      "Austria-Hungary": "austro_hungarian_flag",
+      "France": "french_flag",
+      "Germany": "german_flag",
+      "Russia": "russian_flag",
+      "Italy": "italian_flag",
+      "England": "uk_flag"
+    }
   end
 
   def update
