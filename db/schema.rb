@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20171126193224) do
     t.datetime "updated_at", null: false
     t.bigint "investor_id"
     t.integer "money"
+    t.string "step"
     t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["investor_id"], name: "index_countries_on_investor_id"
   end
@@ -47,7 +48,6 @@ ActiveRecord::Schema.define(version: 20171126193224) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "money"
-    t.string "step"
     t.index ["game_id"], name: "index_investors_on_game_id"
     t.index ["user_id"], name: "index_investors_on_user_id"
   end

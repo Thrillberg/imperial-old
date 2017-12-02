@@ -18,7 +18,15 @@
   <% if @game.current_country.investor.user == current_user %>
     <%= @game.current_country.name %> may do one of the following actions:
     <% @game.get_rondel.each do |step| %>
-      <%= button_to step, game_path(game: {id: @game, step: step}), method: :put %>
+      <div class="row">
+        <%= button_to(step, game_path(game: {id: @game, step: step}), method: :put, class: 'btn btn-primary') %>
+        <% @countries.each do |country| %>
+          <% if country.step == step %>
+            <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
+          <% end %>
+          </span>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
