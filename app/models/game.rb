@@ -48,11 +48,18 @@ class Game < ApplicationRecord
     TurnStep.new.get_steps
   end
 
-  private
-
-  def turn_order
-    ["Austria-Hungary", "Italy", "France", "England", "Germany", "Russia"]
+  def next_country
+    {
+      "Austria-Hungary": "Italy",
+      "Italy": "France",
+      "France": "England",
+      "England": "Germany",
+      "Germany": "Russia",
+      "Russia": "Austria_Hungary"
+    }
   end
+
+  private
 
   def add_board
     self.board = Board.create
