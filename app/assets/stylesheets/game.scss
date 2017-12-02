@@ -60,7 +60,8 @@
   }
 
   .country {
-    width: 100%;
+    justify-content: space-between;
+    margin: 15px;
   }
 
   svg {
@@ -72,5 +73,13 @@
 }
 
 .meeple {
-  width: 15px;
+  display: inline-block;
+}
+
+.step {
+  margin: 15px;
+
+  .meeple {
+    width: 15px;
+  }
 }

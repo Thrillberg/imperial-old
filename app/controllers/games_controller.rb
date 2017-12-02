@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     pre_game = PreGame.find params[:pre_game_id]
     game = Game.new
@@ -37,6 +39,7 @@ class GamesController < ApplicationController
     @game = Game.find(clean_params[:id])
     @current_country = @game.current_country
     @current_country.update(step: clean_params[:step])
+    @game.update(current_country: @game.countries.find_by(name: @game.next_country[@current_country.name.to_sym]))
   end
 
   def clean_params
