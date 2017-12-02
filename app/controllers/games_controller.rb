@@ -13,7 +13,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @countries = @game.countries
-    @current_investor = @game.investors.find_by(user: current_user.id)
+    @investors = @game.investors
+    @current_investor = @investors.find_by(user: current_user.id)
     @flags = {
       "Austria-Hungary": "austro_hungarian_flag",
       "France": "french_flag",
@@ -22,13 +23,20 @@ class GamesController < ApplicationController
       "Italy": "italian_flag",
       "England": "uk_flag"
     }
+    @meeples = {
+      "Austria-Hungary": "austria_hungary_meeple",
+      "France": "france_meeple",
+      "Germany": "germany_meeple",
+      "Russia": "russia_meeple",
+      "Italy": "italy_meeple",
+      "England": "uk_meeple"
+    }
   end
 
   def update
     @game = Game.find(clean_params[:id])
-    @current_investor = @game.investors.find_by(user: current_user.id)
-    byebug
-    @current_investor.update(step: clean_params[:step])
+    @current_country = @game.current_country
+    @current_country.update(step: clean_params[:step])
   end
 
   def clean_params
