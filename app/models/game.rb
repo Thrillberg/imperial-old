@@ -10,6 +10,7 @@ class Game < ApplicationRecord
   belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
   has_many :users
   has_many :investors, dependent: :destroy
+  has_one :pre_game
 
   def start
     assign_bonds_to_investors
@@ -61,6 +62,8 @@ class Game < ApplicationRecord
 
     initial_bonds.zip(investors.cycle) do |(bond, owner)|
       bond.update(investor: owner)
+      owner.money -= bond.price
+      bond.country.money = bond.price
     end
   end
 

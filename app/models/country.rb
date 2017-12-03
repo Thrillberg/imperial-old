@@ -14,7 +14,9 @@ class Country < ApplicationRecord
   def owner
     hash = Hash.new(0)
     bonds.each  do |bond|
-      hash[bond.investor_id] += bond.price if bond.investor_id
+      if bond.investor_id
+        hash[bond.investor_id] += bond.price if bond.investor_id
+      end
     end
     owner_id, = hash.max_by { |id, investment| investment }
     Investor.find(owner_id)
