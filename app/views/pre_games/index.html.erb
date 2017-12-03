@@ -3,7 +3,7 @@
     <div id="pre_games">
       <u>Games:</u>
       <% if @pre_games.count == 0 %>
-        <p>Sorry, no pre_games yet.<p>
+        <p>Sorry, no joinable games yet.<p>
       <% else %>
         <% @pre_games.each do |game| %>
           <%= render game, new: false, game: game %>

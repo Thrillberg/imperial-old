@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
-    game = Game.new
+    game = Game.new(pre_game_id: pre_game.id)
     if game.save
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
       game.update(investors: investors, current_country: game.countries.find_by(name: "Austria-Hungary"))
@@ -41,6 +41,7 @@ class GamesController < ApplicationController
     @current_country.take_turn(clean_params[:step])
     @current_country.update(step: clean_params[:step])
     @game.update(current_country: @game.countries.find_by(name: @game.next_country[@current_country.name.to_sym]))
+    render step
   end
 
   def clean_params

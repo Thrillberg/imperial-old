@@ -4,6 +4,7 @@ class FactoryStep < TurnStep
   end
 
   def self.execute(country)
+    byebug
     country.money -= 5
   end
 end

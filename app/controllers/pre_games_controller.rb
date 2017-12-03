@@ -18,8 +18,12 @@ class PreGamesController < ApplicationController
 
   def show
     @pre_game = PreGame.find(params[:id])
+    @game = Game.find_by(pre_game_id: params[:id])
     @start_enabled = @pre_game.users.count > 1 &&
       current_user == @pre_game.creator
+    if @pre_game.started
+      redirect_to @game
+    end
   end
 
   def update
@@ -34,8 +38,5 @@ class PreGamesController < ApplicationController
       pre_game.users << user
       redirect_to pre_game
     end
-  end
-
-  def destroy
   end
 end
