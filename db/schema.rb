@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126193224) do
+ActiveRecord::Schema.define(version: 20171202203636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 20171126193224) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_boards_on_game_id"
+  end
+
+  create_table "bonds", force: :cascade do |t|
+    t.integer "price"
+    t.integer "interest"
+    t.bigint "country_id"
+    t.bigint "investor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_bonds_on_country_id"
+    t.index ["investor_id"], name: "index_bonds_on_investor_id"
   end
 
   create_table "countries", force: :cascade do |t|

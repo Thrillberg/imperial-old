@@ -38,6 +38,7 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(clean_params[:id])
     @current_country = @game.current_country
+    @current_country.take_turn(clean_params[:step])
     @current_country.update(step: clean_params[:step])
     @game.update(current_country: @game.countries.find_by(name: @game.next_country[@current_country.name.to_sym]))
   end
