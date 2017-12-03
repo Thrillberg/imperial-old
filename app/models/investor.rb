@@ -1,5 +1,6 @@
 class Investor < ApplicationRecord
-  has_many :countries
+  has_many :bonds
+  has_many :countries, through: :bonds
   belongs_to :game
   belongs_to :user
 end

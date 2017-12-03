@@ -16,7 +16,7 @@
 </div>
 
 <div>
-  <% if @game.current_country.investor.user == current_user %>
+  <% if @game.current_country.owner == current_user %>
     <%= @game.current_country.name %> may do one of the following actions:
     <% @game.get_rondel.each do |step| %>
       <div class="row step">

@@ -12,23 +12,20 @@ class Game < ApplicationRecord
   has_many :investors, dependent: :destroy
 
   def start
-    assign_investors_to_countries
+    assign_bonds_to_investors
     # assign_users_to_investors
+  end
+
+  def assign_bonds_to_investors
     set_up_money
+    set_up_bonds
   end
 
-  def assign_investors_to_countries
-    countries.zip(investors.cycle) do |pair|
-      pair[0].investor = pair[1]
-      pair[0].save
-    end
-  end
-
-  def assign_users_to_investors
-    users.zip(investors) do |pair|
-      pair[0].investors << pair[1]
-    end
-  end
+  # def assign_users_to_investors
+  #   users.zip(investors) do |pair|
+  #     pair[0].investors << pair[1]
+  #   end
+  # end
 
   def set_up_money
     amounts = {
@@ -41,6 +38,29 @@ class Game < ApplicationRecord
     money = amounts[investors.count].to_i
     investors.each do |investor|
       investor.update(money: money)
+    end
+  end
+
+  def set_up_bonds
+    create_bonds
+    distribute_initial_bonds
+  end
+
+  def create_bonds
+    prices = [2, 4, 6, 9, 12, 16, 20, 25, 30]
+    countries.each do |country|
+      pairs = (1..9).zip(prices)
+      pairs.each do |pair|
+        Bond.create(price: pair[1], interest: pair[0], country: country)
+      end
+    end
+  end
+
+  def distribute_initial_bonds
+    initial_bonds = Bond.where(country: countries, price: 9)
+
+    initial_bonds.zip(investors.cycle) do |(bond, owner)|
+      bond.update(investor: owner)
     end
   end
 
