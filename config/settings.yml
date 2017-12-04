@@ -134,7 +134,10 @@ neighbors:
   Western Mediterranean Sea: []
   Ionian Sea: []
   Black Sea: []
-factories:
+starting_factories:
   armaments: ["Paris", "Berlin", "Moscow", "Vienna", "Budapest", "Rome"]
   shipyards: ["Liverpool", "London", "Hamburg", "Bordeaux", "Naples", "Odessa"]
+factories:
+  armaments: ["Sheffield", "Cologne", "Munich", "Warsaw", "Kiev", "Lemberg", "Prague", "Dijon", "Florence", "Paris", "Berlin", "Moscow", "Vienna", "Budapest", "Rome"]
+  shipyards: ["Edinburgh", "Dublin", "Danzig", "St. Petersburg", "Brest", "Marseille", "Genoa", "Venice", "Trieste", "Liverpool", "London", "Hamburg", "Bordeaux", "Naples", "Odessa"]
 
