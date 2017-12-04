@@ -62,8 +62,8 @@ class Game < ApplicationRecord
 
     initial_bonds.zip(investors.cycle) do |(bond, owner)|
       bond.update(investor: owner)
-      owner.money -= bond.price
-      bond.country.money = bond.price
+      owner.update(money: owner.money - bond.price)
+      bond.country.update(money: bond.price)
     end
   end
 
@@ -110,16 +110,14 @@ class Game < ApplicationRecord
   end
 
   def set_up_factories
-    Settings.factories.armaments.each do |region_name|
+    Settings.starting_factories.armaments.each do |region_name|
       region = Region.find_by(name: region_name)
-      region.has_factory = true
-      region.save
+      region.update(has_factory: true)
     end
 
-    Settings.factories.shipyards.each do |region_name|
+    Settings.starting_factories.shipyards.each do |region_name|
       region = Region.find_by(name: region_name)
-      region.has_factory = true
-      region.save
+      region.update(has_factory: true)
     end
   end
 end

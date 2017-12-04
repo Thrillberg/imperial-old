@@ -1,1 +1,14 @@
-<h1>What, it works??</h1>
+<h1>Where do you want to build a factory?</h1>
+<% @current_country.regions.each do |region| %>
+  <% unless region.has_factory %>
+    <% if region.possible_factory_type == :armaments %>
+      <div>
+        <%= region.name %> A
+      </div>
+    <% elsif region.possible_factory_type == :shipyard %>
+      <div>
+        <%= region.name %> S
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
