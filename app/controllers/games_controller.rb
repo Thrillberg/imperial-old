@@ -41,7 +41,7 @@ class GamesController < ApplicationController
     @current_country.take_turn(clean_params[:step])
     @current_country.update(step: clean_params[:step])
     @game.update(current_country: @game.countries.find_by(name: @game.next_country[@current_country.name.to_sym]))
-    render "shared/_#{clean_params[:step]}"
+    render "shared/_#{clean_params[:step].downcase}"
   end
 
   def clean_params
