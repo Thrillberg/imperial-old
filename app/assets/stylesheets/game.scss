@@ -74,6 +74,13 @@
 
 .meeple {
   display: inline-block;
+
+  svg {
+    height: 1.5em;
+    width: 2em;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .step {

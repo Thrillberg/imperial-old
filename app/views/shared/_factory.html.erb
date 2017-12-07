@@ -3,11 +3,11 @@
   <% unless region.has_factory %>
     <% if region.possible_factory_type == :armaments %>
       <div>
-        <%= region.name %> A
+        <%= link_to region.name, game_path(game: {id: @game, region: region}), method: :put %> A
       </div>
     <% elsif region.possible_factory_type == :shipyard %>
       <div>
-        <%= region.name %> S
+        <%= link_to region.name, game_path(game: {id: @game, region: region}), method: :put %> S
       </div>
     <% end %>
   <% end %>
