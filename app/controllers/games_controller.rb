@@ -37,14 +37,29 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(clean_params[:id])
-    @current_country = @game.current_country
-    @current_country.take_turn(clean_params[:step])
-    @current_country.update(step: clean_params[:step])
-    @game.update(current_country: @game.countries.find_by(name: @game.next_country[@current_country.name.to_sym]))
-    render "shared/_#{clean_params[:step].downcase}"
+    step = clean_params[:step]
+    region_id = clean_params[:region]
+    if step
+      take_step(@game, step)
+    elsif region_id
+      build_factory(@game, Region.find(region_id))
+    end
+  end
+
+  def take_step(game, step)
+    @current_country = game.current_country
+    @current_country.take_turn(step)
+    @current_country.update(step: step)
+    game.update(current_country: game.countries.find_by(name: game.next_country[@current_country.name.to_sym]))
+    render "shared/_#{step.downcase}"
+  end
+
+  def build_factory(game, region)
+    region.update(has_factory: true)
+    redirect_to :action =>:show, :game => game
   end
 
   def clean_params
-    params.require(:game).permit(:step, :id)
+    params.require(:game).permit(:step, :region, :id)
   end
 end

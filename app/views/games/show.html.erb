@@ -29,6 +29,9 @@
         <% end %>
       </div>
     <% end %>
+  <% else %>
+    <div>It is <%= @game.current_country.name %>'s turn!</div>
+    <span class="meeple"><%= render :partial => "svg/" + @meeples[@game.current_country.name.to_sym] %></span>
   <% end %>
 </div>
 
