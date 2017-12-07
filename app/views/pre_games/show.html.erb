@@ -1,8 +1,10 @@
 <div class="container">
   <u>Users in the game</u>
-  <% @pre_game.users.each do |user| %>
-    <%= user.username %>
-  <% end %>
+  <div id="players">
+    <% @pre_game.users.each do |user| %>
+      <div><%= user.username %></div>
+    <% end %>
+  </div>
   <% if @start_enabled %>
     <%= button_to "Start Game", games_path(:pre_game_id => @pre_game.id), :method => :post, class: "btn btn-primary" %>
   <% end %>

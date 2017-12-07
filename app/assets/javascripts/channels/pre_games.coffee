@@ -8,5 +8,9 @@ App.pre_games = App.cable.subscriptions.create {
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    $('#pre_games').append data['pre_game']
+    if data['pre_game']
+      $('#pre_games').append data['pre_game']
+      $('p').remove '.sorry'
+    else if data['user']
+      $('#players').append data['user']
 
