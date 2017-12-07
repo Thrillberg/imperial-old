@@ -11,7 +11,7 @@ class PreGamesController < ApplicationController
     @pre_game = PreGame.new(users: [current_user], creator: current_user)
     if @pre_game.save
       warden = request.env["warden"]
-      PreGameBroadcastJob.perform_now(@pre_game, warden)
+      PreGameCreateBroadcastJob.perform_now(@pre_game, warden)
       redirect_to @pre_game
     end
   end
@@ -28,14 +28,14 @@ class PreGamesController < ApplicationController
 
   def update
     pre_game = PreGame.find(params[:id])
-    user = User.find(params[:user_id])
-    if pre_game.users.include? user
-      pre_game.users.delete(user)
+    if pre_game.users.include? current_user
+      pre_game.users.delete(current_user)
       if pre_game.users.count == 0
         pre_game.destroy
       end
     else
-      pre_game.users << user
+      pre_game.users << current_user
+      PreGamePopulateBroadcastJob.perform_now(current_user)
       redirect_to pre_game
     end
   end

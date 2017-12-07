@@ -1,4 +1,4 @@
-class PreGameBroadcastJob < ApplicationJob
+class PreGameCreateBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(pre_game, warden)
@@ -12,7 +12,7 @@ class PreGameBroadcastJob < ApplicationJob
     })
     ActionCable.server.broadcast(
       'pre_games_channel',
-      game: render_pre_game(pre_game, renderer)
+      pre_game: render_pre_game(pre_game, renderer)
     )
   end
 
