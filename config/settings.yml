@@ -2,6 +2,7 @@ countries:
   england:
     name: England
     color: red
+    font-color: white
     regions:
       - name: Dublin
         x: 10
@@ -41,33 +42,70 @@ countries:
   france:
     name: France
     color: blue
+    font-color: white
     regions:
       - name: Brest
-        x: 300
-        y: 300
-        text-x: 300
-        text-y: 300
-        cx: 300
-        cy: 300
+        x: 150
+        y: 275
+        text-x: 170
+        text-y: 295
+        cx: 180
+        cy: 275
       - name: Paris
-        x: 305
-        y: 305
-        text-x: 305
-        text-y: 305
-        cx: 305
-        cy: 305
+        x: 250
+        y: 260
+        text-x: 270
+        text-y: 280
       - name: Dijon
+        x: 250
+        y: 310
+        text-x: 270
+        text-y: 330
       - name: Bordeaux
+        x: 150
+        y: 325
+        text-x: 170
+        text-y: 345
+        cx: 150
+        cy: 350
       - name: Marseille
+        x: 250
+        y: 360
+        text-x: 270
+        text-y: 380
   germany:
     name: Germany
     color: black
+    font-color: white
     regions:
       - name: Hamburg
+        x: 420
+        y: 210
+        text-x: 440
+        text-y: 230
       - name: Berlin
+        x: 520
+        y: 210
+        text-x: 540
+        text-y: 230
+        height: 125
       - name: Danzig
+        x: 620
+        y: 210
+        text-x: 640
+        text-y: 230
       - name: Cologne
+        x: 390
+        y: 260
+        text-x: 410
+        text-y: 280
+        width: 130
       - name: Munich
+        x: 350
+        y: 310
+        text-x: 370
+        text-y: 330
+        width: 170
   russia:
     name: Russia
     color: purple
