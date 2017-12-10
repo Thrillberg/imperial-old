@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
-    game = Game.new(pre_game_id: pre_game.id)
+    game = Game.new(pre_game_id: pre_game.id, board: Board.create)
     if game.save
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
       game.update(investors: investors, current_country: game.countries.find_by(name: "Austria-Hungary"))
@@ -17,6 +17,9 @@ class GamesController < ApplicationController
     @countries = @game.countries
     @investors = @game.investors
     @current_investor = @investors.find_by(user: current_user.id)
+    @factories = @game.board.regions.where(has_factory: true).map do |country|
+      country.name
+    end
     @flags = {
       "Austria-Hungary": "austro_hungarian_flag",
       "France": "french_flag",
@@ -33,6 +36,7 @@ class GamesController < ApplicationController
       "Italy": "italy_meeple",
       "England": "uk_meeple"
     }
+    @step = params[:step]
   end
 
   def update
@@ -43,6 +47,7 @@ class GamesController < ApplicationController
       take_step(@game, step)
     elsif region_id
       build_factory(@game, Region.find(region_id))
+      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
     end
   end
 
@@ -50,8 +55,7 @@ class GamesController < ApplicationController
     @current_country = game.current_country
     @current_country.take_turn(step)
     @current_country.update(step: step)
-    game.update(current_country: game.countries.find_by(name: game.next_country[@current_country.name.to_sym]))
-    render "shared/_#{step.downcase}"
+    redirect_to game_path(game: game, step: step)
   end
 
   def build_factory(game, region)

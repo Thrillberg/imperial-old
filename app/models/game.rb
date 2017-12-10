@@ -1,5 +1,4 @@
 class Game < ApplicationRecord
-  before_save :add_board
   after_create :set_up_countries_and_regions
   after_create :set_up_neutral_regions
   after_create :set_up_sea_regions
@@ -14,19 +13,12 @@ class Game < ApplicationRecord
 
   def start
     assign_bonds_to_investors
-    # assign_users_to_investors
   end
 
   def assign_bonds_to_investors
     set_up_money
     set_up_bonds
   end
-
-  # def assign_users_to_investors
-  #   users.zip(investors) do |pair|
-  #     pair[0].investors << pair[1]
-  #   end
-  # end
 
   def set_up_money
     amounts = {
@@ -84,39 +76,35 @@ class Game < ApplicationRecord
 
   private
 
-  def add_board
-    self.board = Board.create
-  end
-
   def set_up_countries_and_regions
     Settings.countries.each do |country|
       new_country = Country.create(game_id: self.id, name: country[1].name)
       country[1].regions.each do |region|
-        new_country.regions << Region.create(name: region)
+        new_country.regions << Region.create(name: region.name, board: board)
       end
     end
   end
 
   def set_up_neutral_regions
     Settings.neutrals.each do |region|
-      Region.create(name: region)
+      Region.create(name: region, board: board)
     end
   end
 
   def set_up_sea_regions
     Settings.sea_regions.each do |region|
-      Region.create(name: region, land: false)
+      Region.create(name: region, land: false, board: board)
     end
   end
 
   def set_up_factories
     Settings.starting_factories.armaments.each do |region_name|
-      region = Region.find_by(name: region_name)
+      region = board.regions.find_by(name: region_name)
       region.update(has_factory: true)
     end
 
     Settings.starting_factories.shipyards.each do |region_name|
-      region = Region.find_by(name: region_name)
+      region = board.regions.find_by(name: region_name)
       region.update(has_factory: true)
     end
   end
