@@ -4,6 +4,7 @@ class CreateRegion < ActiveRecord::Migration[5.1]
       t.string :name
       t.boolean :land, default: true
       t.belongs_to :country, index: true
+      t.belongs_to :board, index: true
 
       t.timestamps
     end

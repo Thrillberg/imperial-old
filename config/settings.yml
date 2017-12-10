@@ -1,58 +1,100 @@
 countries:
   england:
     name: England
-    regions: [
-      "Dublin",
-      "Edinburgh",
-      "Liverpool",
-      "Sheffield",
-      "London"
-    ]
+    color: red
+    regions:
+      - name: Dublin
+        x: 10
+        y: 80
+        text-x: 30
+        text-y: 100
+        cx: 60
+        cy: 130
+      - name: Edinburgh
+        x: 160
+        y: 80
+        text-x: 180
+        text-y: 100
+        cx: 260
+        cy: 105
+      - name: Liverpool
+        x: 120
+        y: 130
+        text-x: 140
+        text-y: 150
+        cx: 120
+        cy: 155
+      - name: Sheffield
+        x: 220
+        y: 130
+        text-x: 240
+        text-y: 150
+        cx: 320
+        cy: 155
+      - name: London
+        x: 160
+        y: 180
+        text-x: 180
+        text-y: 200
+        cx: 210
+        cy: 230
   france:
     name: France
-    regions: [
-      "Brest",
-      "Paris",
-      "Dijon",
-      "Bordeaux",
-      "Marseille"
-    ]
+    color: blue
+    regions:
+      - name: Brest
+        x: 300
+        y: 300
+        text-x: 300
+        text-y: 300
+        cx: 300
+        cy: 300
+      - name: Paris
+        x: 305
+        y: 305
+        text-x: 305
+        text-y: 305
+        cx: 305
+        cy: 305
+      - name: Dijon
+      - name: Bordeaux
+      - name: Marseille
   germany:
     name: Germany
-    regions: [
-      "Hamburg",
-      "Berlin",
-      "Danzig",
-      "Cologne",
-      "Munich"
-    ]
+    color: black
+    regions:
+      - name: Hamburg
+      - name: Berlin
+      - name: Danzig
+      - name: Cologne
+      - name: Munich
   russia:
     name: Russia
-    regions: [
-      "St. Petersburg",
-      "Moscow",
-      "Warsaw",
-      "Kiev",
-      "Odessa"
-    ]
+    color: purple
+    regions:
+      - name: St. Petersburg
+      - name: Moscow
+      - name: Warsaw
+      - name: Kiev
+      - name: Odessa
   austria_hungary:
     name: Austria-Hungary
-    regions: [
-      "Prague",
-      "Lemberg",
-      "Vienna",
-      "Budapest",
-      "Trieste"
-    ]
+    color: yellow
+    regions:
+      - name: Prague
+      - name: Lemberg
+      - name: Vienna
+      - name: Budapest
+      - name: Trieste
   italy:
     name: Italy
-    regions: [
-      "Genoa",
-      "Venice",
-      "Florence",
-      "Rome",
-      "Naples"
-    ]
+    color: green
+    regions:
+      - name: Genoa
+      - name: Venice
+      - name: Florence
+      - name: Rome
+      - name: Naples
 neutrals: [
   "Spain",
   "Portugal",
@@ -70,16 +112,64 @@ neutrals: [
   "Bulgaria",
   "Turkey"
 ]
-sea_regions: [
-  "Baltic Sea",
-  "North Sea",
-  "North Atlantic",
-  "English Channel",
-  "Bay of Biscay",
-  "Western Mediterranean Sea",
-  "Ionian Sea",
-  "Black Sea"
-]
+sea_regions:
+  - name: Baltic Sea
+    width: 100
+    height: 200
+    x: 450
+    y: 0
+    text-x: 470
+    text-y: 20
+  - name: North Sea
+    width: 225
+    height: 200
+    x: 225
+    y: 0
+    text-x: 245
+    text-y: 20
+  - name: North Atlantic
+    width: 225
+    height: 200
+    x: 0
+    y: 0
+    text-x: 20
+    text-y: 20
+  - name: Bay of Biscay
+    width: 225
+    height: 400
+    x: 0
+    y: 200
+    text-x: 20
+    text-y: 300
+  - name: English Channel
+    width: 225
+    height: 75
+    x: 100
+    y: 200
+    text-x: 120
+    text-y: 250
+  - name: Western Mediterranean Sea
+    width: 500
+    height: 250
+    x: 225
+    y: 350
+    text-x: 245
+    text-y: 500
+  - name: Ionian Sea
+    width: 300
+    height: 250
+    x: 725
+    y: 350
+    text-x: 745
+    text-y: 500
+  - name: Black Sea
+  - name: Eastern Mediterranean Sea
+    width: 175
+    height: 150
+    x: 1025
+    y: 450
+    text-x: 1045
+    text-y: 500
 neighbors:
   Dublin: ["North Atlantic"]
   Edinburgh: ["North Sea", "Liverpool", "Sheffield"]

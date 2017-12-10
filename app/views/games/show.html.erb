@@ -1,3 +1,4 @@
+<%= render :partial => "svg/board", locals: { factories: @factories, step: @step, current_country: @game.current_country } %>
 <div class="row your-countries card">
   <strong class='header'>You control the governments of these countries</strong>
   <% @current_investor.countries.each do |country| %>
@@ -16,7 +17,7 @@
 </div>
 
 <div>
-  <% if @game.current_country.owner.user == current_user %>
+  <% if @game.current_country.owner.user == current_user && !@step%>
     <%= @game.current_country.name %> may do one of the following actions:
     <% @game.get_rondel.each do |step| %>
       <div class="row step">
