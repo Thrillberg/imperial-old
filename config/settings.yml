@@ -82,7 +82,7 @@ sea_regions: [
 ]
 neighbors:
   Dublin: ["North Atlantic"]
-  Edinburgh: ["North Sea", "Edinburgh", "Sheffield"]
+  Edinburgh: ["North Sea", "Liverpool", "Sheffield"]
   Liverpool: ["North Atlantic", "Edinburgh", "Sheffield", "London"]
   Sheffield: ["Edinburgh", "Liverpool", "London", "North Sea"]
   London: ["Liverpool", "Sheffield", "English Channel"]
