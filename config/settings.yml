@@ -2,7 +2,6 @@ countries:
   england:
     name: England
     color: red
-    font-color: white
     regions:
       - name: Dublin
         x: 10
@@ -42,7 +41,6 @@ countries:
   france:
     name: France
     color: blue
-    font-color: white
     regions:
       - name: Brest
         x: 150
@@ -56,11 +54,13 @@ countries:
         y: 260
         text-x: 270
         text-y: 280
+        height: 30
       - name: Dijon
         x: 250
-        y: 310
+        y: 290
         text-x: 270
-        text-y: 330
+        text-y: 310
+        height: 70
       - name: Bordeaux
         x: 150
         y: 325
@@ -68,6 +68,7 @@ countries:
         text-y: 345
         cx: 150
         cy: 350
+        height: 85
       - name: Marseille
         x: 250
         y: 360
@@ -76,7 +77,6 @@ countries:
   germany:
     name: Germany
     color: black
-    font-color: white
     regions:
       - name: Hamburg
         x: 420
@@ -147,6 +147,7 @@ countries:
   austria_hungary:
     name: Austria-Hungary
     color: yellow
+    font-color: black
     regions:
       - name: Prague
         x: 520
@@ -222,23 +223,112 @@ countries:
         text-y: 605
         height: 100
         width: 60
-neutrals: [
-  "Spain",
-  "Portugal",
-  "Morocco",
-  "Algeria",
-  "Tunisia",
-  "Belgium",
-  "Holland",
-  "Denmark",
-  "Norway",
-  "Sweden",
-  "West Balkan",
-  "Greece",
-  "Romania",
-  "Bulgaria",
-  "Turkey"
-]
+neutrals:
+  - name: Spain
+    x: 100
+    y: 410
+    text-x: 120
+    text-y: 430
+    height: 150
+    width: 200
+  - name: Portugal
+    x: 40
+    y: 450
+    text-x: 60
+    text-y: 470
+    height: 110
+    width: 60
+  - name: Morocco
+    x: 0
+    y: 750
+    text-x: 20
+    text-y: 770
+    height: 60
+    width: 225
+  - name: Algeria
+    x: 225
+    y: 750
+    text-x: 245
+    text-y: 770
+    height: 60
+    width: 150
+  - name: Tunisia
+    x: 375
+    y: 750
+    text-x: 395
+    text-y: 770
+    height: 60
+    width: 80
+  - name: Belgium
+    x: 350
+    y: 250
+    text-x: 355
+    text-y: 270
+    height: 70
+    width: 40
+  - name: Holland
+    x: 390
+    y: 225
+    text-x: 400
+    text-y: 245
+    height: 35
+    width: 30
+  - name: Denmark
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Norway
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Sweden
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: West Balkan
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Greece
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Romania
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Bulgaria
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
+  - name: Turkey
+    x: 380
+    y: 585
+    text-x: 400
+    text-y: 605
+    height: 100
+    width: 60
 sea_regions:
   - name: Baltic Sea
     width: 100
@@ -263,7 +353,7 @@ sea_regions:
     text-y: 20
   - name: Bay of Biscay
     width: 225
-    height: 400
+    height: 550
     x: 0
     y: 200
     text-x: 20
@@ -277,11 +367,11 @@ sea_regions:
     text-y: 250
   - name: Western Mediterranean Sea
     width: 500
-    height: 250
+    height: 400
     x: 225
     y: 350
     text-x: 245
-    text-y: 500
+    text-y: 720
   - name: Ionian Sea
     width: 300
     height: 250
