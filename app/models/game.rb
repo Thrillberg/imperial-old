@@ -70,7 +70,7 @@ class Game < ApplicationRecord
       "France": "England",
       "England": "Germany",
       "Germany": "Russia",
-      "Russia": "Austria_Hungary"
+      "Russia": "Austria-Hungary"
     }
   end
 
