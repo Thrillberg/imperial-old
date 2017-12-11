@@ -94,6 +94,7 @@ countries:
         y: 210
         text-x: 640
         text-y: 230
+        height: 125
       - name: Cologne
         x: 390
         y: 260
@@ -111,28 +112,116 @@ countries:
     color: purple
     regions:
       - name: St. Petersburg
+        x: 720
+        y: 0
+        text-x: 740
+        text-y: 20
+        height: 230
       - name: Moscow
+        x: 820
+        y: 0
+        text-x: 840
+        text-y: 20
+        height: 270
+        width: 205
       - name: Warsaw
+        x: 720
+        y: 230
+        text-x: 740
+        text-y: 250
+        height: 105
       - name: Kiev
+        x: 820
+        y: 270
+        text-x: 840
+        text-y: 290
+        height: 65
+        width: 205
       - name: Odessa
+        x: 860
+        y: 335
+        text-x: 880
+        text-y: 355
+        height: 150
+        width: 165
   austria_hungary:
     name: Austria-Hungary
     color: yellow
     regions:
       - name: Prague
+        x: 520
+        y: 335
+        text-x: 540
+        text-y: 355
+        height: 50
+        width: 240
       - name: Lemberg
+        x: 760
+        y: 335
+        text-x: 780
+        text-y: 355
+        height: 50
+        width: 85
       - name: Vienna
+        x: 420
+        y: 360
+        text-x: 440
+        text-y: 380
+        height: 50
+        width: 100
       - name: Budapest
+        x: 520
+        y: 385
+        text-x: 540
+        text-y: 405
+        height: 100
+        width: 325
       - name: Trieste
+        x: 460
+        y: 410
+        text-x: 480
+        text-y: 430
+        height: 100
+        width: 60
   italy:
     name: Italy
     color: green
     regions:
       - name: Genoa
+        x: 320
+        y: 410
+        text-x: 340
+        text-y: 430
+        height: 65
+        width: 80
       - name: Venice
+        x: 400
+        y: 410
+        text-x: 420
+        text-y: 430
+        height: 115
+        width: 60
       - name: Florence
+        x: 340
+        y: 475
+        text-x: 360
+        text-y: 495
+        height: 50
+        width: 60
       - name: Rome
+        x: 360
+        y: 525
+        text-x: 380
+        text-y: 545
+        height: 60
+        width: 80
       - name: Naples
+        x: 380
+        y: 585
+        text-x: 400
+        text-y: 605
+        height: 100
+        width: 60
 neutrals: [
   "Spain",
   "Portugal",
