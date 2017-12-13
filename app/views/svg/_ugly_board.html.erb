@@ -1,0 +1,45 @@
+<svg version="1.1"
+     baseProfile="full"
+     width="100%" height="100%"
+     xmlns="http://www.w3.org/2000/svg"
+     viewbox="0 0 1200 1000"
+     preserveAspectRation="true">
+
+  <% Settings.sea_regions.each do |region| %>
+    <g>
+      <rect width="<%= region.width %>" height="<%= region.height %>" x="<%= region.x %>" y="<%= region.y %>" fill="cornflowerblue" stroke="black" stroke-width="1px" />
+      <text x="<%= region['text-x'] %>" y="<%= region['text-y'] %>"><%= region.name %></text>
+    </g>
+  <% end %>
+
+  <% Settings.neutrals.each do |region| %>
+    <% fill = "sandybrown" %>
+    <% text_color = "black" %>
+    <g>
+      <rect width="<%= region.width || '100' %>" height="<%= region.height || '50' %>" x="<%= region.x %>" y="<%= region.y %>" fill="<%= fill %>" stroke="black" stroke-width="1px" />
+      <text x="<%= region['text-x'] %>" y="<%= region['text-y'] %>" fill="<%= text_color %>"><%= region.name %></text>
+    </g>
+  <% end %>
+
+  <% Settings.countries.each do |country| %>
+    <% fill = country[1].color %>
+    <% text_color = country[1]['font-color'] || "white" %>
+    <% country[1].regions.each do |region| %>
+      <g>
+        <rect width="<%= region.width || '100' %>" height="<%= region.height || '50' %>" x="<%= region.x %>" y="<%= region.y %>" fill="<%= fill %>" stroke="black" stroke-width="1px" />
+        <% if region.cx && region.cy %>
+          <circle cx="<%= region.cx %>" cy="<%= region.cy %>" r="10px" />
+        <% end %>
+        <% if factories.include? region.name %>
+          <text x="<%= region['text-x'] %>" y="<%= region['text-y'] %>" fill="<%= text_color %>">F-<%= region.name %></text>
+        <% elsif @step == "Factory" && current_country.name == country[1].name %>
+          <foreignObject x="<%= region['text-x'] %>" y="<%= region['text-y'] %>" fill="<%= text_color %>">
+            <%= link_to region.name, game_path(game: {id: @game, region: current_country.regions.find_by(name: region.name)}), method: :put %>
+          </foreignObject>
+        <% else %>
+        <text x="<%= region['text-x'] %>" y="<%= region['text-y'] %>" fill="<%= text_color %>"><%= region.name %></text>
+        <% end %>
+      </g>
+    <% end %>
+  <% end %>
+</svg>

@@ -1,3 +1,4 @@
+You have <%= @current_investor.money %> million. You're filthy rich!
 <%= render :partial => "svg/board", locals: { factories: @factories, step: @step, current_country: @game.current_country } %>
 <div class="row your-countries card">
   <strong class='header'>You control the governments of these countries</strong>
@@ -6,9 +7,9 @@
       <span><%= render :partial => "svg/" + @flags[country.name.to_sym] %></span>
       <span>
         <% if country == @game.current_country %>
-          <strong><%= country.name %>'s turn</strong>
+          <strong><%= country.money %> million - <%= country.name %>'s turn</strong>
         <% else %>
-          <%= country.name %>
+          <%= country.money %> million - <%= country.name %>
         <% end %>
       </span>
       <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
