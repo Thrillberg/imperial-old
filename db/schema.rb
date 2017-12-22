@@ -93,12 +93,12 @@ ActiveRecord::Schema.define(version: 20171202203636) do
     t.string "name"
     t.boolean "land", default: true
     t.bigint "country_id"
-    t.bigint "board_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "has_factory", default: false
-    t.index ["board_id"], name: "index_regions_on_board_id"
     t.index ["country_id"], name: "index_regions_on_country_id"
+    t.index ["game_id"], name: "index_regions_on_game_id"
   end
 
   create_table "users", force: :cascade do |t|

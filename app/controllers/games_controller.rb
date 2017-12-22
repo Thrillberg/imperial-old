@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
-    game = Game.new(pre_game_id: pre_game.id, board: Board.create)
+    game = Game.new(pre_game_id: pre_game.id)
     if game.save
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
       game.update(investors: investors, current_country: game.countries.find_by(name: "Austria-Hungary"))
@@ -17,7 +17,7 @@ class GamesController < ApplicationController
     @countries = @game.countries
     @investors = @game.investors
     @current_investor = @investors.find_by(user: current_user.id)
-    @factories = @game.board.regions.where(has_factory: true).map do |country|
+    @factories = @game.regions.where(has_factory: true).map do |country|
       country.name
     end
     @flags = {
