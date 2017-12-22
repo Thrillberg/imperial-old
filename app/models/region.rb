@@ -1,6 +1,6 @@
 class Region < ApplicationRecord
   has_many :pieces
-  belongs_to :board
+  belongs_to :game
   belongs_to :country, optional: true
 
   def possible_factory_type

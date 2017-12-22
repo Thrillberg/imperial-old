@@ -4,8 +4,8 @@ class Game < ApplicationRecord
   after_create :set_up_sea_regions
   after_create :set_up_factories
 
-  has_one :board, dependent: :destroy
   has_many :countries, dependent: :destroy
+  has_many :regions, dependent: :destroy
   belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
   has_many :users
   has_many :investors, dependent: :destroy
@@ -80,31 +80,31 @@ class Game < ApplicationRecord
     Settings.countries.each do |country|
       new_country = Country.create(game_id: self.id, name: country[1].name)
       country[1].regions.each do |region|
-        new_country.regions << Region.create(name: region.name, board: board)
+        new_country.regions << Region.create(game_id: self.id, name: region.name)
       end
     end
   end
 
   def set_up_neutral_regions
     Settings.neutrals.each do |region|
-      Region.create(name: region, board: board)
+      Region.create(game_id: self.id, name: region.name)
     end
   end
 
   def set_up_sea_regions
     Settings.sea_regions.each do |region|
-      Region.create(name: region, land: false, board: board)
+      Region.create(game_id: self.id, name: region.name, land: false)
     end
   end
 
   def set_up_factories
     Settings.starting_factories.armaments.each do |region_name|
-      region = board.regions.find_by(name: region_name)
+      region = regions.find_by(name: region_name)
       region.update(has_factory: true)
     end
 
     Settings.starting_factories.shipyards.each do |region_name|
-      region = board.regions.find_by(name: region_name)
+      region = regions.find_by(name: region_name)
       region.update(has_factory: true)
     end
   end
