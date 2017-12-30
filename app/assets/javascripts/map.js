@@ -1,11 +1,14 @@
 $(document).ready(function() {
-  function greeting(city) {
-    console.log(city)
-  }
-  
-  function clickable(city) {
-    document.getElementById(city).addEventListener('click', () => greeting(city));
+  var allFactories = document.getElementsByClassName("factory");
+  for (let factory of allFactories) {
+    checkForBuiltFactory(factory)
   }
 
-  ['Munich', 'Berlin', 'Hamburg', 'Danzig', 'Cologne', 'Vienna', 'Budapest', 'Trieste', 'Lemberg', 'Prague'].forEach(clickable)
+  function checkForBuiltFactory(factory) {
+    window.factories.forEach(function(builtFactory) {
+      if (factory.id === builtFactory) {
+        factory.classList.add("show");
+      };
+    });
+  }
 })

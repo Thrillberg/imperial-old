@@ -90,3 +90,11 @@
     width: 15px;
   }
 }
+
+.factory {
+  display: none;
+
+  &.show {
+    display: initial;
+  }
+}
