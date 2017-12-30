@@ -60,9 +60,6 @@ You have <%= @current_investor.money %> million. You're filthy rich!
               <% if region.pieces.length > 0 %>
                 <strong class="piece marker">X</strong>
                 <strong><%= region.name %></strong>
-              <% elsif region.has_factory %>
-                <strong class="factory marker">F</strong>
-                <strong><%= region.name %></strong>
               <% else %>
                 <span><%= region.name %></span>
               <% end %>

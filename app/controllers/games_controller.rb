@@ -18,7 +18,7 @@ class GamesController < ApplicationController
     @investors = @game.investors
     @current_investor = @investors.find_by(user: current_user.id)
     @factories = @game.regions.where(has_factory: true).map do |country|
-      country.name
+      "#{country.name.downcase}-factory"
     end
     @flags = {
       "Austria-Hungary": "austro_hungarian_flag",
