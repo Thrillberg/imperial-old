@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   root to: 'pre_games#index'
   resources :boards
   resources :pre_games
-  resources :games
+  resources :games do
+    member do
+      post :build_factory
+    end
+  end
   resources :pieces do
     member do
       put :move
