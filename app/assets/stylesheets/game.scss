@@ -98,3 +98,10 @@
     display: initial;
   }
 }
+
+svg path {
+  &.glow-on-hover:hover {
+    fill-opacity: 0.5;
+  }
+}
+

@@ -1,5 +1,5 @@
 You have <%= @current_investor.money %> million. You're filthy rich!
-<%= render :partial => "svg/board", locals: { factories: @factories, step: @step, current_country: @game.current_country } %>
+<%= render :partial => "svg/board", locals: { factories: @factories, regions: nil, game: nil } %>
 <div class="row your-countries card">
   <strong class='header'>You control the governments of these countries</strong>
   <% @current_investor.countries.each do |country| %>
@@ -22,7 +22,7 @@ You have <%= @current_investor.money %> million. You're filthy rich!
     <%= @game.current_country.name %> may do one of the following actions:
     <% @game.get_rondel.each do |step| %>
       <div class="row step">
-        <%= button_to(step, game_path(game: {id: @game, step: step}), method: :put, class: 'btn btn-primary') %>
+        <%= button_to(step, build_factory_game_path(@game), class: 'btn btn-primary') %>
         <% @countries.each do |country| %>
           <% if country.step == step %>
             <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
@@ -36,47 +36,3 @@ You have <%= @current_investor.money %> million. You're filthy rich!
     <span class="meeple"><%= render :partial => "svg/" + @meeples[@game.current_country.name.to_sym] %></span>
   <% end %>
 </div>
-
-<table>
-  <% @countries.each do |country| %>
-    <tr>
-      <td>
-        <strong><%= country.name %></strong>
-      </td>
-      <td>
-        <u>Home regions</u>
-      </td>
-      <td>
-        <u>Neighboring regions</u>
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>
-        <% country.regions.each do |region| %>
-          <tr>
-            <td></td>
-            <td>
-              <% if region.pieces.length > 0 %>
-                <strong class="piece marker">X</strong>
-                <strong><%= region.name %></strong>
-              <% else %>
-                <span><%= region.name %></span>
-              <% end %>
-            </td>
-            <td>
-              <% region.neighbors.each do |neighbor| %>
-                <% if neighbor.pieces.length > 0 %>
-                  <strong class="piece">X</strong>
-                  <strong><%= neighbor.name %>, </strong>
-                <% else %>
-                  <span><%= neighbor.name %>, </span>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>

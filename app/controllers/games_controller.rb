@@ -36,34 +36,27 @@ class GamesController < ApplicationController
       "Italy": "italy_meeple",
       "England": "uk_meeple"
     }
-    @step = params[:step]
   end
 
-  def update
-    @game = Game.find(clean_params[:id])
-    step = clean_params[:step]
-    region_id = clean_params[:region]
-    if step
-      take_step(@game, step)
-    elsif region_id
-      build_factory(@game, Region.find(region_id))
-      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+  def build_factory
+    @game = Game.find(params[:id])
+    if params[:region]
+      @game.regions.find_by(name: params[:region]).update(has_factory: true)
+      redirect_to game_path
+    else
+      @factories = @game.regions.where(has_factory: true).map do |country|
+        "#{country.name.downcase}-factory"
+      end
+      regions = []
+      Settings.countries.each do |country|
+        if country[1].name == @game.current_country.name
+          country[1].regions.each do |region|
+            regions << region.name unless @game.regions.find_by(name: region.name).has_factory
+          end
+        end
+      end
+      @eligible_regions = regions
+      render :build_factory
     end
-  end
-
-  def take_step(game, step)
-    @current_country = game.current_country
-    @current_country.take_turn(step)
-    @current_country.update(step: step)
-    redirect_to game_path(game: game, step: step)
-  end
-
-  def build_factory(game, region)
-    region.update(has_factory: true)
-    redirect_to :action =>:show, :game => game
-  end
-
-  def clean_params
-    params.require(:game).permit(:step, :region, :id)
   end
 end
