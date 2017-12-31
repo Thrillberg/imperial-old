@@ -20,6 +20,7 @@ class GamesController < ApplicationController
     @factories = @game.regions.where(has_factory: true).map do |country|
       "#{country.name.downcase}-factory"
     end
+    @available_steps = @game.get_rondel
     @flags = {
       "Austria-Hungary": "austro_hungarian_flag",
       "France": "french_flag",
@@ -42,6 +43,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
+      @game.update(current_country: Country.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
       redirect_to game_path
     else
       @factories = @game.regions.where(has_factory: true).map do |country|
