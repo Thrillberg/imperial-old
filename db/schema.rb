@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20171202203636) do
 
   create_table "pieces", force: :cascade do |t|
     t.boolean "passive", default: false
+    t.string "type"
     t.bigint "country_id"
     t.bigint "region_id"
     t.datetime "created_at", null: false

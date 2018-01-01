@@ -39,6 +39,14 @@ class GamesController < ApplicationController
     }
   end
 
+  def turn
+    if params[:step] == "Production"
+      redirect_to production_game_path
+    elsif params[:step] == "Factory"
+      redirect_to build_factory_game_path
+    end
+  end
+
   def build_factory
     @game = Game.find(params[:id])
     if params[:region]
@@ -61,5 +69,20 @@ class GamesController < ApplicationController
       @eligible_regions = regions
       render :build_factory
     end
+  end
+
+  def production
+    @game = Game.find(params[:id])
+    regions_with_factories = @game.current_country.regions.select { |region| region.has_factory }
+    regions_with_factories.each do |region|
+      if region.possible_factory_type == :armaments
+        Army.create(region: region, country: region.country)
+      else
+        Fleet.create(region: region, country: region.country)
+      end
+    end
+    @game.update(current_country: Country.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+
+    redirect_to game_path
   end
 end

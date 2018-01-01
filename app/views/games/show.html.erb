@@ -25,7 +25,7 @@ You have <%= @current_investor.money %> million. You're filthy rich!
     <% @available_steps.each do |step| %>
       <div class="row step">
         <% if step[:enabled] %>
-          <%= button_to(step[:name], build_factory_game_path(@game), class: 'btn btn-primary') %>
+          <%= button_to(step[:name], { action: "turn", step: step[:name] }, class: 'btn btn-primary') %>
         <% else %>
           <%= button_tag step[:name], class: 'btn btn-primary disabled', disabled: true  %>
         <% end %>
