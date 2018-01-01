@@ -1,20 +1,22 @@
 You have <%= @current_investor.money %> million. You're filthy rich!
 <%= render :partial => "svg/board", locals: { factories: @factories, regions: nil, game: nil } %>
-<div class="row your-countries card">
-  <strong class='header'>You control the governments of these countries</strong>
-  <% @current_investor.countries.each do |country| %>
-    <span class="row country">
-      <span><%= render :partial => "svg/" + @flags[country.name.to_sym] %></span>
-      <span>
-        <% if country == @game.current_country %>
-          <strong><%= country.money %> million - <%= country.name %>'s turn</strong>
-        <% else %>
-          <%= country.money %> million - <%= country.name %>
-        <% end %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-xs-12 your-countries card">
+    <strong class='header'>You control the governments of these countries</strong>
+    <% @current_investor.countries.each do |country| %>
+      <span class="row country">
+        <span><%= render :partial => "svg/" + @flags[country.name.to_sym] %></span>
+        <span>
+          <% if country == @game.current_country %>
+            <strong><%= country.money %> million - <%= country.name %>'s turn</strong>
+          <% else %>
+            <%= country.money %> million - <%= country.name %>
+          <% end %>
+        </span>
+        <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
       </span>
-      <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
-    </span>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
 <div>

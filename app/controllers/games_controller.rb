@@ -43,6 +43,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
+      @game.current_country.update(money: @game.current_country.money - 5)
       @game.update(current_country: Country.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
       redirect_to game_path
     else
