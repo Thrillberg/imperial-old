@@ -5,6 +5,7 @@ class DropArmyAndFleetCreatePiece < ActiveRecord::Migration[5.1]
 
     create_table :pieces do |t|
       t.boolean :passive, default: false
+      t.string :type
       t.belongs_to :country, index: true
       t.belongs_to :region, index: true
 
