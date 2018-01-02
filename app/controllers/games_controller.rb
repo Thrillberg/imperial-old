@@ -20,6 +20,10 @@ class GamesController < ApplicationController
     @factories = @game.regions.where(has_factory: true).map do |country|
       "#{country.name.downcase}-factory"
     end
+    pieces = @game.regions.select do |region|
+      region.pieces.length > 0
+    end
+    @pieces = pieces.map{ |region| region.name.downcase }
     @available_steps = @game.get_rondel
     @flags = {
       "Austria-Hungary": "austro_hungarian_flag",
