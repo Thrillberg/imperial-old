@@ -4,6 +4,11 @@ $(document).on('turbolinks:load', function() {
     checkForBuiltFactory(factory)
   }
 
+  var allPieces = document.getElementsByClassName("piece");
+  for (let piece of allPieces) {
+    checkForPiece(piece)
+  }
+
   Array.from(allFactories).map(getCurrentRegions);
 
   function getCurrentRegions(factory) {
@@ -30,6 +35,14 @@ $(document).on('turbolinks:load', function() {
       if (factory.id === builtFactory) {
         factory.classList.add("show");
       };
+    });
+  }
+
+  function checkForPiece(piece) {
+    window.pieces.forEach(function(existingPiece) {
+      if (piece.id.startsWith(existingPiece)) {
+        piece.classList.add("show");
+      }
     });
   }
 })
