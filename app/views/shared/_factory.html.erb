@@ -1,11 +1,11 @@
 <h1>Where do you want to build a factory?</h1>
 <% @current_country.regions.each do |region| %>
   <% unless region.has_factory %>
-    <% if region.possible_factory_type == :armaments %>
+    <% if region.factory_type == :armaments %>
       <div>
         <%= link_to region.name, game_path(game: {id: @game, region: region}), method: :put %> A
       </div>
-    <% elsif region.possible_factory_type == :shipyard %>
+    <% elsif region.factory_type == :shipyard %>
       <div>
         <%= link_to region.name, game_path(game: {id: @game, region: region}), method: :put %> S
       </div>
