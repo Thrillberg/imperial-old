@@ -3,7 +3,7 @@ class Region < ApplicationRecord
   belongs_to :game
   belongs_to :country, optional: true
 
-  def possible_factory_type
+  def factory_type
     if Settings.factories.armaments.include? name
       return :armaments
     elsif Settings.factories.shipyards.include? name

@@ -79,7 +79,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     regions_with_factories = @game.current_country.regions.select { |region| region.has_factory }
     regions_with_factories.each do |region|
-      if region.possible_factory_type == :armaments
+      if region.factory_type == :armaments
         Army.create(region: region, country: region.country)
       else
         Fleet.create(region: region, country: region.country)

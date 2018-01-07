@@ -6,16 +6,10 @@ class Game < ApplicationRecord
 
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
-  belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
-  has_many :users
   has_many :investors, dependent: :destroy
-  has_one :pre_game
+  belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
 
   def start
-    assign_bonds_to_investors
-  end
-
-  def assign_bonds_to_investors
     set_up_money
     set_up_bonds
   end
