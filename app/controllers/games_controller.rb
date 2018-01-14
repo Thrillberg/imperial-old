@@ -6,7 +6,7 @@ class GamesController < ApplicationController
     game = Game.new(pre_game_id: pre_game.id)
     if game.save
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
-      game.update(investors: investors, current_country: game.countries.find_by(name: "Austria-Hungary"))
+      game.update(investors: investors, current_country: game.countries.find_by(name: "austria-hungary"))
       game.start
       redirect_to game
     end
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @countries = @game.countries
     @investors = @game.investors
-    @current_investor = @investors.find_by(user: current_user.id)
+    @current_investor = @game.investors.find_by(user: current_user.id)
     @factories = @game.regions.where(has_factory: true).map do |country|
       "#{country.name.downcase}-factory"
     end
@@ -26,20 +26,12 @@ class GamesController < ApplicationController
     @pieces = pieces.map{ |region| region.name.downcase }
     @available_steps = @game.get_rondel
     @flags = {
-      "Austria-Hungary": "austro_hungarian_flag",
-      "France": "french_flag",
-      "Germany": "german_flag",
-      "Russia": "russian_flag",
-      "Italy": "italian_flag",
-      "England": "uk_flag"
-    }
-    @meeples = {
-      "Austria-Hungary": "austria_hungary_meeple",
-      "France": "france_meeple",
-      "Germany": "germany_meeple",
-      "Russia": "russia_meeple",
-      "Italy": "italy_meeple",
-      "England": "uk_meeple"
+      "austria-hungary": "austro_hungarian_flag",
+      "france": "french_flag",
+      "germany": "german_flag",
+      "russia": "russian_flag",
+      "italy": "italian_flag",
+      "england": "uk_flag"
     }
   end
 
@@ -53,6 +45,10 @@ class GamesController < ApplicationController
 
   def build_factory
     @game = Game.find(params[:id])
+    pieces = @game.regions.select do |region|
+      region.pieces.length > 0
+    end
+    @pieces = pieces.map{ |region| region.name.downcase }
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
       @game.current_country.update(money: @game.current_country.money - 5)

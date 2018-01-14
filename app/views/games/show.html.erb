@@ -13,7 +13,7 @@ You have <%= @current_investor.money %> million. You're filthy rich!
             <%= country.money %> million - <%= country.name %>
           <% end %>
         </span>
-        <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
+        <span class="meeple"><%= render :partial => "svg/" + country.name + "_meeple" %></span>
       </span>
     <% end %>
   </div>
@@ -39,6 +39,6 @@ You have <%= @current_investor.money %> million. You're filthy rich!
     <% end %>
   <% else %>
     <div>It is <%= @game.current_country.name %>'s turn!</div>
-    <span class="meeple"><%= render :partial => "svg/" + @meeples[@game.current_country.name.to_sym] %></span>
+    <span class="meeple"><%= render :partial => "svg/" + @game.current_country.name + "_meeple" %></span>
   <% end %>
 </div>

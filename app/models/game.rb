@@ -7,7 +7,7 @@ class Game < ApplicationRecord
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
   has_many :investors, dependent: :destroy
-  belongs_to :current_country, :class_name => "Country", :foreign_key => "country_id", optional: true
+  has_one :current_country, :class_name => "Country", :foreign_key => "game_id", dependent: :destroy
 
   def start
     set_up_money

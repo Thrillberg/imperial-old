@@ -1,228 +1,59 @@
 countries:
   england:
-    name: England
+    name: england
     color: red
     regions:
-      - name: Dublin
-        x: 10
-        y: 80
-        text-x: 30
-        text-y: 100
-        cx: 60
-        cy: 130
-      - name: Edinburgh
-        x: 160
-        y: 80
-        text-x: 180
-        text-y: 100
-        cx: 260
-        cy: 105
-      - name: Liverpool
-        x: 120
-        y: 130
-        text-x: 140
-        text-y: 150
-        cx: 120
-        cy: 155
-      - name: Sheffield
-        x: 220
-        y: 130
-        text-x: 240
-        text-y: 150
-        cx: 320
-        cy: 155
-      - name: London
-        x: 160
-        y: 180
-        text-x: 180
-        text-y: 200
-        cx: 210
-        cy: 230
+      - name: dublin
+      - name: edinburgh
+      - name: liverpool
+      - name: sheffield
+      - name: london
   france:
-    name: France
+    name: france
     color: blue
     regions:
-      - name: Brest
-        x: 150
-        y: 275
-        text-x: 170
-        text-y: 295
-        cx: 180
-        cy: 275
-      - name: Paris
-        x: 250
-        y: 260
-        text-x: 270
-        text-y: 280
-        height: 30
-      - name: Dijon
-        x: 250
-        y: 290
-        text-x: 270
-        text-y: 310
-        height: 70
-      - name: Bordeaux
-        x: 150
-        y: 325
-        text-x: 170
-        text-y: 345
-        cx: 150
-        cy: 350
-        height: 85
-      - name: Marseille
-        x: 250
-        y: 360
-        text-x: 270
-        text-y: 380
+      - name: brest
+      - name: paris
+      - name: dijon
+      - name: bordeaux
+      - name: marseille
   germany:
-    name: Germany
+    name: germany
     color: black
     regions:
-      - name: Hamburg
-        x: 420
-        y: 210
-        text-x: 440
-        text-y: 230
-      - name: Berlin
-        x: 520
-        y: 210
-        text-x: 540
-        text-y: 230
-        height: 125
-      - name: Danzig
-        x: 620
-        y: 210
-        text-x: 640
-        text-y: 230
-        height: 125
-      - name: Cologne
-        x: 390
-        y: 260
-        text-x: 410
-        text-y: 280
-        width: 130
-      - name: Munich
-        x: 350
-        y: 310
-        text-x: 370
-        text-y: 330
-        width: 170
+      - name: hamburg
+      - name: berlin
+      - name: danzig
+      - name: cologne
+      - name: munich
   russia:
-    name: Russia
+    name: russia
     color: purple
     regions:
-      - name: St. Petersburg
-        x: 720
-        y: 0
-        text-x: 740
-        text-y: 20
-        height: 230
-      - name: Moscow
-        x: 820
-        y: 0
-        text-x: 840
-        text-y: 20
-        height: 270
-        width: 205
-      - name: Warsaw
-        x: 720
-        y: 230
-        text-x: 740
-        text-y: 250
-        height: 105
-      - name: Kiev
-        x: 820
-        y: 270
-        text-x: 840
-        text-y: 290
-        height: 65
-        width: 205
-      - name: Odessa
-        x: 860
-        y: 335
-        text-x: 880
-        text-y: 355
-        height: 150
-        width: 165
+      - name: st_petersburg
+      - name: moscow
+      - name: warsaw
+      - name: kiev
+      - name: odessa
   austria_hungary:
-    name: Austria-Hungary
+    name: austria_hungary
     color: yellow
     font-color: black
     regions:
-      - name: Prague
-        x: 520
-        y: 335
-        text-x: 540
-        text-y: 355
-        height: 50
-        width: 240
-      - name: Lemberg
-        x: 760
-        y: 335
-        text-x: 780
-        text-y: 355
-        height: 50
-        width: 85
-      - name: Vienna
-        x: 420
-        y: 360
-        text-x: 440
-        text-y: 380
-        height: 50
-        width: 100
-      - name: Budapest
-        x: 520
-        y: 385
-        text-x: 540
-        text-y: 405
-        height: 100
-        width: 325
-      - name: Trieste
-        x: 460
-        y: 410
-        text-x: 480
-        text-y: 430
-        height: 100
-        width: 60
+      - name: prague
+      - name: lemberg
+      - name: vienna
+      - name: budapest
+      - name: trieste
   italy:
-    name: Italy
+    name: italy
     color: green
     regions:
-      - name: Genoa
-        x: 320
-        y: 410
-        text-x: 340
-        text-y: 430
-        height: 65
-        width: 80
-      - name: Venice
-        x: 400
-        y: 410
-        text-x: 420
-        text-y: 430
-        height: 115
-        width: 60
-      - name: Florence
-        x: 340
-        y: 475
-        text-x: 360
-        text-y: 495
-        height: 50
-        width: 60
-      - name: Rome
-        x: 360
-        y: 525
-        text-x: 380
-        text-y: 545
-        height: 60
-        width: 80
-      - name: Naples
-        x: 380
-        y: 585
-        text-x: 400
-        text-y: 605
-        height: 100
-        width: 60
+      - name: genoa
+      - name: venice
+      - name: florence
+      - name: rome
+      - name: naples
 neutrals:
   - name: Spain
     x: 100
@@ -442,9 +273,9 @@ neighbors:
   Ionian Sea: []
   Black Sea: []
 starting_factories:
-  armaments: ["Paris", "Berlin", "Moscow", "Vienna", "Budapest", "Rome"]
-  shipyards: ["Liverpool", "London", "Hamburg", "Bordeaux", "Naples", "Odessa"]
+  armaments: ["paris", "berlin", "moscow", "vienna", "budapest", "rome"]
+  shipyards: ["liverpool", "london", "hamburg", "bordeaux", "naples", "odessa"]
 factories:
-  armaments: ["Sheffield", "Cologne", "Munich", "Warsaw", "Kiev", "Lemberg", "Prague", "Dijon", "Florence", "Paris", "Berlin", "Moscow", "Vienna", "Budapest", "Rome"]
-  shipyards: ["Edinburgh", "Dublin", "Danzig", "St. Petersburg", "Brest", "Marseille", "Genoa", "Venice", "Trieste", "Liverpool", "London", "Hamburg", "Bordeaux", "Naples", "Odessa"]
+  armaments: ["sheffield", "cologne", "munich", "warsaw", "kiev", "lemberg", "prague", "dijon", "florence", "paris", "berlin", "moscow", "vienna", "budapest", "rome"]
+  shipyards: ["edinburgh", "dublin", "danzig", "st_petersburg", "brest", "marseille", "genoa", "venice", "trieste", "liverpool", "london", "hamburg", "bordeaux", "naples", "odessa"]
 
