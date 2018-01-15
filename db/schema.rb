@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20171202203636) do
     t.bigint "pre_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "country_id"
+    t.integer "current_country_id"
     t.index ["pre_game_id"], name: "index_games_on_pre_game_id"
   end
 

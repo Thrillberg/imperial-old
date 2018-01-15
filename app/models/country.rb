@@ -2,7 +2,7 @@ class Country < ApplicationRecord
   has_many :armies, dependent: :destroy
   has_many :regions, dependent: :destroy
   has_many :bonds
-  belongs_to :game
+  belongs_to :game, optional: true
 
   def owner
     hash = Hash.new(0)
