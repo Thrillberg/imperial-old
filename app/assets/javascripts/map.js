@@ -40,7 +40,11 @@ $(document).on('turbolinks:load', function() {
 
   function checkForPiece(piece) {
     window.pieces.forEach(function(existingPiece) {
-      if (piece.id.startsWith(existingPiece.name)) {
+      if (piece.id.startsWith(existingPiece.region_name)) {
+        piece.getElementsByTagName("ellipse")[0].setAttribute("style", "fill: " + existingPiece.color +"; stroke: black; stroke-width: 25px;")
+        var count = parseInt(piece.getElementsByTagName("tspan")[0].textContent);
+        count += 1;
+        piece.getElementsByTagName("tspan")[0].textContent = count;
         piece.classList.add("show");
       }
     });
