@@ -73,6 +73,15 @@ class Game < ApplicationRecord
     }
   end
 
+  def regions_with_pieces
+    regions_with_pieces = regions.map do |region|
+      if region.pieces.length > 0
+        region
+      end
+    end
+    regions_with_pieces.compact
+  end
+
   private
 
   def set_up_countries_and_regions

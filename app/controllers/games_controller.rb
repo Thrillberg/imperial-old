@@ -18,12 +18,9 @@ class GamesController < ApplicationController
     @investors = @game.investors
     @current_investor = @game.investors.find_by(user: current_user.id)
     @factories = @game.regions.where(has_factory: true).map do |country|
-      "#{country.name.downcase}-factory"
+      "#{country.name}-factory"
     end
-    pieces = @game.regions.select do |region|
-      region.pieces.length > 0
-    end
-    @pieces = pieces.map{ |region| region.name.downcase }
+    @pieces = @game.regions_with_pieces 
     @available_steps = @game.get_rondel
   end
 
