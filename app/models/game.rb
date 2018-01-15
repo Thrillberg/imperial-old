@@ -64,12 +64,12 @@ class Game < ApplicationRecord
 
   def next_country
     {
-      "Austria-Hungary": "Italy",
-      "Italy": "France",
-      "France": "England",
-      "England": "Germany",
-      "Germany": "Russia",
-      "Russia": "Austria-Hungary"
+      "austria_hungary": "italy",
+      "italy": "france",
+      "france": "england",
+      "england": "germany",
+      "germany": "russia",
+      "russia": "austria_hungary"
     }
   end
 
