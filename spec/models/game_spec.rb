@@ -4,7 +4,7 @@ describe Game do
   it { should have_many :countries }
   it { should have_many :regions }
   it { should have_many :investors }
-  it { should have_one :current_country }
+  it { should belong_to :current_country }
 
   describe 'callbacks' do
     let(:game) { build(:game) }

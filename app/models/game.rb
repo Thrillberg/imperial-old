@@ -7,7 +7,7 @@ class Game < ApplicationRecord
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
   has_many :investors, dependent: :destroy
-  has_one :current_country, :class_name => "Country", :foreign_key => "game_id", dependent: :destroy
+  belongs_to :current_country, :class_name => "Country", :foreign_key => "current_country_id", optional: true
 
   def start
     set_up_money
@@ -78,6 +78,7 @@ class Game < ApplicationRecord
   def set_up_countries_and_regions
     Settings.countries.each do |country|
       new_country = Country.create(game_id: self.id, name: country[1].name)
+      # self.update_attribute(current_country, new_country)
       country[1].regions.each do |region|
         new_country.regions << Region.create(game_id: self.id, name: region.name)
       end

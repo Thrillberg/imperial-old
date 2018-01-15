@@ -6,7 +6,7 @@ class GamesController < ApplicationController
     game = Game.new(pre_game_id: pre_game.id)
     if game.save
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
-      game.update(investors: investors, current_country: game.countries.find_by(name: "austria-hungary"))
+      game.update(investors: investors, current_country: game.countries.find_by(name: "austria_hungary"))
       game.start
       redirect_to game
     end
@@ -25,14 +25,6 @@ class GamesController < ApplicationController
     end
     @pieces = pieces.map{ |region| region.name.downcase }
     @available_steps = @game.get_rondel
-    @flags = {
-      "austria-hungary": "austro_hungarian_flag",
-      "france": "french_flag",
-      "germany": "german_flag",
-      "russia": "russian_flag",
-      "italy": "italian_flag",
-      "england": "uk_flag"
-    }
   end
 
   def turn
