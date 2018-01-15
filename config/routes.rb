@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       post :turn
       get :production
       get :build_factory
+      post :build_factory
     end
   end
   resources :pieces do
