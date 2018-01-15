@@ -40,7 +40,7 @@ $(document).on('turbolinks:load', function() {
 
   function checkForPiece(piece) {
     window.pieces.forEach(function(existingPiece) {
-      if (piece.id.startsWith(existingPiece)) {
+      if (piece.id.startsWith(existingPiece.name)) {
         piece.classList.add("show");
       }
     });
