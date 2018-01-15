@@ -76,10 +76,17 @@ class Game < ApplicationRecord
   def regions_with_pieces
     regions_with_pieces = regions.map do |region|
       if region.pieces.length > 0
-        region
+        region.pieces.map do |piece|
+          {
+            region_name: piece.region.name,
+            country_name: piece.country.name,
+            type: piece.type,
+            color: Settings.countries[piece.country.name].color
+          }
+        end
       end
     end
-    regions_with_pieces.compact
+    regions_with_pieces.compact.flatten
   end
 
   private
@@ -87,7 +94,6 @@ class Game < ApplicationRecord
   def set_up_countries_and_regions
     Settings.countries.each do |country|
       new_country = Country.create(game_id: self.id, name: country[1].name)
-      # self.update_attribute(current_country, new_country)
       country[1].regions.each do |region|
         new_country.regions << Region.create(game_id: self.id, name: region.name)
       end

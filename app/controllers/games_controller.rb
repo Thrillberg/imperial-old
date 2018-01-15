@@ -20,7 +20,7 @@ class GamesController < ApplicationController
     @factories = @game.regions.where(has_factory: true).map do |country|
       "#{country.name}-factory"
     end
-    @pieces = @game.regions_with_pieces 
+    @pieces = @game.regions_with_pieces
     @available_steps = @game.get_rondel
   end
 
