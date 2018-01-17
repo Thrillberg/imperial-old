@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
-  after_create :set_up_countries_and_regions
-  after_create :set_up_neutral_regions
-  after_create :set_up_sea_regions
-  after_create :set_up_factories
+  after_save :set_up_countries_and_regions
+  after_save :set_up_neutral_regions
+  after_save :set_up_sea_regions
+  after_save :set_up_factories
 
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
