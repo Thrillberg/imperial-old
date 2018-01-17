@@ -6,7 +6,7 @@ FactoryBot.define do
         investors_count 2
       end
 
-      after(:create) do |game, evaluator|
+      after(:build) do |game, evaluator|
         create_list(:investor, evaluator.investors_count, game: game)
       end
     end
