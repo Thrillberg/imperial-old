@@ -41,7 +41,7 @@ class GamesController < ApplicationController
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
       @game.current_country.update(money: @game.current_country.money - 5)
-      @game.update(current_country: Country.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
       redirect_to game_path
     else
       @factories = @game.regions.where(has_factory: true).map do |country|
@@ -70,7 +70,7 @@ class GamesController < ApplicationController
         Fleet.create(region: region, country: region.country)
       end
     end
-    @game.update(current_country: Country.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+    @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
 
     redirect_to game_path
   end

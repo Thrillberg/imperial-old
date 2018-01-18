@@ -66,7 +66,8 @@ describe Game do
         region_name: region_name,
         country_name: country_name,
         type: "Army",
-        color: "yellow"
+        color: "#CCCC00",
+        font_color: "black"
       }]
     end
     

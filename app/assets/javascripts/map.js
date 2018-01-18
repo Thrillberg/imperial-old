@@ -41,10 +41,17 @@ $(document).on('turbolinks:load', function() {
   function checkForPiece(piece) {
     window.pieces.forEach(function(existingPiece) {
       if (piece.id.startsWith(existingPiece.region_name)) {
-        piece.getElementsByTagName("ellipse")[0].setAttribute("style", "fill: " + existingPiece.color +"; stroke: black; stroke-width: 25px;")
-        var count = parseInt(piece.getElementsByTagName("tspan")[0].textContent);
+        var ellipse = piece.getElementsByTagName("ellipse")[0];
+        ellipse.style.fill = existingPiece.color;
+        ellipse.style.stroke = existingPiece.font_color;
+        ellipse.style.strokeWidth = '25px';
+
+        var number = piece.getElementsByTagName("tspan")[0];
+        number.style.fill = existingPiece.font_color;
+
+        var count = parseInt(number.textContent);
         count += 1;
-        piece.getElementsByTagName("tspan")[0].textContent = count;
+        number.textContent = count;
         piece.classList.add("show");
       }
     });
