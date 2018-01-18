@@ -34,13 +34,48 @@ describe Game do
       expect(Bond.count).to eq(54)
     end
 
-    it 'distributed initial bonds' do
+    it 'distributes initial bonds' do
       game_with_investors.set_up_money
       game_with_investors.create_bonds
       game_with_investors.distribute_initial_bonds
       game_with_investors.investors.each do |investor|
         expect(investor.money).to eq(8)
       end
+    end
+  end
+
+  describe 'get_rondel' do
+    let(:game_with_investors) { build(:game_with_investors) }
+    let(:steps) { [{first: "step"}, {second: "step"}] }
+
+    it 'returns steps' do
+      game_with_investors.start
+      game_with_investors.update(current_country: Country.first)
+      expect(TurnStep).to receive_message_chain(:new, :get_steps).and_return(steps)
+      expect(game_with_investors.get_rondel).to eq(steps)
+    end
+  end
+
+  describe 'regions_with_pieces' do
+    let(:game_with_investors) { build(:game_with_investors) }
+    let(:army) { build(:army) }
+    let(:region_name) { "vienna" }
+    let(:country_name) { "austria_hungary" }
+    let(:expected_pieces) do
+      [{
+        region_name: region_name,
+        country_name: country_name,
+        type: "Army",
+        color: "yellow"
+      }]
+    end
+    
+    it 'returns regions with pieces' do
+      game_with_investors.start
+      region = Region.find_by(name: region_name)
+      country = Country.find_by(name: country_name)
+      army.update(region: region, country: country)
+      expect(game_with_investors.regions_with_pieces).to eq(expected_pieces)
     end
   end
 end
