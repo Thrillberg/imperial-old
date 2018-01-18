@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
-  after_save :set_up_countries_and_regions
-  after_save :set_up_neutral_regions
-  after_save :set_up_sea_regions
-  after_save :set_up_factories
+  after_create :set_up_countries_and_regions
+  after_create :set_up_neutral_regions
+  after_create :set_up_sea_regions
+  after_create :set_up_factories
 
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
@@ -81,7 +81,8 @@ class Game < ApplicationRecord
             region_name: piece.region.name,
             country_name: piece.country.name,
             type: piece.type,
-            color: Settings.countries[piece.country.name].color
+            color: Settings.countries[piece.country.name].color,
+            font_color: Settings.countries[piece.country.name].font_color
           }
         end
       end
