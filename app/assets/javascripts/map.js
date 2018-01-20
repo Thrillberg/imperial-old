@@ -41,10 +41,10 @@ $(document).on('turbolinks:load', function() {
   function checkForPiece(piece) {
     window.pieces.forEach(function(existingPiece) {
       if (piece.id.startsWith(existingPiece.region_name)) {
-        var ellipse = piece.getElementsByTagName("ellipse")[0];
-        ellipse.style.fill = existingPiece.color;
-        ellipse.style.stroke = existingPiece.font_color;
-        ellipse.style.strokeWidth = '25px';
+        var shape = piece.getElementsByTagName("rect")[0] || piece.getElementsByTagName("ellipse")[0];
+        shape.style.fill = existingPiece.color;
+        shape.style.stroke = existingPiece.font_color;
+        shape.style.strokeWidth = '25px';
 
         var number = piece.getElementsByTagName("tspan")[0];
         number.style.fill = existingPiece.font_color;
