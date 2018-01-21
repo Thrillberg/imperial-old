@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get :production
       get :build_factory
       post :build_factory
+      get :import
+      post :import
     end
   end
   resources :pieces do

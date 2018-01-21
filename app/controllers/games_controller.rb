@@ -29,6 +29,8 @@ class GamesController < ApplicationController
       redirect_to production_game_path
     elsif params[:step] == "Factory"
       redirect_to build_factory_game_path
+    elsif params[:step] == "Import"
+      redirect_to import_game_path
     end
   end
 
@@ -73,5 +75,27 @@ class GamesController < ApplicationController
     @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
 
     redirect_to game_path
+  end
+
+  def import
+    @game = Game.find(params[:id])
+    if params[:region]
+      region = @game.regions.find_by(name: params[:region])
+      Army.create(region: region, country: region.country)
+      owner = region.country.owner
+      owner.update(money: owner.money - 3)
+
+      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+
+      redirect_to game_path
+    else
+      @pieces = @game.regions_with_pieces
+      @eligible_regions = @game.current_country.regions.map(&:name)
+      @factories = @game.regions.where(has_factory: true).map do |country|
+        "#{country.name.downcase}-factory"
+      end
+
+      render :import
+    end
   end
 end
