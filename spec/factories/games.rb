@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :game do
-
     factory :game_with_investors do
       transient do
         investors_count 2

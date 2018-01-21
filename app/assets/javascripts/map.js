@@ -17,7 +17,16 @@ $(document).on('turbolinks:load', function() {
         if (factory.id === region.toLowerCase() + "-factory") {
           var svgRegion = document.getElementById(region);
           svgRegion.classList.add("glow-on-hover");
-          svgRegion.addEventListener("click", () => { buildFactory(svgRegion) })
+          switch (window.turn) {
+            case 'build-factory':
+              svgRegion.addEventListener("click", () => { buildFactory(svgRegion) });
+              break;
+            case 'import':
+              svgRegion.addEventListener("click", () => { importPiece(svgRegion) });
+              break;
+            default:
+              break;
+          }
         }
       })
     }
@@ -26,6 +35,13 @@ $(document).on('turbolinks:load', function() {
   function buildFactory(region) {
     $.ajax({
       url: '/games/' + window.game + '/build_factory?region=' + region.id,
+      method: 'POST'
+    })
+  }
+
+  function importPiece(region) {
+    $.ajax({
+      url: '/games/' + window.game + '/import?region=' + region.id,
       method: 'POST'
     })
   }
