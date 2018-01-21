@@ -5,7 +5,7 @@ You have <%= @current_investor.money %> million. You're filthy rich!
     <strong class='header'>You control the governments of these countries</strong>
     <% @current_investor.countries.each do |country| %>
       <span class="row country">
-        <span><%= render :partial => "svg/" + @game.current_country.name + "_flag" %></span>
+        <span><%= render :partial => "svg/" + country.name + "_flag" %></span>
         <span>
           <% if country == @game.current_country %>
             <strong><%= country.money %> million - <%= country.name %>'s turn</strong>
