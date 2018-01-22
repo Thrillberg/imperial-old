@@ -84,10 +84,17 @@ class GamesController < ApplicationController
       Army.create(region: region, country: region.country)
       owner = region.country.owner
       owner.update(money: owner.money - 3)
+      @import_count = params[:import_count]
 
-      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+      if @import_count.to_i >= 3
+        @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+        session[:import_count] = 0
 
-      redirect_to game_path
+        redirect_to game_path and return
+      end
+
+      session[:import_count] = @import_count
+      redirect_back(fallback_location: game_path)
     else
       @pieces = @game.regions_with_pieces
       @eligible_regions = @game.current_country.regions.map(&:name)
