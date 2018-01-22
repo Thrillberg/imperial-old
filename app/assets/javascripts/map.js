@@ -22,7 +22,7 @@ $(document).on('turbolinks:load', function() {
               svgRegion.addEventListener("click", () => { buildFactory(svgRegion) });
               break;
             case 'import':
-              svgRegion.addEventListener("click", () => { importPiece(svgRegion) });
+              svgRegion.addEventListener("click", () => { importPiece(svgRegion, window.importCount) });
               break;
             default:
               break;
@@ -39,10 +39,13 @@ $(document).on('turbolinks:load', function() {
     })
   }
 
-  function importPiece(region) {
+  function importPiece(region, importCount) {
     $.ajax({
       url: '/games/' + window.game + '/import?region=' + region.id,
-      method: 'POST'
+      method: 'POST',
+      data: {
+        import_count: parseInt(importCount) + 1
+      }
     })
   }
 

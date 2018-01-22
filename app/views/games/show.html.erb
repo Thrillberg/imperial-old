@@ -1,5 +1,6 @@
-You have <%= @current_investor.money %> million. You're filthy rich!
-<%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil } %>
+<h1>It is <%= @game.current_country.name %>’s turn</h1>
+<h2>You are an investor with <%= @current_investor.money %> million.</h2>
+<%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil } %>
 <div class="row">
   <div class="col-lg-6 offset-lg-3 col-xs-12 your-countries card">
     <strong class='header'>You control the governments of these countries</strong>
