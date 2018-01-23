@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function() {
           var svgRegion = document.getElementById(region);
           svgRegion.classList.add("glow-on-hover");
           switch (window.turn) {
-            case 'build-factory':
+            case 'build_factory':
               svgRegion.addEventListener("click", () => { buildFactory(svgRegion) });
               break;
             case 'import':

@@ -82,8 +82,7 @@ class GamesController < ApplicationController
     if params[:region]
       region = @game.regions.find_by(name: params[:region])
       Army.create(region: region, country: region.country)
-      owner = region.country.owner
-      owner.update(money: owner.money - 3)
+      region.country.update(money: region.country.money - 1)
       @import_count = params[:import_count]
 
       if @import_count.to_i >= 3
