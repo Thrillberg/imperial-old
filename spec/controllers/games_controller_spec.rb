@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe GamesController do
   let(:user) { create(:user) }
-  let(:country) { create(:country, name: 'country') }
+  let(:country) { create(:country, name: 'country', money: 9) }
   let(:game) { create(:game, current_country: country) }
   let(:region) { create(:region, name: 'region', country: country, game: game) }
 
@@ -17,12 +17,10 @@ describe GamesController do
       }.to change{Piece.count}.by(1)
     end
 
-    it 'deducts 3 from the investor’s money' do
-      region.country.owner.update(money: 3)
-
+    it 'deducts 1 from the country’s money' do
       post :import, params: { id: game.id, region: region.name }
-
-      expect(region.country.owner.money).to eq(0)
+      country.reload
+      expect(country.money).to eq(8)
     end
   end
 end
