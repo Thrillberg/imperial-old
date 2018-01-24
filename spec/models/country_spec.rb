@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Country do
-  it { should have_many :armies }
+  it { should have_many :pieces }
   it { should have_many :regions }
   it { should have_many :bonds }
   it { should belong_to :game }

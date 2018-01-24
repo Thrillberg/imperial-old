@@ -31,6 +31,8 @@ class GamesController < ApplicationController
       redirect_to build_factory_game_path
     elsif params[:step] == "Import"
       redirect_to import_game_path
+    elsif params[:step] = "Maneuver"
+      redirect_to maneuver_game_path
     end
   end
 
@@ -102,6 +104,39 @@ class GamesController < ApplicationController
       end
 
       render :import
+    end
+  end
+
+  def maneuver
+    @game = Game.find(params[:id])
+    if (params[:origin_region])
+      redirect_to maneuver_destination_game_path(origin_region: params[:origin_region])
+    else
+      @pieces = @game.regions_with_pieces
+      @eligible_regions = Region.joins(:pieces).merge(@game.current_country.pieces).map(&:name)
+      @factories = @game.regions.where(has_factory: true).map do |country|
+        "#{country.name.downcase}-factory"
+      end
+    end
+  end
+
+  def maneuver_destination
+    @game = Game.find(params[:id])
+    if params[:destination_region]
+      origin_region = @game.regions.find_by(name: params[:origin_region])
+      destination_region = @game.regions.find_by(name: params[:destination_region])
+      piece = origin_region.pieces.where(country: @game.current_country).take
+      piece.update(region: destination_region)
+      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+
+      redirect_to game_path
+    elsif params[:origin_region]
+      @pieces = @game.regions_with_pieces
+      @factories = @game.regions.where(has_factory: true).map do |country|
+        "#{country.name.downcase}-factory"
+      end
+      @eligible_regions = Settings.neighbors[params[:origin_region]]
+      session[:origin_region] = params[:origin_region]
     end
   end
 end

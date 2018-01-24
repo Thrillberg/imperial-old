@@ -1,0 +1,2 @@
+<h1>Where would you like this piece to go?</h1>
+<%= render :partial => "svg/board", locals: { factories: @factories, regions: @eligible_regions, game: @game.id, pieces: @pieces, turn: 'maneuver-destination', import_count: nil, origin_region: session[:origin_region] } %>
