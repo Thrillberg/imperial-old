@@ -13,6 +13,10 @@ Rails.application.routes.draw do
       post :build_factory
       get :import
       post :import
+      get :maneuver
+      post :maneuver
+      get :maneuver_destination
+      post :maneuver_destination
     end
   end
   resources :pieces do

@@ -24,6 +24,11 @@ $(document).on('turbolinks:load', function() {
             case 'import':
               svgRegion.addEventListener("click", () => { importPiece(svgRegion, window.importCount) });
               break;
+            case 'maneuver':
+              svgRegion.addEventListener("click", () => { movePieceFrom(svgRegion) });
+              break;
+            case 'maneuver-destination':
+              svgRegion.addEventListener("click", () => { movePieceTo(svgRegion) });
             default:
               break;
           }
@@ -36,7 +41,7 @@ $(document).on('turbolinks:load', function() {
     $.ajax({
       url: '/games/' + window.game + '/build_factory?region=' + region.id,
       method: 'POST'
-    })
+    });
   }
 
   function importPiece(region, importCount) {
@@ -46,7 +51,24 @@ $(document).on('turbolinks:load', function() {
       data: {
         import_count: parseInt(importCount) + 1
       }
-    })
+    });
+  }
+
+  function movePieceFrom(region) {
+    $.ajax({
+      url: '/games/' + window.game + '/maneuver?origin_region=' + region.id,
+      method: 'POST'
+    });
+  }
+
+  function movePieceTo(destination) {
+    $.ajax({
+      url: '/games/' + window.game + '/maneuver_destination?destination_region=' + destination.id,
+      method: 'POST',
+      data: {
+        origin_region: originRegion
+      }
+    });
   }
 
   function checkForBuiltFactory(factory) {
