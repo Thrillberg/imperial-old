@@ -1,3 +1,3 @@
 <h1>Where would you like to import armies?</h1>
 You have <%= (3 - session[:import_count].to_i) %> more imports left and <%= @game.current_country.money %> monies left!
-<%= render :partial => "svg/board", locals: { factories: @factories, regions: @eligible_regions, game: @game.id, pieces: @pieces, turn: 'import', import_count: session[:import_count] || 0 } %>
+<%= render :partial => "svg/board", locals: { factories: @factories, regions: @eligible_regions, game: @game.id, pieces: @pieces, turn: 'import', import_count: session[:import_count] || 0, origin_region: nil } %>
