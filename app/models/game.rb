@@ -80,7 +80,7 @@ class Game < ApplicationRecord
           {
             region_name: piece.region.name,
             country_name: piece.country.name,
-            type: piece.type,
+            type: piece.type.downcase,
             color: Settings.countries[piece.country.name].color,
             font_color: Settings.countries[piece.country.name].font_color
           }
