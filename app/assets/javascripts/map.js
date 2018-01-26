@@ -81,8 +81,13 @@ $(document).on('turbolinks:load', function() {
 
   function checkForPiece(piece) {
     window.pieces.forEach(function(existingPiece) {
-      if (piece.id.startsWith(existingPiece.region_name)) {
-        var shape = piece.getElementsByTagName("rect")[0] || piece.getElementsByTagName("ellipse")[0];
+      if (piece.id == `${existingPiece.region_name}-${existingPiece.type}`) {
+        if (existingPiece.type == "fleet") {
+          var shape = piece.getElementsByTagName("ellipse")[0];
+        } else {
+          var shape = piece.getElementsByTagName("rect")[0];
+        };
+
         shape.style.fill = existingPiece.color;
         shape.style.stroke = existingPiece.font_color;
         shape.style.strokeWidth = '25px';

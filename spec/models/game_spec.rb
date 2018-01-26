@@ -65,7 +65,7 @@ describe Game do
       [{
         region_name: region_name,
         country_name: country_name,
-        type: "Army",
+        type: "army",
         color: "#CCCC00",
         font_color: "black"
       }]
