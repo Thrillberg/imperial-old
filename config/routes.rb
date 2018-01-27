@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :pre_games
   resources :games do
     member do
+      post :next_turn
       post :turn
       get :production
       get :build_factory
