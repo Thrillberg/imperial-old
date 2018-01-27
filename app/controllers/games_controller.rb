@@ -24,12 +24,6 @@ class GamesController < ApplicationController
     @available_steps = @game.get_rondel
   end
 
-  def next_turn
-    @game = Game.find(params[:id])
-    @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
-    redirect_to game_path
-  end
-
   def turn
     if params[:step] == "Production"
       redirect_to production_game_path
@@ -51,7 +45,7 @@ class GamesController < ApplicationController
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
       @game.current_country.update(money: @game.current_country.money - 5)
-      @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+      @game.next_turn
       redirect_to game_path
     else
       @factories = @game.regions.where(has_factory: true).map do |country|
@@ -80,7 +74,7 @@ class GamesController < ApplicationController
         Fleet.create(region: region, country: region.country)
       end
     end
-    @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+    @game.next_turn
 
     redirect_to game_path
   end
@@ -94,7 +88,7 @@ class GamesController < ApplicationController
       @import_count = params[:import_count]
 
       if @import_count.to_i >= 3
-        @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+        @game.next_turn
         session[:import_count] = 0
 
         redirect_to game_path and return
@@ -135,9 +129,11 @@ class GamesController < ApplicationController
       destination_region = @game.regions.find_by(name: params[:destination_region])
       piece = origin_region.pieces.where(country: @game.current_country).take
       piece.update(region: destination_region)
+      @game.check_for_conflict(piece)
       session[:moved_pieces_ids] << piece.id
       if (@game.current_country.pieces.map(&:id) - session[:moved_pieces_ids]).empty?
-        @game.update(current_country: @game.countries.find_by(name: @game.next_country[@game.current_country.name.to_sym]))
+        session[:moved_pieces_ids] = []
+        @game.next_turn
 
         redirect_to game_path
       else
@@ -150,6 +146,12 @@ class GamesController < ApplicationController
       end
       @eligible_regions = Settings.neighbors[params[:origin_region]]
       session[:origin_region] = params[:origin_region]
+    end
+
+    if params[:next_turn]
+      session[:moved_pieces_ids] = []
+      @game.next_turn
+      redirect_to game_path
     end
   end
 end

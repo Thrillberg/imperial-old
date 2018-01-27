@@ -112,7 +112,7 @@ neighbors:
   budapest: ["lemberg", "prague", "vienna", "romania", "trieste", "west_balkan"]
   trieste: ["vienna", "budapest", "west_balkan", "venice"]
   genoa: ["marseille", "vienna", "venice", "florence"]
-  venice: ["genoa", "florence", "vienna", "trieste"]
+  venice: ["genoa", "florence", "vienna", "trieste", "rome"]
   florence: ["genoa", "venice", "rome"]
   rome: ["florence", "venice", "naples"]
   naples: ["rome"]

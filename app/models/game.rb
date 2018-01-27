@@ -73,6 +73,19 @@ class Game < ApplicationRecord
     }
   end
 
+  def next_turn
+    self.update(current_country: self.countries.find_by(name: self.next_country[self.current_country.name.to_sym]))
+  end
+
+  def check_for_conflict(moving_piece)
+    pieces = moving_piece.region.pieces
+    enemy_piece = pieces.where.not(country: moving_piece.country)
+      if enemy_piece.count > 0
+      Piece.destroy(enemy_piece[0].id)
+      Piece.destroy(moving_piece.id)
+    end
+  end
+
   def regions_with_pieces
     regions_with_pieces = regions.map do |region|
       if region.pieces.length > 0
