@@ -6,12 +6,13 @@ $(document).on('turbolinks:load', function() {
 
   var allPieces = document.getElementsByClassName("piece");
   for (let piece of allPieces) {
-    checkForPiece(piece)
+    checkForPiece(piece);
+    getManeuverableRegions(piece);
   }
 
-  Array.from(allFactories).map(getCurrentRegions);
+  Array.from(allFactories).map(getHomeRegions);
 
-  function getCurrentRegions(factory) {
+  function getHomeRegions(factory) {
     if (window.regions) {
       window.regions.forEach(function(region) {
         if (factory.id === region.toLowerCase() + "-factory") {
@@ -24,6 +25,21 @@ $(document).on('turbolinks:load', function() {
             case 'import':
               svgRegion.addEventListener("click", () => { importPiece(svgRegion, window.importCount) });
               break;
+            default:
+              break;
+          }
+        }
+      });
+    }
+  }
+
+  function getManeuverableRegions(piece) {
+    if (window.regions) {
+      window.regions.forEach(function(region) {
+        if (piece.id === region + "-army" || piece.id === region + "-fleet") {
+          var svgRegion = document.getElementById(region);
+          svgRegion.classList.add("glow-on-hover");
+          switch (window.turn) {
             case 'maneuver':
               svgRegion.addEventListener("click", () => { movePieceFrom(svgRegion) });
               break;
@@ -36,7 +52,6 @@ $(document).on('turbolinks:load', function() {
       })
     }
   }
-
   function buildFactory(region) {
     $.ajax({
       url: '/games/' + window.game + '/build_factory?region=' + region.id,
