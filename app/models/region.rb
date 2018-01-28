@@ -1,5 +1,6 @@
 class Region < ApplicationRecord
   has_many :pieces
+  has_one :flag
   belongs_to :game
   belongs_to :country, optional: true
 

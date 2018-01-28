@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_game, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation]
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
@@ -13,7 +14,6 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
     @countries = @game.countries
     @investors = @game.investors
     @current_investor = @game.investors.find_by(user: current_user)
@@ -31,13 +31,14 @@ class GamesController < ApplicationController
       redirect_to build_factory_game_path
     elsif params[:step] == "Import"
       redirect_to import_game_path
-    elsif params[:step] = "Maneuver"
+    elsif params[:step] == "Maneuver"
       redirect_to maneuver_game_path
+    elsif params[:step] == "Taxation"
+      redirect_to taxation_game_path
     end
   end
 
   def build_factory
-    @game = Game.find(params[:id])
     pieces = @game.regions.select do |region|
       region.pieces.length > 0
     end
@@ -65,7 +66,6 @@ class GamesController < ApplicationController
   end
 
   def production
-    @game = Game.find(params[:id])
     regions_with_factories = @game.current_country.regions.select { |region| region.has_factory }
     regions_with_factories.each do |region|
       if region.factory_type == :armaments
@@ -80,7 +80,6 @@ class GamesController < ApplicationController
   end
 
   def import
-    @game = Game.find(params[:id])
     if params[:region]
       region = @game.regions.find_by(name: params[:region])
       Army.create(region: region, country: region.country)
@@ -108,7 +107,6 @@ class GamesController < ApplicationController
   end
 
   def maneuver
-    @game = Game.find(params[:id])
     if (params[:origin_region])
       redirect_to maneuver_destination_game_path(origin_region: params[:origin_region])
     else
@@ -123,7 +121,6 @@ class GamesController < ApplicationController
   end
 
   def maneuver_destination
-    @game = Game.find(params[:id])
     if params[:destination_region]
       origin_region = @game.regions.find_by(name: params[:origin_region])
       destination_region = @game.regions.find_by(name: params[:destination_region])
@@ -153,5 +150,18 @@ class GamesController < ApplicationController
       @game.next_turn
       redirect_to game_path
     end
+  end
+
+  def taxation
+    @taxes = @game.get_taxes
+    @power_position = @game.move_on_tax_chart(@taxes)
+    @game.add_power_points
+    @game.pay_soldiers(@taxes)
+  end
+
+  private
+
+  def set_game
+    @game = Game.find(params[:id])
   end
 end

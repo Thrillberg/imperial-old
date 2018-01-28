@@ -1,5 +1,44 @@
+.map-display {
+  display: flex;
+  align-items: flex-start;
+
+  .power-track {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0 20px;
+
+    .level {
+      font-size: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+
+      svg {
+        height: 1em;
+        width: 1.5em;
+        display: block;
+        margin: 0 auto;
+      }
+
+      &.header {
+        font-size: 14px;
+        padding: 5px;
+      }
+
+      > div {
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
 svg {
-  width: 100%
+  width: 100%;
+  &#board {
+    height: auto;
+  }
 }
 
 .marker {
