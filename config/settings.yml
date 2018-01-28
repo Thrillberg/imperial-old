@@ -60,31 +60,31 @@ countries:
       - name: rome
       - name: naples
 neutrals:
-  - name: Spain
-  - name: Portugal
-  - name: Morocco
-  - name: Algeria
-  - name: Tunisia
-  - name: Belgium
-  - name: Holland
-  - name: Denmark
-  - name: Norway
-  - name: Sweden
-  - name: West Balkan
-  - name: Greece
-  - name: Romania
-  - name: Bulgaria
-  - name: Turkey
+  - name: spain
+  - name: portugal
+  - name: morocco
+  - name: algeria
+  - name: tunisia
+  - name: belgium
+  - name: holland
+  - name: denmark
+  - name: norway
+  - name: sweden
+  - name: west_balkan
+  - name: greece
+  - name: romania
+  - name: bulgaria
+  - name: turkey
 sea_regions:
-  - name: Baltic Sea
-  - name: North Sea
-  - name: North Atlantic
-  - name: Bay of Biscay
-  - name: English Channel
-  - name: Western Mediterranean Sea
-  - name: Ionian Sea
-  - name: Black Sea
-  - name: Eastern Mediterranean Sea
+  - name: baltic_sea
+  - name: north_sea
+  - name: north_atlantic
+  - name: bay_of_biscay
+  - name: english_channel
+  - name: western_mediterranean_sea
+  - name: ionian_sea
+  - name: black_sea
+  - name: eastern_mediterranean_sea
 neighbors:
   dublin: ["north_atlantic"]
   edinburgh: ["north sea", "liverpool", "sheffield"]

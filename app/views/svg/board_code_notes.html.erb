@@ -1,0 +1,9 @@
+<%= javascript_tag do %>
+  window.factories = <%= raw factories.to_json %>
+  window.regions = <%= raw regions.to_json %>
+  window.pieces = <%= raw pieces.to_json %>
+  window.game = <%= raw game.to_json %>
+  window.turn = <%= raw turn.to_json %>
+  window.importCount = <%= raw import_count.to_json %>
+  window.originRegion = <%= raw origin_region.to_json %>
+<% end %>
