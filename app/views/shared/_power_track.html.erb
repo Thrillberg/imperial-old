@@ -1,0 +1,29 @@
+<div class="power-track">
+  <div class="level header">
+    <div class="tax">
+      Tax
+    </div>
+    <div class="points">
+      Points
+    </div>
+    <div class="meeple">
+    </div>
+  </div>
+  <% Settings.tax_chart.each do |level| %>
+    <div class="level">
+      <div class="tax">
+        <%= level %>
+      </div>
+      <div class="points">
+        <%= Settings.tax_chart.index(level) %>
+      </div>
+      <div class="meeple">
+        <% @game.countries.each do |country| %>
+          <% if country.position_on_tax_chart == level %>
+            <%= render :partial => "svg/" + country.name + "_meeple" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

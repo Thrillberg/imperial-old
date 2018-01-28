@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  include Taxation
+
   after_create :set_up_countries_and_regions
   after_create :set_up_neutral_regions
   after_create :set_up_sea_regions
@@ -107,7 +109,7 @@ class Game < ApplicationRecord
 
   def set_up_countries_and_regions
     Settings.countries.each do |country|
-      new_country = Country.create(game_id: self.id, name: country[1].name)
+      new_country = Country.create(game_id: self.id, name: country[1].name, position_on_tax_chart: Settings.tax_chart[0])
       country[1].regions.each do |region|
         new_country.regions << Region.create(game_id: self.id, name: region.name)
       end

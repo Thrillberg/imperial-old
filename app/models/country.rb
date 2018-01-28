@@ -2,6 +2,7 @@ class Country < ApplicationRecord
   has_many :pieces, dependent: :destroy
   has_many :regions, dependent: :destroy
   has_many :bonds
+  has_many :flags
   belongs_to :game, optional: true
 
   def owner
