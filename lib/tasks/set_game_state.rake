@@ -5,15 +5,18 @@ namespace :set_game_state do
     user2 = User.create!(:email => "test2@test.com", :password => 'password', :password_confirmation => 'password', username: "user2")
     pregame = PreGame.create!(users: [user1, user2], creator: user1)
     game = Game.create!(pre_game_id: pregame.id)
-    investors = pregame.users.map { |user| user.convert_users_to_investors(game) }
-    game.update(investors: investors, current_country: game.countries.find_by(name: "austria_hungary"))
-    game.start
     england = game.countries.find_by(name: "england")
     france = game.countries.find_by(name: "france")
     austria_hungary = game.countries.find_by(name: "austria_hungary")
     germany = game.countries.find_by(name: "germany")
     russia = game.countries.find_by(name: "russia")
     italy = game.countries.find_by(name: "italy")
+    investors = pregame.users.map { |user| user.convert_users_to_investors(game) }
+    game.establish_investor_order
+    eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
+    eligible_investors.sample.update(has_investor_card: true)
+    game.update(investors: investors, current_country: austria_hungary)
+    game.start
 
     Army.create!(country: france, region: Region.find_by(name: "belgium"))
     Army.create!(country: france, region: Region.find_by(name: "spain"))

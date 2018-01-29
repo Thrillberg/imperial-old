@@ -1,0 +1,21 @@
+You have <%= @current_investor.money %> money and control these countries:
+<% @current_investor.countries.each do |country| %>
+  <div class="country">
+    <%= country.name %>
+  </div>
+<% end %>
+<div class="bonds">
+  <% @available_bonds.each do |bond| %>
+    <div class="bond">
+      <div class="country-name">
+        <%= bond.country.name %>
+      </div>
+      <div class="price">
+        Price: <%= bond.price %>
+      </div>
+      <div class="interest">
+        Interest Rate: <%= bond.interest %>
+      </div>
+    </div>
+  <% end %>
+</div>

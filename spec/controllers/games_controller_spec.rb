@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe GamesController do
   let(:user) { create(:user) }
-  let(:country) { create(:country, name: 'country', money: 9) }
+  let(:country) { create(:country, name: 'country', money: 9, game: Game.create) }
   let(:game) { create(:game, current_country: country) }
   let(:region) { create(:region, name: 'region', country: country, game: game) }
 

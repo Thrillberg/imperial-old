@@ -5,7 +5,7 @@ FactoryBot.define do
     end
 
     after(:build) do |country, evaluator|
-      create_list(:bond, evaluator.bonds_count, country: country)
+      create_list(:bond, evaluator.bonds_count, country: country, game: country.game)
     end
   end
 end

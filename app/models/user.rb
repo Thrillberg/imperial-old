@@ -12,6 +12,6 @@ class User < ApplicationRecord
   end
 
   def convert_users_to_investors(game)
-    Investor.create(user: self, game: game)
+    Investor.create(user: self, game: game, has_investor_card: false)
   end
 end

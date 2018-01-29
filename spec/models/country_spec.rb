@@ -17,8 +17,8 @@ describe Country do
     let(:expected_investor) { create(:investor) }
 
     it 'returns the owner of the most bond value for the country' do
-      Bond.create(price: 10, country: country, investor: expected_investor)
-      Bond.create(price: 1, country: country, investor: other_investor)
+      Bond.create(price: 10, country: country, investor: expected_investor, game: game)
+      Bond.create(price: 1, country: country, investor: other_investor, game: game)
       owner = country.owner
       expect(owner).to eql(expected_investor)
     end
