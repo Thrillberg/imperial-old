@@ -1,20 +1,23 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation]
+  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation, :investor]
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
     game = Game.new(pre_game_id: pre_game.id)
     if game.save
+      austria_hungary = game.countries.find_by(name: "austria_hungary")
       investors = pre_game.users.map { |user| user.convert_users_to_investors(game) }
-      game.update(investors: investors, current_country: game.countries.find_by(name: "austria_hungary"))
+      game.establish_investor_order
+      eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
+      eligible_investors.sample.update(has_investor_card: true)
+      game.update(investors: investors, current_country: austria_hungary)
       game.start
       redirect_to game
     end
   end
 
   def show
-    @current_investor = @game.investors.find_by(user: current_user)
     @available_steps = @game.get_rondel
   end
 
@@ -29,6 +32,8 @@ class GamesController < ApplicationController
       redirect_to maneuver_game_path
     elsif params[:step] == "Taxation"
       redirect_to taxation_game_path
+    elsif params[:step] == "Investor"
+      redirect_to investor_game_path
     end
   end
 
@@ -141,6 +146,18 @@ class GamesController < ApplicationController
     redirect_to game_path
   end
 
+  def investor
+    if params[:bond]
+      @game.next_turn
+      redirect_to game_path
+    else
+      @game.pay_interest
+      @game.activate_investor
+      @available_bonds = @game.bonds.where(investor: nil)
+      render :investor
+    end
+  end
+
   private
 
   def set_common_instance_variables
@@ -150,5 +167,6 @@ class GamesController < ApplicationController
       "#{country.name}-factory"
     end
     @pieces = @game.regions_with_pieces
+    @current_investor = @game.investors.find_by(user: current_user)
   end
 end

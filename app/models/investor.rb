@@ -8,4 +8,8 @@ class Investor < ApplicationRecord
       bond.country
     end
   end
+
+  def next
+    Investor.where(seating_order: seating_order + 1).or(Investor.where(seating_order: 0))
+  end
 end

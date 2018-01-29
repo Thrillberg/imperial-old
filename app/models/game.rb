@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
-  include Taxation
+  include TaxationStep
+  include InvestorStep
 
   after_create :set_up_countries_and_regions
   after_create :set_up_neutral_regions
@@ -9,6 +10,7 @@ class Game < ApplicationRecord
   has_many :countries, dependent: :destroy
   has_many :regions, dependent: :destroy
   has_many :investors, dependent: :destroy
+  has_many :bonds, dependent: :destroy
   belongs_to :current_country, :class_name => "Country", :foreign_key => "current_country_id", optional: true
 
   def start
@@ -40,7 +42,7 @@ class Game < ApplicationRecord
     countries.each do |country|
       pairs = (1..9).zip(prices)
       pairs.each do |pair|
-        Bond.create(price: pair[1], interest: pair[0], country: country)
+        Bond.create(price: pair[1], interest: pair[0], country: country, game: self)
       end
     end
   end
@@ -118,6 +120,12 @@ class Game < ApplicationRecord
         color: Settings.countries[flag.country.name].color,
         region_name: Region.find(flag.region.id).name
       }
+    end
+  end
+
+  def establish_investor_order
+    investors.shuffle.each_with_index do |investor, index|
+      investor.update(seating_order: index)
     end
   end
 

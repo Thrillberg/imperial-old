@@ -1,4 +1,4 @@
-module Taxation
+module TaxationStep
   def get_taxes
     taxes = 0
     taxes += current_country.regions.select(&:has_factory).count * 2

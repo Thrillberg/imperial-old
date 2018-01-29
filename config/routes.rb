@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       get :maneuver_destination
       post :maneuver_destination
       get :taxation
+      get :investor
+      post :investor
     end
   end
   resources :pieces do
