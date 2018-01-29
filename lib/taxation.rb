@@ -14,13 +14,17 @@ module Taxation
     elsif taxes >= 15
       current_country.update(position_on_tax_chart: tax_chart[10])
       if previous_position < 10
-        money = current_country.money += taxes - previous_position
+        income = taxes - previous_position - current_country.pieces.count
+        money = current_country.money
+        money += income if income > 0
         current_country.update(money: money)
       end
     else
       current_country.update(position_on_tax_chart: taxes.to_s)
       if previous_position < taxes
-        money = current_country.money += taxes - previous_position
+        income = taxes - previous_position - current_country.pieces.count
+        money = current_country.money
+        money += income if income > 0
         current_country.update(money: money)
       end
     end
@@ -31,8 +35,5 @@ module Taxation
     points = Settings.tax_chart.index(current_country.position_on_tax_chart)
     score = current_country.score + points
     current_country.update(score: score)
-  end
-
-  def pay_soldiers(taxes)
   end
 end

@@ -136,7 +136,9 @@ class GamesController < ApplicationController
     @taxes = @game.get_taxes
     @power_position = @game.move_on_tax_chart(@taxes)
     @game.add_power_points
-    @game.pay_soldiers(@taxes)
+    @game.next_turn
+
+    redirect_to game_path
   end
 
   private
