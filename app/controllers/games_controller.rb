@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_game, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation]
+  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation]
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
@@ -14,13 +14,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @countries = @game.countries
-    @investors = @game.investors
     @current_investor = @game.investors.find_by(user: current_user)
-    @factories = @game.regions.where(has_factory: true).map do |country|
-      "#{country.name}-factory"
-    end
-    @pieces = @game.regions_with_pieces
     @available_steps = @game.get_rondel
   end
 
@@ -49,9 +43,6 @@ class GamesController < ApplicationController
       @game.next_turn
       redirect_to game_path
     else
-      @factories = @game.regions.where(has_factory: true).map do |country|
-        "#{country.name.downcase}-factory"
-      end
       regions = []
       Settings.countries.each do |country|
         if country[1].name == @game.current_country.name
@@ -96,11 +87,7 @@ class GamesController < ApplicationController
       session[:import_count] = @import_count
       redirect_back(fallback_location: game_path)
     else
-      @pieces = @game.regions_with_pieces
       @eligible_regions = @game.current_country.regions.map(&:name)
-      @factories = @game.regions.where(has_factory: true).map do |country|
-        "#{country.name.downcase}-factory"
-      end
 
       render :import
     end
@@ -111,12 +98,8 @@ class GamesController < ApplicationController
       redirect_to maneuver_destination_game_path(origin_region: params[:origin_region])
     else
       session[:moved_pieces_ids] ||= []
-      @pieces = @game.regions_with_pieces
       eligible_pieces = @game.current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
       @eligible_regions = eligible_pieces.map(&:region).map(&:name)
-      @factories = @game.regions.where(has_factory: true).map do |country|
-        "#{country.name.downcase}-factory"
-      end
     end
   end
 
@@ -127,6 +110,7 @@ class GamesController < ApplicationController
       piece = origin_region.pieces.where(country: @game.current_country).take
       piece.update(region: destination_region)
       @game.check_for_conflict(piece)
+      @game.reconcile_flags(destination_region)
       session[:moved_pieces_ids] << piece.id
       if (@game.current_country.pieces.map(&:id) - session[:moved_pieces_ids]).empty?
         session[:moved_pieces_ids] = []
@@ -137,10 +121,6 @@ class GamesController < ApplicationController
         redirect_to maneuver_game_path, origin_region: nil, destination_region: nil
       end
     elsif params[:origin_region]
-      @pieces = @game.regions_with_pieces
-      @factories = @game.regions.where(has_factory: true).map do |country|
-        "#{country.name.downcase}-factory"
-      end
       @eligible_regions = Settings.neighbors[params[:origin_region]]
       session[:origin_region] = params[:origin_region]
     end
@@ -161,7 +141,12 @@ class GamesController < ApplicationController
 
   private
 
-  def set_game
+  def set_common_instance_variables
     @game = Game.find(params[:id])
+    @flags = @game.regions_with_flags
+    @factories = @game.regions.where(has_factory: true).map do |country|
+      "#{country.name}-factory"
+    end
+    @pieces = @game.regions_with_pieces
   end
 end

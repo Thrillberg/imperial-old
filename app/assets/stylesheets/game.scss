@@ -132,7 +132,7 @@ svg {
   }
 }
 
-.factory, .piece {
+.factory, .piece, .flag {
   display: none;
 
   &.show {
@@ -145,4 +145,3 @@ svg path {
     fill-opacity: 0.5;
   }
 }
-

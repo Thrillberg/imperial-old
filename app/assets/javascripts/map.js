@@ -10,6 +10,11 @@ $(document).on('turbolinks:load', function() {
     getManeuverableRegions(piece);
   }
 
+  var allFlags = document.getElementsByClassName("flag");
+  for (let flag of allFlags) {
+    setFlags(flag);
+  }
+
   Array.from(allFactories).map(getHomeRegions);
 
   function getHomeRegions(factory) {
@@ -49,9 +54,19 @@ $(document).on('turbolinks:load', function() {
               break;
           }
         }
-      })
+      });
     }
   }
+
+  function setFlags(flag) {
+    window.flags.forEach(function(actualFlag) {
+      if (flag.id == actualFlag.region_name + "-flag") {
+        flag.classList.add("show");
+        flag.style.fill = actualFlag.color;
+      }
+    });
+  }
+
   function buildFactory(region) {
     $.ajax({
       url: '/games/' + window.game + '/build_factory?region=' + region.id,
