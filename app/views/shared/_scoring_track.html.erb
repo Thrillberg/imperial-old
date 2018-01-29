@@ -1,0 +1,12 @@
+<div class="scoring-track">
+  <% (0..25).each do |score| %>
+    <div class="score">
+      <%= score %>
+      <% @game.countries.each do |country| %>
+        <% if country.score == score %>
+          <%= render :partial => "svg/" + country.name + "_meeple" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

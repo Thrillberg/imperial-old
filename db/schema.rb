@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180128152140) do
+ActiveRecord::Schema.define(version: 20180129005103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180128152140) do
     t.integer "money"
     t.string "step"
     t.string "position_on_tax_chart"
+    t.integer "score"
     t.index ["game_id"], name: "index_countries_on_game_id"
     t.index ["investor_id"], name: "index_countries_on_investor_id"
   end

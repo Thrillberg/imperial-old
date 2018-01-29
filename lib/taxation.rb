@@ -28,6 +28,9 @@ module Taxation
   end
 
   def add_power_points
+    points = Settings.tax_chart.index(current_country.position_on_tax_chart)
+    score = current_country.score + points
+    current_country.update(score: score)
   end
 
   def pay_soldiers(taxes)
