@@ -18,13 +18,13 @@ module Taxation
         current_country.update(money: money)
       end
     else
-      current_country.update(position_on_tax_chart: tax_chart.index(taxes.to_s))
+      current_country.update(position_on_tax_chart: taxes.to_s)
       if previous_position < taxes
         money = current_country.money += taxes - previous_position
         current_country.update(money: money)
       end
     end
-    tax_chart.index(current_country.position_on_tax_chart)
+    current_country.position_on_tax_chart
   end
 
   def add_power_points

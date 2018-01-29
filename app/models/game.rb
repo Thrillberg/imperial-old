@@ -88,6 +88,13 @@ class Game < ApplicationRecord
     end
   end
 
+  def reconcile_flags(region)
+    if region.pieces.count > 0 && !region.country
+      region.flag.destroy if region.flag
+      Flag.create(region: region, country: region.pieces.first.country)
+    end
+  end
+
   def regions_with_pieces
     regions_with_pieces = regions.map do |region|
       if region.pieces.length > 0
@@ -103,6 +110,15 @@ class Game < ApplicationRecord
       end
     end
     regions_with_pieces.compact.flatten
+  end
+
+  def regions_with_flags
+    regions.map(&:flag).compact.map do |flag|
+      {
+        color: Settings.countries[flag.country.name].color,
+        region_name: Region.find(flag.region.id).name
+      }
+    end
   end
 
   private

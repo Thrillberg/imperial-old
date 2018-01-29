@@ -1,7 +1,7 @@
 <h1>It is <%= @game.current_country.name %>’s turn</h1>
 <h2>You are an investor with <%= @current_investor.money %> million.</h2>
 <div class="map-display">
-  <%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil, origin_region: nil } %>
+  <%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil, origin_region: nil, flags: @flags } %>
   <%= render "shared/power_track", locals: { player_levels: @player_levels } %>
 </div>
 <div class="row">
@@ -33,7 +33,7 @@
         <% else %>
           <%= button_tag step[:name], class: 'btn btn-primary disabled', disabled: true  %>
         <% end %>
-        <% @countries.each do |country| %>
+        <% @game.countries.each do |country| %>
           <% if country.step == step %>
             <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
           <% end %>
