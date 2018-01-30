@@ -148,6 +148,12 @@ class GamesController < ApplicationController
 
   def investor
     if params[:bond]
+      bond = @game.bonds.find(params[:bond])
+      bond.update(investor: @current_investor)
+      money = @current_investor.money - bond.price
+      @current_investor.update(money: money)
+      @current_investor.next.update(has_investor_card: true)
+      @current_investor.update(has_investor_card: false)
       @game.next_turn
       redirect_to game_path
     else
