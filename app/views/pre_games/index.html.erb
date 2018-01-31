@@ -6,7 +6,7 @@
         <p class="sorry">Sorry, no joinable games yet.</p>
       <% else %>
         <% @pre_games.each do |game| %>
-          <%= render game, new: false, game: game %>
+          <%= render game, new: false, game: game, investor: Game.where(pre_game_id: game.id)[0].investors.find_by(user: current_user) %>
         <% end %>
       <% end %>
     </div>

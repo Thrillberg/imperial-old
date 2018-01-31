@@ -1,5 +1,5 @@
 <div id="game">
-  <%= link_to game.get_users, pre_game_path(game) %>
+  <%= link_to game.get_users, game_investor_path(game_id: game.id, id: investor.id) %>
   <% if !game.users.include?(current_user) || new %>
     <%= link_to "Join", pre_game_path(game), method: :put, class: "toggle-game join" %>
   <% else %>

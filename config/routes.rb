@@ -6,9 +6,14 @@ Rails.application.routes.draw do
   resources :boards
   resources :pre_games
   resources :games do
+    resources :investors do
+      member do
+        post :turn
+      end
+    end
+
     member do
       post :next_turn
-      post :turn
       get :production
       get :build_factory
       post :build_factory
@@ -19,8 +24,8 @@ Rails.application.routes.draw do
       get :maneuver_destination
       post :maneuver_destination
       get :taxation
-      get :investor
-      post :investor
+      get :investor_turn
+      post :investor_turn
     end
   end
   resources :pieces do
