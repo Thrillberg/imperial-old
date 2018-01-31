@@ -7,18 +7,19 @@ class InvestorsController < ApplicationController
   end
 
   def turn
+    id = params[:game_id]
     if params[:step] == "Production"
-      redirect_to production_game_path
+      redirect_to production_game_path(id: id)
     elsif params[:step] == "Factory"
-      redirect_to build_factory_game_path
+      redirect_to build_factory_game_path(id: id)
     elsif params[:step] == "Import"
-      redirect_to import_game_path
+      redirect_to import_game_path(id: id)
     elsif params[:step] == "Maneuver"
-      redirect_to maneuver_game_path
+      redirect_to maneuver_game_path(id: id)
     elsif params[:step] == "Taxation"
-      redirect_to taxation_game_path
+      redirect_to taxation_game_path(id: id)
     elsif params[:step] == "Investor"
-      redirect_to investor_game_path
+      redirect_to investor_game_path(id: id)
     end
   end
 
