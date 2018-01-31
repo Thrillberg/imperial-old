@@ -1,4 +1,6 @@
 class Rondel
+  NO_ACTION = :no_action
+
   ALL_ACTIONS = %i[
     maneuver_1
     taxation
@@ -11,7 +13,11 @@ class Rondel
   ].freeze
 
   def initialize(current_action:)
-    @index = ALL_ACTIONS.find_index current_action
+    if current_action.nil?
+      @index = NO_ACTION
+    else
+      @index = ALL_ACTIONS.find_index current_action.to_sym
+    end
     raise "Action #{current_action} does not exist." unless @index
   end
 
@@ -20,6 +26,8 @@ class Rondel
   end
 
   def next(count)
+    raise "No current action" if no_action?
+
     case count
     when 0..6
       old_action = @index
@@ -38,13 +46,29 @@ class Rondel
   end
 
   def available
-    (1..6).map do |i|
-      action = ALL_ACTIONS[(i + @index) % ALL_ACTIONS.size]
-      {
-        id: action,
-        label: action.to_s.split('_').first.capitalize,
-        cost: [i - 3, 0].max
-      }
+    if no_action?
+      ALL_ACTIONS.map do |action|
+        {
+          id: action,
+          label: action.to_s.split('_').first.capitalize,
+          cost: 0
+        }
+      end
+    else
+      (1..6).map do |i|
+        action = ALL_ACTIONS[(i + @index) % ALL_ACTIONS.size]
+        {
+          id: action,
+          label: action.to_s.split('_').first.capitalize,
+          cost: [i - 3, 0].max
+        }
+      end
     end
+  end
+
+  private
+
+  def no_action?
+    @index == NO_ACTION
   end
 end

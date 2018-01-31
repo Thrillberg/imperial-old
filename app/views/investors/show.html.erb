@@ -39,15 +39,11 @@ You are <%= @current_investor.user.username %>.
 <div>
   <% if @game.current_country.owner.user == current_user && !@step%>
     <%= @game.current_country.name %> may do one of the following actions:
-    <% @available_steps.each do |step| %>
+    <% @steps.each do |step| %>
       <div class="row step">
-        <% if step[:enabled] %>
-          <%= button_to(step[:name], { action: "turn", step: step[:name] }, class: 'btn btn-primary') %>
-        <% else %>
-          <%= button_tag step[:name], class: 'btn btn-primary disabled', disabled: true  %>
-        <% end %>
+        <%= button_to "#{step[:label]} (costs #{step[:cost]})", { action: 'turn', step: step[:id] }, class: 'btn btn-primary' %>
         <% @game.countries.each do |country| %>
-          <% if country.step == step %>
+          <% if country.step == step[:id] %>
             <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
           <% end %>
           </span>

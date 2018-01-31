@@ -115,6 +115,13 @@ RSpec.describe Rondel do
         }
       end
     end
+
+    context 'when the current action is nil' do
+      let(:current_action) { nil }
+      let(:count) { instance_double Fixnum }
+
+      it { expect { subject }.to raise_error(/no current action/i) }
+    end
   end
 
   describe '#available' do
@@ -147,6 +154,23 @@ RSpec.describe Rondel do
           { id: :taxation, label: 'Taxation', cost: 1 },
           { id: :factory, label: 'Factory', cost: 2 },
           { id: :production_1, label: 'Production', cost: 3 }
+        ]
+      end
+    end
+
+    context 'when the current action is nil' do
+      let(:current_action) { nil }
+
+      it do
+        is_expected.to eql [
+          { id: :maneuver_1, label: 'Maneuver', cost: 0 },
+          { id: :taxation, label: 'Taxation', cost: 0 },
+          { id: :factory, label: 'Factory', cost: 0 },
+          { id: :production_1, label: 'Production', cost: 0 },
+          { id: :maneuver_2, label: 'Maneuver', cost: 0 },
+          { id: :investor, label: 'Investor', cost: 0 },
+          { id: :import, label: 'Import', cost: 0 },
+          { id: :production_2, label: 'Production', cost: 0 }
         ]
       end
     end
