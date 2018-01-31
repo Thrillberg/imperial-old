@@ -18,23 +18,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @available_steps = @game.get_rondel
-  end
-
-  def turn
-    if params[:step] == "Production"
-      redirect_to production_game_path
-    elsif params[:step] == "Factory"
-      redirect_to build_factory_game_path
-    elsif params[:step] == "Import"
-      redirect_to import_game_path
-    elsif params[:step] == "Maneuver"
-      redirect_to maneuver_game_path
-    elsif params[:step] == "Taxation"
-      redirect_to taxation_game_path
-    elsif params[:step] == "Investor"
-      redirect_to investor_game_path
-    end
+    redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
   end
 
   def build_factory
@@ -146,7 +130,7 @@ class GamesController < ApplicationController
     redirect_to game_path
   end
 
-  def investor
+  def investor_turn
     if params[:bond]
       @game.purchase_bond(params[:bond])
       @game.pass_investor_card
@@ -156,7 +140,7 @@ class GamesController < ApplicationController
       @game.pay_interest
       @game.activate_investor
       @available_bonds = @game.bonds.where(investor: nil)
-      render :investor
+      render :investor_turn
     end
   end
 

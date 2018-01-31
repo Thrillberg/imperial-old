@@ -1,0 +1,61 @@
+<h1>It is <%= @game.current_country.name %>’s turn</h1>
+<% @game.investors.each do |investor| %>
+  <div class="investor">
+    <%= investor.user.username %> has <%= investor.money %> monies.
+    <% if investor.has_investor_card %>
+      <div>^ HAS THE INVESTOR CARD</div>
+    <% end %>
+  </div>
+<% end %>
+You are <%= @current_investor.user.username %>.
+<div class="map-display">
+  <div class="row map">
+    <%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil, origin_region: nil, flags: @flags } %>
+    <%= render "shared/power_track", locals: { player_levels: @player_levels } %>
+  </div>
+  <div class="row">
+    <%= render "shared/scoring_track" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-xs-12 your-countries card">
+    <strong class='header'>You control the governments of these countries</strong>
+    <% @current_investor.countries.each do |country| %>
+      <span class="row country">
+        <span><%= render :partial => "svg/" + country.name + "_flag" %></span>
+        <span>
+          <% if country == @game.current_country %>
+            <strong><%= country.money %> million - <%= country.name %>'s turn</strong>
+          <% else %>
+            <%= country.money %> million - <%= country.name %>
+          <% end %>
+        </span>
+        <span class="meeple"><%= render :partial => "svg/" + country.name + "_meeple" %></span>
+      </span>
+    <% end %>
+  </div>
+</div>
+
+<div>
+  <% if @game.current_country.owner.user == current_user && !@step%>
+    <%= @game.current_country.name %> may do one of the following actions:
+    <% @available_steps.each do |step| %>
+      <div class="row step">
+        <% if step[:enabled] %>
+          <%= button_to(step[:name], { action: "turn", step: step[:name] }, class: 'btn btn-primary') %>
+        <% else %>
+          <%= button_tag step[:name], class: 'btn btn-primary disabled', disabled: true  %>
+        <% end %>
+        <% @game.countries.each do |country| %>
+          <% if country.step == step %>
+            <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
+          <% end %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <div>It is <%= @game.current_country.name %>'s turn!</div>
+    <span class="meeple"><%= render :partial => "svg/" + @game.current_country.name + "_meeple" %></span>
+  <% end %>
+</div>
