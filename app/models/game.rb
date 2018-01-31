@@ -57,15 +57,6 @@ class Game < ApplicationRecord
     end
   end
 
-  def get_rondel
-    steps = TurnStep.new.get_steps
-    unless current_country.regions.any? {|region| region.has_factory == false}
-      steps[2][:enabled] = false
-    end
-
-    steps
-  end
-
   def next_country
     {
       "austria_hungary": "italy",
