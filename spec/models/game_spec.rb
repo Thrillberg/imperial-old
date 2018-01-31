@@ -44,18 +44,6 @@ describe Game do
     end
   end
 
-  describe 'get_rondel' do
-    let(:game_with_investors) { build(:game_with_investors) }
-    let(:steps) { [{first: "step"}, {second: "step"}] }
-
-    it 'returns steps' do
-      game_with_investors.start
-      game_with_investors.update(current_country: Country.first)
-      expect(TurnStep).to receive_message_chain(:new, :get_steps).and_return(steps)
-      expect(game_with_investors.get_rondel).to eq(steps)
-    end
-  end
-
   describe 'regions_with_pieces' do
     let(:game_with_investors) { build(:game_with_investors) }
     let(:army) { build(:army) }
