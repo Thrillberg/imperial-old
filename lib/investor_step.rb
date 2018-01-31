@@ -13,4 +13,16 @@ module InvestorStep
     money = investor_card_holder.money + 2
     investor_card_holder.update(money: money)
   end
+
+  def purchase_bond(bond_id)
+    bond = bonds.find(bond_id)
+    bond.update(investor: current_investor)
+    money = current_investor.money - bond.price
+    current_investor.update(money: money)
+  end
+
+  def pass_investor_card
+    current_investor.next.update(has_investor_card: true)
+    current_investor.update(has_investor_card: false)
+  end
 end
