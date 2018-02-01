@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   root to: 'pre_games#index'
-  post '/games/:game_id/investors/:id', to: 'investors#build_factory'
+  post '/games/:game_id/investors/:id/build_factory', to: 'investors#build_factory'
+  post '/games/:game_id/investors/:id/import', to: 'investors#import'
   resources :boards
   resources :pre_games
   resources :games do

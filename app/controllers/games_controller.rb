@@ -21,29 +21,6 @@ class GamesController < ApplicationController
     redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
   end
 
-  def import
-    if params[:region]
-      region = @game.regions.find_by(name: params[:region])
-      Army.create(region: region, country: region.country)
-      region.country.update(money: region.country.money - 1)
-      @import_count = params[:import_count]
-
-      if @import_count.to_i >= 3
-        @game.next_turn
-        session[:import_count] = 0
-
-        redirect_to game_path and return
-      end
-
-      session[:import_count] = @import_count
-      redirect_back(fallback_location: game_path)
-    else
-      @eligible_regions = @game.current_country.regions.map(&:name)
-
-      render :import
-    end
-  end
-
   def maneuver
     if (params[:origin_region])
       redirect_to maneuver_destination_game_path(origin_region: params[:origin_region])

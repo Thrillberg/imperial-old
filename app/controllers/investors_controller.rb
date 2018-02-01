@@ -26,7 +26,9 @@ class InvestorsController < ApplicationController
 
         render :build_factory
       when /^import/i
-        redirect_to import_game_path(id: id)
+        @eligible_regions = @game.current_country.regions.map(&:name)
+
+        render :import
       when /^investor/i
         redirect_to investor_game_path(id: id)
       when /^taxation/i
@@ -44,6 +46,25 @@ class InvestorsController < ApplicationController
       @game.current_country.update(money: @game.current_country.money - 5)
       @game.next_turn
       redirect_to game_investor_path
+    end
+  end
+
+  def import
+    if params[:region]
+      region = @game.regions.find_by(name: params[:region])
+      Army.create(region: region, country: region.country)
+      region.country.update(money: region.country.money - 1)
+      @import_count = params[:import_count]
+
+      if @import_count.to_i >= 3
+        @game.next_turn
+        session[:import_count] = 0
+
+        redirect_to game_investor_path and return
+      end
+
+      session[:import_count] = @import_count
+      redirect_back(fallback_location: game_investor_path)
     end
   end
 

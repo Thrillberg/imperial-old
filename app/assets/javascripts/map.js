@@ -69,14 +69,14 @@ $(document).on('turbolinks:load', function() {
 
   function buildFactory(region) {
     $.ajax({
-      url: '/games/' + window.game + '/investors/' + window.investorId + '?region=' + region.id,
+      url: '/games/' + window.game + '/investors/' + window.investorId + '/build_factory?region=' + region.id,
       method: 'POST'
     });
   }
 
   function importPiece(region, importCount) {
     $.ajax({
-      url: '/games/' + window.game + '/import?region=' + region.id,
+      url: '/games/' + window.game + '/investors/' + window.investorId + '/import?region=' + region.id,
       method: 'POST',
       data: {
         import_count: parseInt(importCount) + 1
