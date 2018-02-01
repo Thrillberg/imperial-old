@@ -21,20 +21,6 @@ class GamesController < ApplicationController
     redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
   end
 
-  def production
-    regions_with_factories = @game.current_country.regions.select { |region| region.has_factory }
-    regions_with_factories.each do |region|
-      if region.factory_type == :armaments
-        Army.create(region: region, country: region.country)
-      else
-        Fleet.create(region: region, country: region.country)
-      end
-    end
-    @game.next_turn
-
-    redirect_to game_path
-  end
-
   def import
     if params[:region]
       region = @game.regions.find_by(name: params[:region])

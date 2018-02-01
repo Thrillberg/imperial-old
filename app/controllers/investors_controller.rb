@@ -7,7 +7,16 @@ class InvestorsController < ApplicationController
       case @game.current_country.step
       when /^maneuver/i
       when /^production/i
-        redirect_to production_game_path(id: id)
+        @game.current_country.regions.select(&:has_factory).each do |region|
+          if region.factory_type == :armaments
+            Army.create(region: region, country: region.country)
+          else
+            Fleet.create(region: region, country: region.country)
+          end
+        end
+        @game.next_turn
+
+        redirect_to game_investor_path
       when /^factory/i
         regions = []
         @game.current_country.regions.each do |region|
