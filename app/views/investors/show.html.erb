@@ -10,7 +10,7 @@
 You are <%= @current_investor.user.username %>.
 <div class="map-display">
   <div class="row map">
-    <%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil, origin_region: nil, flags: @flags } %>
+    <%= render :partial => "svg/board", locals: { factories: @factories, pieces: @pieces, regions: nil, game: nil, turn: nil, import_count: nil, origin_region: nil, flags: @flags, investor_id: @current_investor.id } %>
     <%= render "shared/power_track", locals: { player_levels: @player_levels } %>
   </div>
   <div class="row">

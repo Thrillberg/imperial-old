@@ -69,7 +69,7 @@ $(document).on('turbolinks:load', function() {
 
   function buildFactory(region) {
     $.ajax({
-      url: '/games/' + window.game + '/build_factory?region=' + region.id,
+      url: '/games/' + window.game + '/investors/' + window.investorId + '?region=' + region.id,
       method: 'POST'
     });
   }

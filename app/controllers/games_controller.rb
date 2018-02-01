@@ -21,30 +21,6 @@ class GamesController < ApplicationController
     redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
   end
 
-  def build_factory
-    pieces = @game.regions.select do |region|
-      region.pieces.length > 0
-    end
-    @pieces = pieces.map{ |region| region.name.downcase }
-    if params[:region]
-      @game.regions.find_by(name: params[:region]).update(has_factory: true)
-      @game.current_country.update(money: @game.current_country.money - 5)
-      @game.next_turn
-      redirect_to game_path
-    else
-      regions = []
-      Settings.countries.each do |country|
-        if country[1].name == @game.current_country.name
-          country[1].regions.each do |region|
-            regions << region.name unless @game.regions.find_by(name: region.name).has_factory
-          end
-        end
-      end
-      @eligible_regions = regions
-      render :build_factory
-    end
-  end
-
   def production
     regions_with_factories = @game.current_country.regions.select { |region| region.has_factory }
     regions_with_factories.each do |region|
