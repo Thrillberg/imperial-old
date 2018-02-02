@@ -9,7 +9,7 @@ module InvestorStep
   end
 
   def activate_investor
-    investor_card_holder = investors.find_by(has_investor_card: true)
+    investor_card_holder = investor_card.investor
     money = investor_card_holder.money + 2
     investor_card_holder.update(money: money)
   end
@@ -19,12 +19,5 @@ module InvestorStep
     bond.update(investor: investor)
     money = investor.money - bond.price
     investor.update(money: money)
-  end
-
-  def pass_investor_card(investor)
-    if investor.has_investor_card
-      investor.next.update(has_investor_card: true)
-      investor.update(has_investor_card: false)
-    end
   end
 end

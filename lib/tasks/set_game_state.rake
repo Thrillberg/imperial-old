@@ -14,7 +14,7 @@ namespace :set_game_state do
     investors = pregame.users.map { |user| user.convert_users_to_investors(game) }
     game.establish_investor_order
     eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
-    eligible_investors.sample.update(has_investor_card: true)
+    InvestorCard.create(game: game, investor: eligible_investors.sample)
     game.update(investors: investors, current_country: austria_hungary)
     game.start
 

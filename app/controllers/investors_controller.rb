@@ -23,10 +23,10 @@ class InvestorsController < ApplicationController
       when /^investor/i
         @game.pay_interest
         @game.activate_investor
-        if @current_investor.has_investor_card
+        if @current_investor.has_investor_card?
           render :investor_turn
         else
-          @game.investors.find_by(has_investor_card: true).update(eligible_to_invest: true)
+          @game.investor_card.investor.update(eligible_to_invest: true)
           redirect_to game_investor_path
         end
       when /^taxation/i
@@ -112,7 +112,7 @@ class InvestorsController < ApplicationController
   def investor_turn
     if params[:bond]
       @game.purchase_bond(params[:bond], @current_investor)
-      @game.pass_investor_card(@current_investor)
+      @game.investor_card.pass_card
       @current_investor.update(eligible_to_invest: false)
       @game.next_turn
       redirect_to game_investor_path
