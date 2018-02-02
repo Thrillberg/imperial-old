@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129124906) do
+ActiveRecord::Schema.define(version: 20180202180826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 20180129124906) do
     t.index ["pre_game_id"], name: "index_games_on_pre_game_id"
   end
 
+  create_table "investor_cards", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "investor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_investor_cards_on_game_id"
+    t.index ["investor_id"], name: "index_investor_cards_on_investor_id"
+  end
+
   create_table "investors", force: :cascade do |t|
     t.bigint "game_id"
     t.datetime "created_at", null: false
@@ -74,6 +83,7 @@ ActiveRecord::Schema.define(version: 20180129124906) do
     t.integer "money"
     t.boolean "has_investor_card"
     t.integer "seating_order"
+    t.boolean "eligible_to_invest", default: false
     t.index ["game_id"], name: "index_investors_on_game_id"
     t.index ["user_id"], name: "index_investors_on_user_id"
   end

@@ -1,0 +1,2 @@
+Where would you like to build your factory?
+<%= render :partial => "svg/board", locals: { factories: @factories, regions: @eligible_regions, game: @game.id, pieces: @pieces, turn: 'build_factory', import_count: nil, origin_region: nil, flags: @flags, investor_id: @current_investor.id } %>
