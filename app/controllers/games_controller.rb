@@ -30,20 +30,6 @@ class GamesController < ApplicationController
     redirect_to game_path
   end
 
-  def investor_turn
-    if params[:bond]
-      @game.purchase_bond(params[:bond])
-      @game.pass_investor_card
-      @game.next_turn
-      redirect_to game_path
-    else
-      @game.pay_interest
-      @game.activate_investor
-      @available_bonds = @game.bonds.where(investor: nil)
-      render :investor_turn
-    end
-  end
-
   private
 
   def set_common_instance_variables

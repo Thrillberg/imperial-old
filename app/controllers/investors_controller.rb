@@ -1,8 +1,12 @@
 class InvestorsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation, :investor]
+  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation, :investor_turn]
 
   def show
+    @available_bonds = @game.bonds.where(investor: nil)
+    if @current_investor.eligible_to_invest
+      render :investor_turn
+    end
     if params[:in_turn]
       case @game.current_country.step
       when /^maneuver/i
@@ -35,7 +39,14 @@ class InvestorsController < ApplicationController
 
         render :import
       when /^investor/i
-        redirect_to investor_game_path(id: id)
+        @game.pay_interest
+        @game.activate_investor
+        if @current_investor.has_investor_card
+          render :investor_turn
+        else
+          @game.investors.find_by(has_investor_card: true).update(eligible_to_invest: true)
+          redirect_to game_investor_path
+        end
       when /^taxation/i
         redirect_to taxation_game_path(id: id)
       end
@@ -107,6 +118,16 @@ class InvestorsController < ApplicationController
 
     if params[:next_turn]
       session[:moved_pieces_ids] = []
+      @game.next_turn
+      redirect_to game_investor_path
+    end
+  end
+
+  def investor_turn
+    if params[:bond]
+      @game.purchase_bond(params[:bond], @current_investor)
+      @game.pass_investor_card(@current_investor)
+      @current_investor.update(eligible_to_invest: false)
       @game.next_turn
       redirect_to game_investor_path
     end

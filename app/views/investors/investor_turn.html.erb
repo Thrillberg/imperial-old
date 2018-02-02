@@ -8,7 +8,7 @@ You have <%= @current_investor.money %> money and control these countries:
   <% @available_bonds.each do |bond| %>
     <div class="bond">
       <div class="country-name">
-        <%= link_to bond.country.name, investor_game_path(bond: bond) %>
+        <%= link_to bond.country.name, investor_turn_game_investor_path(bond: bond) %>
       </div>
       <div class="price">
         Price: <%= bond.price %>

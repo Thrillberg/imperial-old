@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         post :turn
         get :maneuver_destination
         get :maneuver
+        get :investor_turn
       end
     end
 
