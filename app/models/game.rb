@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   include TaxationStep
   include InvestorStep
+  include ProductionStep
 
   after_create :set_up_countries_and_regions
   after_create :set_up_neutral_regions

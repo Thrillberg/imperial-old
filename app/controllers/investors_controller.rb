@@ -1,6 +1,6 @@
 class InvestorsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation, :investor_turn]
+  before_action :set_common_instance_variables, only: [:show, :build_factory, :import, :maneuver, :maneuver_destination, :investor_turn, :turn]
 
   def show
     @available_bonds = @game.bonds.where(investor: nil)
@@ -8,35 +8,17 @@ class InvestorsController < ApplicationController
       render :investor_turn
     end
     if params[:in_turn]
-      case @game.current_country.step
+      case @current_country.step
       when /^maneuver/i
         session[:moved_pieces_ids] ||= []
-        eligible_pieces = @game.current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
-        @eligible_regions = eligible_pieces.map(&:region).map(&:name)
-
         render :maneuver
       when /^production/i
-        @game.current_country.regions.select(&:has_factory).each do |region|
-          if region.factory_type == :armaments
-            Army.create(region: region, country: region.country)
-          else
-            Fleet.create(region: region, country: region.country)
-          end
-        end
+        @game.production
         @game.next_turn
-
         redirect_to game_investor_path
       when /^factory/i
-        regions = []
-        @game.current_country.regions.each do |region|
-          regions << region.name unless @game.regions.find_by(name: region.name).has_factory
-        end
-        @eligible_regions = regions
-
         render :build_factory
       when /^import/i
-        @eligible_regions = @game.current_country.regions.map(&:name)
-
         render :import
       when /^investor/i
         @game.pay_interest
@@ -52,11 +34,10 @@ class InvestorsController < ApplicationController
         @power_position = @game.move_on_tax_chart(@taxes)
         @game.add_power_points
         @game.next_turn
-
         redirect_to game_investor_path
       end
     else
-      rondel = Rondel.new current_action: @game.current_country.step
+      rondel = Rondel.new current_action: @current_country.step
       @steps = rondel.available
     end
   end
@@ -64,7 +45,7 @@ class InvestorsController < ApplicationController
   def build_factory
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
-      @game.current_country.update(money: @game.current_country.money - 5)
+      @current_country.update(money: @current_country.money - 5)
       @game.next_turn
       redirect_to game_investor_path
     end
@@ -91,7 +72,7 @@ class InvestorsController < ApplicationController
 
   def maneuver
     session[:moved_pieces_ids] ||= []
-    eligible_pieces = @game.current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
+    eligible_pieces = @current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
     @eligible_regions = eligible_pieces.map(&:region).map(&:name)
 
     if (params[:origin_region])
@@ -103,12 +84,12 @@ class InvestorsController < ApplicationController
     if params[:destination_region]
       origin_region = @game.regions.find_by(name: params[:origin_region])
       destination_region = @game.regions.find_by(name: params[:destination_region])
-      piece = origin_region.pieces.where(country: @game.current_country).take
+      piece = origin_region.pieces.where(country: @current_country).take
       piece.update(region: destination_region)
       @game.check_for_conflict(piece)
       @game.reconcile_flags(destination_region)
       session[:moved_pieces_ids] << piece.id
-      if (@game.current_country.pieces.map(&:id) - session[:moved_pieces_ids]).empty?
+      if (@current_country.pieces.map(&:id) - session[:moved_pieces_ids]).empty?
         session[:moved_pieces_ids] = []
         @game.next_turn
 
@@ -139,10 +120,7 @@ class InvestorsController < ApplicationController
   end
 
   def turn
-    id = params[:game_id]
-    game = Game.find id
-    country = game.current_country
-    country.update step: params[:step]
+    @current_country.update step: params[:step]
 
     redirect_to game_investor_path(in_turn: true)
   end
@@ -152,10 +130,29 @@ class InvestorsController < ApplicationController
   def set_common_instance_variables
     @game = Game.find(params[:game_id])
     @flags = @game.regions_with_flags
+    @current_country = @game.current_country
     @factories = @game.regions.where(has_factory: true).map do |country|
       "#{country.name}-factory"
     end
     @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
+    @eligible_regions = eligible_regions(@current_country.step)
+  end
+
+  def eligible_regions(action)
+    eligible_regions = @current_country.regions
+
+    case action
+    when /^maneuver/i
+      all_pieces = @current_country.pieces
+      eligible_pieces = all_pieces.reject do |piece|
+        session[:moved_pieces_ids].include? piece.id
+      end
+      eligible_regions = eligible_pieces.map(&:region)
+    when /^factory/i
+      eligible_regions = eligible_regions.reject(&:has_factory)
+    end
+
+    eligible_regions.map(&:name)
   end
 end
