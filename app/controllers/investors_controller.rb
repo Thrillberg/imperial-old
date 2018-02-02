@@ -6,6 +6,11 @@ class InvestorsController < ApplicationController
     if params[:in_turn]
       case @game.current_country.step
       when /^maneuver/i
+        session[:moved_pieces_ids] ||= []
+        eligible_pieces = @game.current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
+        @eligible_regions = eligible_pieces.map(&:region).map(&:name)
+
+        render :maneuver
       when /^production/i
         @game.current_country.regions.select(&:has_factory).each do |region|
           if region.factory_type == :armaments
@@ -65,6 +70,45 @@ class InvestorsController < ApplicationController
 
       session[:import_count] = @import_count
       redirect_back(fallback_location: game_investor_path)
+    end
+  end
+
+  def maneuver
+    session[:moved_pieces_ids] ||= []
+    eligible_pieces = @game.current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
+    @eligible_regions = eligible_pieces.map(&:region).map(&:name)
+
+    if (params[:origin_region])
+      redirect_to maneuver_destination_game_investor_path(origin_region: params[:origin_region])
+    end
+  end
+
+  def maneuver_destination
+    if params[:destination_region]
+      origin_region = @game.regions.find_by(name: params[:origin_region])
+      destination_region = @game.regions.find_by(name: params[:destination_region])
+      piece = origin_region.pieces.where(country: @game.current_country).take
+      piece.update(region: destination_region)
+      @game.check_for_conflict(piece)
+      @game.reconcile_flags(destination_region)
+      session[:moved_pieces_ids] << piece.id
+      if (@game.current_country.pieces.map(&:id) - session[:moved_pieces_ids]).empty?
+        session[:moved_pieces_ids] = []
+        @game.next_turn
+
+        redirect_to game_investor_path
+      else
+        redirect_to maneuver_game_investor_path
+      end
+    elsif params[:origin_region]
+      @eligible_regions = Settings.neighbors[params[:origin_region]]
+      session[:origin_region] = params[:origin_region]
+    end
+
+    if params[:next_turn]
+      session[:moved_pieces_ids] = []
+      @game.next_turn
+      redirect_to game_investor_path
     end
   end
 

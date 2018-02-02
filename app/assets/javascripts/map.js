@@ -86,14 +86,14 @@ $(document).on('turbolinks:load', function() {
 
   function movePieceFrom(region) {
     $.ajax({
-      url: '/games/' + window.game + '/maneuver?origin_region=' + region.id,
+      url: '/games/' + window.game + '/investors/' + window.investorId + '/maneuver?origin_region=' + region.id,
       method: 'POST'
     });
   }
 
   function movePieceTo(destination) {
     $.ajax({
-      url: '/games/' + window.game + '/maneuver_destination?destination_region=' + destination.id,
+      url: '/games/' + window.game + '/investors/' + window.investorId + '/maneuver_destination?destination_region=' + destination.id,
       method: 'POST',
       data: {
         origin_region: originRegion
