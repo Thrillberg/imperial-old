@@ -48,7 +48,12 @@ class InvestorsController < ApplicationController
           redirect_to game_investor_path
         end
       when /^taxation/i
-        redirect_to taxation_game_path(id: id)
+        @taxes = @game.get_taxes
+        @power_position = @game.move_on_tax_chart(@taxes)
+        @game.add_power_points
+        @game.next_turn
+
+        redirect_to game_investor_path
       end
     else
       rondel = Rondel.new current_action: @game.current_country.step

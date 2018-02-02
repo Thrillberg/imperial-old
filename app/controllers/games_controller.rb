@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_common_instance_variables, only: [:show, :build_factory, :production, :import, :maneuver, :maneuver_destination, :taxation, :investor]
 
   def create
     pre_game = PreGame.find params[:pre_game_id]
@@ -18,27 +17,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
-  end
-
-  def taxation
-    @taxes = @game.get_taxes
-    @power_position = @game.move_on_tax_chart(@taxes)
-    @game.add_power_points
-    @game.next_turn
-
-    redirect_to game_path
-  end
-
-  private
-
-  def set_common_instance_variables
     @game = Game.find(params[:id])
-    @flags = @game.regions_with_flags
-    @factories = @game.regions.where(has_factory: true).map do |country|
-      "#{country.name}-factory"
-    end
-    @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
+    redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
   end
 end
