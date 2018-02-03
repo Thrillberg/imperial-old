@@ -72,6 +72,7 @@ class Game < ApplicationRecord
 
   def next_turn
     self.update(current_country: self.countries.find_by(name: self.next_country[self.current_country.name.to_sym]))
+    NextTurnBroadcastJob.perform_now(id)
   end
 
   def check_for_conflict(moving_piece)
