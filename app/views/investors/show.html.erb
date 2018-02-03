@@ -54,4 +54,5 @@ You are <%= @current_investor.user.username %>.
     <div>It is <%= @game.current_country.name %>'s turn!</div>
     <span class="meeple"><%= render :partial => "svg/" + @game.current_country.name + "_meeple" %></span>
   <% end %>
+  <%= render :partial => "svg/rondel" %>
 </div>
