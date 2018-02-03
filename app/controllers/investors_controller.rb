@@ -3,8 +3,8 @@ class InvestorsController < ApplicationController
   before_action :set_common_instance_variables, only: [:show, :build_factory, :import, :maneuver, :maneuver_destination, :investor_turn, :turn]
 
   def show
-    @available_bonds = @game.bonds.where(investor: nil)
     if @current_investor.eligible_to_invest
+      @available_bonds = @game.bonds.where(investor: nil)
       render :investor_turn
     end
     if params[:in_turn]
@@ -26,8 +26,10 @@ class InvestorsController < ApplicationController
         if @current_investor.has_investor_card?
           render :investor_turn
         else
-          @game.investor_card.investor.update(eligible_to_invest: true)
-          redirect_to game_investor_path
+          eligible_investor = @game.investor_card.investor
+          eligible_investor.update(eligible_to_invest: true)
+          EligibleToInvestBroadcastJob.perform_now(@game.id, eligible_investor.id, eligible_investor.user.id)
+          render :wait_for_investors
         end
       when /^taxation/i
         @taxes = @game.get_taxes
@@ -110,13 +112,18 @@ class InvestorsController < ApplicationController
   end
 
   def investor_turn
+    @available_bonds = @game.bonds.where(investor: nil)
     if params[:bond]
+      PurchasedBondBroadcastJob.perform_now(@game.id, @current_investor.id, params[:bond])
       @game.purchase_bond(params[:bond], @current_investor)
       @game.investor_card.pass_card
       @current_investor.update(eligible_to_invest: false)
       @game.next_turn
       redirect_to game_investor_path
     end
+  end
+
+  def wait_for_investors
   end
 
   def turn

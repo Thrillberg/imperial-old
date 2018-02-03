@@ -77,7 +77,7 @@ class Game < ApplicationRecord
   def check_for_conflict(moving_piece)
     pieces = moving_piece.region.pieces
     enemy_piece = pieces.where.not(country: moving_piece.country)
-      if enemy_piece.count > 0
+    if enemy_piece.count > 0
       Piece.destroy(enemy_piece[0].id)
       Piece.destroy(moving_piece.id)
     end
