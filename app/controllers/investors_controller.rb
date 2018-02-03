@@ -38,9 +38,6 @@ class InvestorsController < ApplicationController
         @game.next_turn
         redirect_to game_investor_path
       end
-    else
-      rondel = Rondel.new current_action: @current_country.step
-      @steps = rondel.available
     end
   end
 
@@ -144,6 +141,8 @@ class InvestorsController < ApplicationController
     @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
     @eligible_regions = eligible_regions(@current_country.step)
+    rondel = Rondel.new current_action: @current_country.step
+    @steps = rondel.available
   end
 
   def eligible_regions(action)
