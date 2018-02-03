@@ -1,5 +1,6 @@
 $(document).on('turbolinks:load', function() {
   window.steps.forEach(addListener)
+  window.countrySteps.forEach(placeMeeple)
 
   function addListener(step) {
     var svgRegion = document.getElementById(step.id);
@@ -12,6 +13,13 @@ $(document).on('turbolinks:load', function() {
     } else if (step.cost == 1) {
       svgRegion.classList.add("one");
     }
+  }
+
+  function placeMeeple(countryStep) {
+    debugger
+    var meeple = document.getElementById(countryStep.step + '-' + countryStep.name);
+    meeple.classList.add("show");
+    meeple.style.fill = countryStep.color;
   }
 
   function takeTurn(step) {

@@ -35,4 +35,4 @@ You are <%= @current_investor.user.username %>.
     <% end %>
   </div>
 </div>
-<%= render :partial => "svg/rondel", locals: { game: @game.id, investor_id: @current_investor.id, steps: @steps } %>
+<%= render :partial => "svg/rondel", locals: { game: @game.id, investor_id: @current_investor.id, steps: @steps, country_steps: @country_steps } %>

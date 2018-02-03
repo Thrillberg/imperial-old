@@ -143,6 +143,13 @@ class InvestorsController < ApplicationController
     @eligible_regions = eligible_regions(@current_country.step)
     rondel = Rondel.new current_action: @current_country.step
     @steps = rondel.available
+    @country_steps = @game.countries.map do |country|
+      {
+        name: country.name,
+        step: country.step,
+        color: Settings.countries[country.name].color
+      }
+    end
   end
 
   def eligible_regions(action)
