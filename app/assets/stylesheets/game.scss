@@ -166,6 +166,21 @@ svg path {
   &.glow-on-hover:hover {
     fill-opacity: 0.5;
   }
+
+  &.three:hover {
+    fill: deeppink !IMPORTANT;
+    fill-opacity: 1;
+  }
+
+  &.two:hover {
+    fill: firebrick !IMPORTANT;
+    fill-opacity: 1;
+  }
+
+  &.one:hover {
+    fill: lightpink !IMPORTANT;
+    fill-opacity: 1;
+  }
 }
 
 .bonds {

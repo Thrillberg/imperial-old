@@ -35,24 +35,4 @@ You are <%= @current_investor.user.username %>.
     <% end %>
   </div>
 </div>
-
-<div>
-  <% if @game.current_country.owner.user == current_user && !@step%>
-    <%= @game.current_country.name %> may do one of the following actions:
-    <% @steps.each do |step| %>
-      <div class="row step">
-        <%= button_to "#{step[:label]} (costs #{step[:cost]})", { action: 'turn', step: step[:id] }, class: 'btn btn-primary' %>
-        <% @game.countries.each do |country| %>
-          <% if country.step == step[:id] %>
-            <span class="meeple"><%= render :partial => "svg/" + @meeples[country.name.to_sym] %></span>
-          <% end %>
-          </span>
-        <% end %>
-      </div>
-    <% end %>
-  <% else %>
-    <div>It is <%= @game.current_country.name %>'s turn!</div>
-    <span class="meeple"><%= render :partial => "svg/" + @game.current_country.name + "_meeple" %></span>
-  <% end %>
-  <%= render :partial => "svg/rondel" %>
-</div>
+<%= render :partial => "svg/rondel", locals: { game: @game.id, investor_id: @current_investor.id, steps: @steps } %>
