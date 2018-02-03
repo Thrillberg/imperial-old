@@ -22,6 +22,7 @@ class PreGamesController < ApplicationController
     @start_enabled = @pre_game.users.count > 1 &&
       current_user == @pre_game.creator
     if @pre_game.started
+      @current_investor = @game.investors.find_by(user: current_user)
       redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
     end
   end

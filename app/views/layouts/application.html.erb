@@ -13,7 +13,7 @@
   <% unless current_user %>
     <div class="background">
   <% else %>
-    <div>
+    <div id="imperial" data-current-user-id=<%= current_user.id %>>
   <% end %>
       <%= render 'shared/header' %>
       <div class="container">

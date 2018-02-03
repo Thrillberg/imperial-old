@@ -10,7 +10,7 @@ class Investor < ApplicationRecord
   end
 
   def next
-    Investor.where(seating_order: seating_order + 1).or(Investor.where(seating_order: 0))
+    game.investors.where(seating_order: seating_order + 1).or(game.investors.where(seating_order: 0)).first
   end
 
   def has_investor_card?
