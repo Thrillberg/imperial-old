@@ -12,5 +12,8 @@ App.pre_games = App.cable.subscriptions.create {
       $('#pre_games').append data['pre_game']
       $('p').remove '.sorry'
     else if data['user']
-      $('#players').append data['user']
+      if data['action'] == 'join'
+        $('#players-' + data['pre_game_id']).append data['user']
+      else
+        window.location.href = '/'
 

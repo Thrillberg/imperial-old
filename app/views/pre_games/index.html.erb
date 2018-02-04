@@ -5,7 +5,7 @@
       <% if @joinable_games.count == 0 %>
         <p class="sorry">Sorry, no joinable games.</p>
       <% else %>
-        <% @joinable__games.each do |game| %>
+        <% @joinable_games.each do |game| %>
           <%= render game, new: false, game: game %>
         <% end %>
       <% end %>
