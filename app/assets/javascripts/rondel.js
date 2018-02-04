@@ -16,9 +16,11 @@ $(document).on('turbolinks:load', function() {
   }
 
   function placeMeeple(countryStep) {
-    var meeple = document.getElementById(countryStep.step + '-' + countryStep.name);
-    meeple.classList.add("show");
-    meeple.style.fill = countryStep.color;
+    if (countryStep) {
+      var meeple = document.getElementById(countryStep.step + '-' + countryStep.name);
+      meeple.classList.add("show");
+      meeple.style.fill = countryStep.color;
+    }
   }
 
   function takeTurn(step) {
