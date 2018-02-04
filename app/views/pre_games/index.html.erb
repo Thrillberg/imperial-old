@@ -1,11 +1,21 @@
 <div class="row">
   <div class="col">
     <div id="pre_games">
-      <u>Games:</u>
-      <% if @pre_games.count == 0 %>
-        <p class="sorry">Sorry, no joinable games yet.</p>
+      <u>Joinable Games:</u>
+      <% if @joinable_games.count == 0 %>
+        <p class="sorry">Sorry, no joinable games.</p>
       <% else %>
-        <% @pre_games.each do |game| %>
+        <% @joinable__games.each do |game| %>
+          <%= render game, new: false, game: game %>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="in-progress-games">
+      <u>In-progress Games:</u>
+      <% if @games.count == 0 %>
+        <p class="sorry">Sorry, no in-progress games.</p>
+      <% else %>
+        <% @games.each do |game| %>
           <%= render game, new: false, game: game %>
         <% end %>
       <% end %>

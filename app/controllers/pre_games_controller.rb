@@ -2,9 +2,10 @@ class PreGamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @pre_games = PreGame.all
+    @joinable_games = PreGame.all.reject(&:started)
     @pre_game = PreGame.new
     @users = User.all
+    @games = Game.all
   end
 
   def create
