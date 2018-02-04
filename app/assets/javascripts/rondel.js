@@ -16,7 +16,6 @@ $(document).on('turbolinks:load', function() {
   }
 
   function placeMeeple(countryStep) {
-    debugger
     var meeple = document.getElementById(countryStep.step + '-' + countryStep.name);
     meeple.classList.add("show");
     meeple.style.fill = countryStep.color;
