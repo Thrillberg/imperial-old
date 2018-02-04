@@ -32,12 +32,13 @@ class PreGamesController < ApplicationController
     pre_game = PreGame.find(params[:id])
     if pre_game.users.include? current_user
       pre_game.users.delete(current_user)
+      PreGamePopulateBroadcastJob.perform_now(current_user, pre_game.id, "leave")
       if pre_game.users.count == 0
         pre_game.destroy
       end
     else
       pre_game.users << current_user
-      PreGamePopulateBroadcastJob.perform_now(current_user)
+      PreGamePopulateBroadcastJob.perform_now(current_user, pre_game.id, "join")
       redirect_to pre_game
     end
   end
