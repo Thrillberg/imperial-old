@@ -1,4 +1,11 @@
-<%= link_to pre_games_path, class: "header" do %>
-  <%= render :partial => 'svg/icon-cannibal' %>
+<div class="site-header">
+  <%= link_to pre_games_path do %>
+    <%= render :partial => 'svg/icon-cannibal' %>
+  <% end %>
   <span>Imperial</span>
-<% end %>
+  <% if user_signed_in? %>
+    <%= link_to destroy_user_session_path, method: :delete do %>
+      <i class="fas fa-sign-out-alt sign-out"></i>
+    <% end %>
+  <% end %>
+</div>
