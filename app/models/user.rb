@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :pre_games, through: :pre_game_users
 
   def online?
-    !Redis.new.get("user_#{self.id}_online").nil?
+    $redis.get("user_#{self.id}_online").nil?
   end
 
   def convert_users_to_investors(game)
