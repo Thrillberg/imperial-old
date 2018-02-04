@@ -1,6 +1,8 @@
 $(document).on('turbolinks:load', function() {
-  window.steps.forEach(addListener)
-  window.countrySteps.forEach(placeMeeple)
+  if (window.steps && window.countrySteps) {
+    window.steps.forEach(addListener)
+    window.countrySteps.forEach(placeMeeple)
+  }
 
   function addListener(step) {
     var svgRegion = document.getElementById(step.id);
