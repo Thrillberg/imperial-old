@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function() {
   var allFactories = document.getElementsByClassName("factory");
   for (let factory of allFactories) {
-    checkForBuiltFactory(factory)
+    checkForBuiltFactory(factory);
   }
 
   var allPieces = document.getElementsByClassName("piece");
