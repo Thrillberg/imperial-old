@@ -71,8 +71,7 @@ class InvestorsController < ApplicationController
 
   def maneuver
     session[:moved_pieces_ids] ||= []
-    eligible_pieces = @current_country.pieces.reject{|piece| session[:moved_pieces_ids].include? piece.id}
-    @eligible_regions = eligible_pieces.map(&:region).map(&:name)
+    @eligible_regions = InvestorsHelper.eligible_regions(:maneuver)
 
     if (params[:origin_region])
       redirect_to maneuver_destination_game_investor_path(origin_region: params[:origin_region])
@@ -97,7 +96,7 @@ class InvestorsController < ApplicationController
         redirect_to maneuver_game_investor_path
       end
     elsif params[:origin_region]
-      @eligible_regions = Settings.neighbors[params[:origin_region]]
+      @eligible_regions = InvestorHelper.eligible_regions(:maneuver_destination, params)
       session[:origin_region] = params[:origin_region]
     end
 
@@ -140,7 +139,7 @@ class InvestorsController < ApplicationController
     end
     @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
-    @eligible_regions = eligible_regions(@current_country.step)
+    @eligible_regions = InvestorHelper.eligible_regions(@current_country.step)
     rondel = Rondel.new current_action: @current_country.step
     @steps = rondel.available
     @country_steps = @game.countries.map do |country|
@@ -150,22 +149,5 @@ class InvestorsController < ApplicationController
         color: Settings.countries[country.name].color
       }
     end
-  end
-
-  def eligible_regions(action)
-    eligible_regions = @current_country.regions
-
-    case action
-    when /^maneuver/i
-      all_pieces = @current_country.pieces
-      eligible_pieces = all_pieces.reject do |piece|
-        session[:moved_pieces_ids].include? piece.id
-      end
-      eligible_regions = eligible_pieces.map(&:region)
-    when /^factory/i
-      eligible_regions = eligible_regions.reject(&:has_factory)
-    end
-
-    eligible_regions.map(&:name)
   end
 end
