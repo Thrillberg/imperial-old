@@ -5,7 +5,7 @@ module InvestorsHelper
     case action
     when /^maneuver/i
       if action == :maneuver_destination
-        return Settings.neighbors(params[:origin_region])
+        return Settings.neighbors[params[:origin_region]]
       end
 
       @current_country.pieces.each do |piece|
