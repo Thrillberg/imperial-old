@@ -48,8 +48,8 @@ describe InvestorsHelper do
       let(:region_names) { ["destination-region", "sunshine-region"] }
 
       it "returns neighbors from Settings file" do
-        expect(Settings).to receive(:neighbors).and_return(region_names)
-        expect(helper.eligible_regions(:maneuver_destination, { origin_region: "blort" })).to eql region_names
+        expect(Settings).to receive(:neighbors).and_return({blort: region_names})
+        expect(helper.eligible_regions(:maneuver_destination, { origin_region: :blort })).to eql region_names
       end
     end
 

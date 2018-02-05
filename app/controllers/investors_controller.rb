@@ -72,6 +72,7 @@ class InvestorsController < ApplicationController
 
   def maneuver
     session[:moved_pieces_ids] ||= []
+    @eligible_regions = helpers.eligible_regions(@current_country.step)
 
     if (params[:origin_region])
       redirect_to maneuver_destination_game_investor_path(origin_region: params[:origin_region])
