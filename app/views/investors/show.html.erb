@@ -20,7 +20,7 @@ You are <%= @current_investor.user.username %>.
 <div class="row">
   <div class="col-lg-6 offset-lg-3 col-xs-12 your-countries card">
     <strong class='header'>You control the governments of these countries</strong>
-    <% @current_investor.countries.each do |country| %>
+    <% @owned_countries.each do |country| %>
       <span class="row country">
         <span><%= render :partial => "svg/" + country.name + "_flag" %></span>
         <span>
@@ -41,3 +41,19 @@ You are <%= @current_investor.user.username %>.
   <div>It is <%= @game.current_country.name %>'s turn and you ain't <%= @game.current_country.name %>!</div>
   <%= render :partial => "svg/rondel", locals: { game: @game.id, investor_id: @current_investor.id, steps: [], country_steps: @country_steps } %>
 <% end %>
+<b>You own the following bonds:</b>
+<div class="bonds">
+  <% @current_investor.bonds.each do |bond| %>
+    <div class="bond">
+      <div class="country-name">
+        <%= bond.country.name %>
+      </div>
+      <div class="price">
+        Price: <%= bond.price %>
+      </div>
+      <div class="interest">
+        Interest Rate: <%= bond.interest %>
+      </div>
+    </div>
+  <% end %>
+</div>

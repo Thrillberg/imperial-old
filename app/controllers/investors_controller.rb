@@ -149,5 +149,6 @@ class InvestorsController < ApplicationController
         color: Settings.countries[country.name].color
       }
     end
+    @owned_countries = @game.countries.select{|country| country.owner == @current_investor}
   end
 end
