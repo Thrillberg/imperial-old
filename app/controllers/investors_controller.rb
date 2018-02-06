@@ -8,6 +8,7 @@ class InvestorsController < ApplicationController
       render :investor_turn
     end
     if params[:in_turn]
+      @eligible_regions = helpers.eligible_regions(@current_country.step)
       case @current_country.step
       when /^maneuver/i
         session[:moved_pieces_ids] ||= []
@@ -39,10 +40,21 @@ class InvestorsController < ApplicationController
         @game.next_turn
         redirect_to game_investor_path
       end
+    else
+      rondel = Rondel.new current_action: @current_country.step
+      @steps = rondel.available
+      @country_steps = @game.countries.map do |country|
+        {
+          name: country.name,
+          step: country.step,
+          color: Settings.countries[country.name].color
+        }
+      end
     end
   end
 
   def build_factory
+    @eligible_regions = helpers.eligible_regions(@current_country.step)
     if params[:region]
       @game.regions.find_by(name: params[:region]).update(has_factory: true)
       @current_country.update(money: @current_country.money - 5)
@@ -140,15 +152,6 @@ class InvestorsController < ApplicationController
     end
     @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
-    rondel = Rondel.new current_action: @current_country.step
-    @steps = rondel.available
-    @country_steps = @game.countries.map do |country|
-      {
-        name: country.name,
-        step: country.step,
-        color: Settings.countries[country.name].color
-      }
-    end
     @owned_countries = @game.countries.select{|country| country.owner == @current_investor}
   end
 end
