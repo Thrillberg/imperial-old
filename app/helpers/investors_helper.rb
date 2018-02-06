@@ -14,7 +14,9 @@ module InvestorsHelper
         end
       end
     when /^factory/i
-      return @current_country.regions.select(&:has_factory).map(&:name)
+      return @current_country.regions.reject(&:has_factory).map(&:name)
+    when /^import/i
+      return @current_country.regions.map(&:name)
     end
 
     result

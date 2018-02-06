@@ -55,18 +55,35 @@ describe InvestorsHelper do
 
     context "action is factory" do
       let(:action) { :factory }
-      let(:expected_region_names) { ["factorified-region", "pollution-central"] }
+      let(:expected_region_names) { ["rolling-hills-region", "no-factory-central"] }
 
       before(:each) do
         @current_country = create(:country, game: game)
         expected_region_names.each do |region_name|
-          Region.create!(name: region_name, game: game, country: @current_country, has_factory: true)
+          Region.create!(name: region_name, game: game, country: @current_country, has_factory: false)
+        end
+        Region.create!(name: "bogus-region", game: game, has_factory: true)
+      end
+
+      it "returns an array of region names" do
+        expect(helper.eligible_regions(:factory)).to eql expected_region_names
+      end
+    end
+
+    context "action is import" do
+      let(:action) { :import }
+      let(:expected_region_names) { ["importable-region", "lets-get-ana-army-here"] }
+
+      before(:each) do
+        @current_country = create(:country, game: game)
+        expected_region_names.each do |region_name|
+          Region.create!(name: region_name, game: game, country: @current_country)
         end
         Region.create!(name: "bogus-region", game: game)
       end
 
       it "returns an array of region names" do
-        expect(helper.eligible_regions(:factory)).to eql expected_region_names
+        expect(helper.eligible_regions(:import)).to eql expected_region_names
       end
     end
   end

@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
   if (window.steps && window.countrySteps) {
     window.steps.forEach(addListener)
     window.countrySteps.forEach(placeMeeple)
