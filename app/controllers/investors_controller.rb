@@ -54,27 +54,19 @@ class InvestorsController < ApplicationController
   end
 
   def build_factory
-    @eligible_regions = helpers.eligible_regions(@current_country.step)
     @game.build_factory(params[:region])
     redirect_to game_investor_path
   end
 
   def import
-    if params[:region]
-      region = @game.regions.find_by(name: params[:region])
-      Army.create(region: region, country: region.country)
-      region.country.update(money: region.country.money - 1)
-      @import_count = params[:import_count]
-
-      if @import_count.to_i >= 3
-        @game.next_turn
-        session[:import_count] = 0
-
-        redirect_to game_investor_path and return
-      end
-
-      session[:import_count] = @import_count
+    if params[:import_count].to_i < 3
+      @game.import(params[:region])
+      session[:import_count] = params[:import_count]
       redirect_back(fallback_location: game_investor_path)
+    else
+      @game.next_turn
+      session[:import_count] = 0
+      redirect_to game_investor_path and return
     end
   end
 

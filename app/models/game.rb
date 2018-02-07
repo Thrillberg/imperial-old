@@ -114,6 +114,13 @@ class Game < ApplicationRecord
     next_turn
   end
 
+  def import(region_name)
+    region = regions.find_by(name: region_name)
+    country = region.country
+    Army.create(region: region, country: country)
+    country.update(money: country.money - 1)
+  end
+
   private
 
   def set_up_countries
