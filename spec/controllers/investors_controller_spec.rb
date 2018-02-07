@@ -67,4 +67,35 @@ describe InvestorsController do
       end
     end
   end
+
+  describe "GET #maneuver" do
+    let(:params) do
+      {
+        game_id: game.id,
+        id: investor.id 
+      }
+    end
+    let(:subject) { get :maneuver, params: params }
+    let(:expected_regions) { ["blort", "blard"] }
+
+    context "no origin region" do
+      it "sets eligible regions" do
+        game.current_country.update(step: "maneuver")
+        allow_any_instance_of(InvestorsHelper).to receive(:eligible_regions).with("maneuver").and_return(expected_regions)
+        subject
+        expect(assigns(:eligible_regions)).to eq(expected_regions)
+      end
+    end
+
+    context "with an origin region" do
+      let(:origin_region) { game.current_country.regions.sample }
+      before(:each) do
+        params[:origin_region] = origin_region.name
+      end
+
+      it "redirects to maneuver destination route" do
+        expect(subject).to redirect_to "/games/#{params[:game_id]}/investors/#{params[:id]}/maneuver_destination?origin_region=#{params[:origin_region]}"
+      end
+    end
+  end
 end
