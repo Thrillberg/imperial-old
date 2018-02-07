@@ -11,7 +11,7 @@ namespace :set_game_state do
     germany = game.countries.find_by(name: "germany")
     russia = game.countries.find_by(name: "russia")
     italy = game.countries.find_by(name: "italy")
-    investors = pregame.users.map { |user| user.convert_users_to_investors(game) }
+    investors = pregame.users.map { |user| user.convert_to_investor(game) }
     game.establish_investor_order
     eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
     InvestorCard.create(game: game, investor: eligible_investors.sample)
