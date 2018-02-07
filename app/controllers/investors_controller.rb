@@ -55,12 +55,8 @@ class InvestorsController < ApplicationController
 
   def build_factory
     @eligible_regions = helpers.eligible_regions(@current_country.step)
-    if params[:region]
-      @game.regions.find_by(name: params[:region]).update(has_factory: true)
-      @current_country.update(money: @current_country.money - 5)
-      @game.next_turn
-      redirect_to game_investor_path
-    end
+    @game.build_factory(params[:region])
+    redirect_to game_investor_path
   end
 
   def import

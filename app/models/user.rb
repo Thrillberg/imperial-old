@@ -11,7 +11,7 @@ class User < ApplicationRecord
     $redis.get("user_#{self.id}_online").nil?
   end
 
-  def convert_users_to_investors(game)
+  def convert_to_investor(game)
     Investor.create(user: self, game: game, has_investor_card: false)
   end
 end

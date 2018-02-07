@@ -3,7 +3,7 @@ class Game < ApplicationRecord
   include InvestorStep
   include ProductionStep
 
-  after_create :set_up_countries_and_regions
+  after_create :set_up_countries
   after_create :set_up_neutral_regions
   after_create :set_up_sea_regions
   after_create :set_up_factories
@@ -17,7 +17,7 @@ class Game < ApplicationRecord
 
   def start
     set_up_money
-    set_up_bonds
+    distribute_initial_bonds
   end
 
   def set_up_money
@@ -31,21 +31,6 @@ class Game < ApplicationRecord
     money = amounts[investors.count].to_i
     investors.each do |investor|
       investor.update(money: money)
-    end
-  end
-
-  def set_up_bonds
-    create_bonds
-    distribute_initial_bonds
-  end
-
-  def create_bonds
-    prices = [2, 4, 6, 9, 12, 16, 20, 25, 30]
-    countries.each do |country|
-      pairs = (1..9).zip(prices)
-      pairs.each do |pair|
-        Bond.create(price: pair[1], interest: pair[0], country: country, game: self)
-      end
     end
   end
 
@@ -71,7 +56,7 @@ class Game < ApplicationRecord
   end
 
   def next_turn
-    self.update(current_country: self.countries.find_by(name: self.next_country[self.current_country.name.to_sym]))
+    update(current_country: countries.find_by(name: next_country[current_country.name.to_sym]))
     NextTurnBroadcastJob.perform_now(id)
   end
 
@@ -123,14 +108,17 @@ class Game < ApplicationRecord
     end
   end
 
+  def build_factory(region_name)
+    regions.find_by(name: region_name).update(has_factory: true)
+    current_country.update(money: current_country.money - 5)
+    next_turn
+  end
+
   private
 
-  def set_up_countries_and_regions
+  def set_up_countries
     Settings.countries.each do |country|
-      new_country = Country.create(game_id: self.id, name: country[1].name, position_on_tax_chart: Settings.tax_chart[0], score: 0)
-      country[1].regions.each do |region|
-        new_country.regions << Region.create(game_id: self.id, name: region.name)
-      end
+      Country.create(game_id: self.id, name: country[1].name, position_on_tax_chart: Settings.tax_chart[0], score: 0)
     end
   end
 
