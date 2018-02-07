@@ -11,8 +11,6 @@ class InvestorsController < ApplicationController
       @eligible_regions = helpers.eligible_regions(@current_country.step)
       case @current_country.step
       when /^maneuver/i
-        session[:moved_pieces_ids] ||= []
-        @eligible_regions = helpers.eligible_regions(@current_country.step)
         render :maneuver
       when /^production/i
         @game.production
