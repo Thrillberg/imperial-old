@@ -39,14 +39,14 @@ describe Game do
   end
 
   describe 'regions_with_pieces' do
-    let(:game) { build(:game) }
-    let(:army) { build(:army) }
-    let(:region_name) { "vienna" }
-    let(:country_name) { "austria_hungary" }
+    let(:game) { create(:game) }
+    let(:region) { game.regions.find_by(name: "vienna") }
+    let(:country) { game.countries.find_by(name: "austria_hungary") }
+    let(:piece) { create(:army, country: country, region: region) }
     let(:expected_pieces) do
       [{
-        region_name: region_name,
-        country_name: country_name,
+        region_name: region.name,
+        country_name: country.name,
         type: "army",
         color: "#CCCC00",
         font_color: "black"
@@ -54,10 +54,7 @@ describe Game do
     end
     
     it 'returns regions with pieces' do
-      game.start
-      region = Region.find_by(name: region_name)
-      country = Country.find_by(name: country_name)
-      army.update(region: region, country: country)
+      piece.reload
       expect(game.regions_with_pieces).to eq(expected_pieces)
     end
   end

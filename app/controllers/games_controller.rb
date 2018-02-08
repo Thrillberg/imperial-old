@@ -6,7 +6,7 @@ class GamesController < ApplicationController
     game = Game.new(pre_game_id: pre_game.id)
     if game.save
       austria_hungary = game.countries.find_by(name: "austria_hungary")
-      investors = pre_game.users.map { |user| user.convert_to_investor(game) }
+      investors = pre_game.users.map { |user| user.investors.create(game: game) }
       game.establish_investor_order
       eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
       InvestorCard.create(game: game, investor: eligible_investors.sample)
