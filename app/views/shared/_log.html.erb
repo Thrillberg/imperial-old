@@ -1,0 +1,3 @@
+<% @logs.each do |entry| %>
+  <p><%= entry.country.name %> - <%= entry.action %> - <%= entry.created_at.strftime("%H:%M on %b %d") %></p>
+<% end %>

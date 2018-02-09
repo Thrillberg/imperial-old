@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202180826) do
+ActiveRecord::Schema.define(version: 20180209153312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,16 @@ ActiveRecord::Schema.define(version: 20180202180826) do
     t.boolean "eligible_to_invest", default: false
     t.index ["game_id"], name: "index_investors_on_game_id"
     t.index ["user_id"], name: "index_investors_on_user_id"
+  end
+
+  create_table "log_entries", force: :cascade do |t|
+    t.string "action"
+    t.bigint "country_id"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_log_entries_on_country_id"
+    t.index ["game_id"], name: "index_log_entries_on_game_id"
   end
 
   create_table "pieces", force: :cascade do |t|

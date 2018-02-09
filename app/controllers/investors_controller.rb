@@ -3,6 +3,7 @@ class InvestorsController < ApplicationController
   before_action :set_common_instance_variables, only: [:show, :build_factory, :import, :maneuver, :maneuver_destination, :investor_turn, :turn]
 
   def show
+    @logs = @game.log_entries.last(3).reverse
     if @current_investor.eligible_to_invest
       @available_bonds = @game.bonds.where(investor: nil)
       render :investor_turn
@@ -123,6 +124,7 @@ class InvestorsController < ApplicationController
 
   def turn
     @current_country.update step: params[:step]
+    LogEntry.create(country: @current_country, game: @game, action: params[:step])
 
     redirect_to game_investor_path(in_turn: true)
   end
