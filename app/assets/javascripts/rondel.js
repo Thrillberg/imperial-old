@@ -6,7 +6,7 @@ $(document).ready(function() {
 
   function addListener(step) {
     var svgRegion = document.getElementById(step.id);
-    svgRegion.addEventListener("click", () => { takeTurn(step) });
+    svgRegion.addEventListener("click", takeTurn);
     svgRegion.classList.add("glow-on-hover");
     if (step.cost == 3) {
       svgRegion.classList.add("three");
@@ -25,12 +25,15 @@ $(document).ready(function() {
     }
   }
 
-  function takeTurn(step) {
+  function takeTurn(evt) {
+    window.steps.forEach((step) => {
+      document.getElementById(step.id).removeEventListener("click", takeTurn);
+    });
     $.ajax({
       url: '/games/' + window.game + '/investors/' + window.investorId + '/turn/',
       method: 'POST',
       data: {
-        step: step.id
+        step: evt.target.id
       }
     });
   }
