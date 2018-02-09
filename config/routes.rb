@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :pre_games
   resources :games do
+    resources :log_entries, only: [:index]
     resources :investors do
       member do
         post :turn

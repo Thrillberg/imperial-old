@@ -1,3 +1,7 @@
+<div class="log">
+  <%= render :partial => "shared/log" %>
+  <%= link_to "Full Game History", game_log_entries_path(@game) %>
+</div>
 <h1>It is <%= @game.current_country.name %>’s turn</h1>
 <% @game.investors.each do |investor| %>
   <div class="investor">

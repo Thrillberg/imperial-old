@@ -6,6 +6,7 @@ class Country < ApplicationRecord
   has_many :regions, dependent: :destroy
   has_many :bonds
   has_many :flags
+  has_many :log_entries
   belongs_to :game, optional: true
 
   def set_up_bonds

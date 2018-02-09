@@ -13,6 +13,7 @@ class Game < ApplicationRecord
   has_many :investors, dependent: :destroy
   has_one :investor_card
   has_many :bonds, dependent: :destroy
+  has_many :log_entries
   belongs_to :current_country, :class_name => "Country", :foreign_key => "current_country_id", optional: true
 
   def start
