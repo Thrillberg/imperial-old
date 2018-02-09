@@ -123,10 +123,12 @@ class InvestorsController < ApplicationController
   end
 
   def turn
-    @current_country.update step: params[:step]
-    LogEntry.create(country: @current_country, game: @game, action: params[:step])
+    if @current_country.owner == @current_investor
+      @current_country.update step: params[:step]
+      LogEntry.create(country: @current_country, game: @game, action: params[:step])
 
-    redirect_to game_investor_path(in_turn: true)
+      redirect_to game_investor_path(in_turn: true)
+    end
   end
 
   private
