@@ -5,12 +5,7 @@ class GamesController < ApplicationController
     pre_game = PreGame.find params[:pre_game_id]
     game = Game.new(pre_game_id: pre_game.id)
     if game.save
-      austria_hungary = game.countries.find_by(name: "austria_hungary")
-      investors = pre_game.users.map { |user| user.investors.create(game: game) }
-      game.establish_investor_order
-      eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
-      InvestorCard.create(game: game, investor: eligible_investors.sample)
-      game.update(investors: investors, current_country: austria_hungary)
+      pre_game.users.map { |user| user.investors.create(game: game) }
       game.start
       redirect_to game
     end
