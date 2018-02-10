@@ -2,8 +2,8 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    pre_game = PreGame.find params[:pre_game_id]
-    game = Game.new(pre_game_id: pre_game.id)
+    pre_game = PreGame.find(params[:pre_game_id])
+    game = pre_game.build_game
     if game.save
       pre_game.users.map { |user| user.investors.create(game: game) }
       game.start
