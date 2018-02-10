@@ -5,7 +5,6 @@ class InvestorsController < ApplicationController
   def show
     @logs = @game.log_entries.last(3).reverse
     if @current_investor.eligible_to_invest
-      @available_bonds = @game.bonds.where(investor: nil)
       render :investor_turn
     end
     if params[:in_turn]
@@ -108,7 +107,6 @@ class InvestorsController < ApplicationController
   end
 
   def investor_turn
-    @available_bonds = @game.bonds.where(investor: nil)
     if params[:bond]
       PurchasedBondBroadcastJob.perform_now(@game.id, @current_investor.id, params[:bond])
       @game.purchase_bond(params[:bond], @current_investor)
@@ -143,5 +141,6 @@ class InvestorsController < ApplicationController
     @pieces = @game.regions_with_pieces
     @current_investor = @game.investors.find_by(user: current_user)
     @owned_countries = @game.countries.select{|country| country.owner == @current_investor}
+    @available_bonds = @game.bonds.where(investor: nil)
   end
 end
