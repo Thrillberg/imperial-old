@@ -18,6 +18,7 @@ class Game < ApplicationRecord
 
   def start
     set_up_money
+    set_up_investors
     distribute_initial_bonds
   end
 
@@ -33,6 +34,14 @@ class Game < ApplicationRecord
     investors.each do |investor|
       investor.update(money: money)
     end
+  end
+
+  def set_up_investors
+    austria_hungary = countries.find_by(name: "austria_hungary")
+    establish_investor_order
+    eligible_investors = investors.reject { |investor| investor.countries.include? austria_hungary }
+    InvestorCard.create(game: self, investor: eligible_investors.sample)
+    update(investors: investors, current_country: austria_hungary)
   end
 
   def distribute_initial_bonds
