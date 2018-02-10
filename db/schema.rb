@@ -59,11 +59,9 @@ ActiveRecord::Schema.define(version: 20180209153312) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.bigint "pre_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "current_country_id"
-    t.index ["pre_game_id"], name: "index_games_on_pre_game_id"
   end
 
   create_table "investor_cards", force: :cascade do |t|
@@ -120,8 +118,10 @@ ActiveRecord::Schema.define(version: 20180209153312) do
 
   create_table "pre_games", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_pre_games_on_game_id"
     t.index ["user_id"], name: "index_pre_games_on_user_id"
   end
 
