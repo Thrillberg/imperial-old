@@ -9,7 +9,6 @@ FactoryBot.define do
       users.each do |user|
         user.investors.create(game: game)
       end
-      game.update(current_country: game.countries.find_by(name: "austria_hungary"))
       game.start
     end
   end

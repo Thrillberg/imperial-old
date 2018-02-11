@@ -1,43 +1,40 @@
 require "rails_helper"
 
 describe InvestorsController do
-  let(:game) { create(:game) }
-  let(:user) { game.investors.first.user }
-  let(:investor) { game.investors.first }
-  let(:country_regions) { game.countries.map(&:regions).flatten }
+  let(:game) { double("game") }
+  let(:game_id) { "123" }
+  let(:user) { create(:user) }
+  let(:investor_id) { "456" }
+  let(:region_name) { "Ubekibekistanstan" }
 
   before(:each) do
     sign_in user
+    allow(Game).to receive(:find).with(game_id).and_return game
   end
 
   describe "POST #build_factory" do
     let(:params) do
       {
-        region: country_regions.sample.name,
-        game_id: game.id,
-        id: investor.id 
+        region: region_name,
+        game_id: game_id,
+        id: investor_id
       }
     end
     let(:subject) { post :build_factory, params: params }
 
     it "calls game#build_factory" do
-      expect_any_instance_of(Game).to receive(:build_factory).with(params[:region])
-      subject
-    end
-
-    it "redirects to game_investor_path" do
+      expect(game).to receive(:build_factory).with(params[:region])
       subject
       expect(response).to redirect_to game_investor_path
     end
   end
 
   describe "POST #import" do
-    let(:region) { country_regions.sample }
     let(:params) do
       {
-        region: region.name,
-        game_id: game.id,
-        id: investor.id 
+        region: region_name,
+        game_id: game_id,
+        id: investor_id 
       }
     end
     let(:subject) { post :import, params: params }
@@ -47,8 +44,9 @@ describe InvestorsController do
         params[:import_count] = "1"
       end
 
-      it "adds a piece to the region" do
-        expect{ subject }.to change{ region.pieces.count }.by(1)
+      it "calls game#import" do
+        expect(game).to receive(:import).with(region_name)
+        subject
       end
     end
 
@@ -57,11 +55,8 @@ describe InvestorsController do
         params[:import_count] = "3"
       end
 
-      it "does not add a piece to the region" do
-        expect{ subject }.to_not change{ region.pieces.count }
-      end
-
-      it "redirects to game_investor_path" do
+      it "calls game#next_turn" do
+        expect(game).to receive(:next_turn)
         subject
         expect(response).to redirect_to game_investor_path
       end
@@ -71,8 +66,8 @@ describe InvestorsController do
   describe "GET #maneuver" do
     let(:params) do
       {
-        game_id: game.id,
-        id: investor.id 
+        game_id: game_id,
+        id: investor_id 
       }
     end
     let(:subject) { get :maneuver, params: params }
@@ -80,7 +75,6 @@ describe InvestorsController do
 
     context "no origin region" do
       it "sets eligible regions" do
-        game.current_country.update(step: "maneuver")
         allow_any_instance_of(InvestorsHelper).to receive(:eligible_regions).with("maneuver").and_return(expected_regions)
         subject
         expect(assigns(:eligible_regions)).to eq(expected_regions)
@@ -88,12 +82,12 @@ describe InvestorsController do
     end
 
     context "with an origin region" do
-      let(:origin_region) { game.current_country.regions.sample }
       before(:each) do
-        params[:origin_region] = origin_region.name
+        params[:origin_region] = region_name
       end
 
       it "redirects to maneuver destination route" do
+        allow_any_instance_of(InvestorsHelper).to receive(:eligible_regions).with("maneuver").and_return(expected_regions)
         expect(subject).to redirect_to "/games/#{params[:game_id]}/investors/#{params[:id]}/maneuver_destination?origin_region=#{params[:origin_region]}"
       end
     end

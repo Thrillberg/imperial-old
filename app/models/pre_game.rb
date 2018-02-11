@@ -12,11 +12,7 @@ class PreGame < ApplicationRecord
     users_string.chomp(', ') if users_string != ''
   end
 
-  def started
-    if Game.find_by(pre_game_id: id)
-      return true
-    end
-
-    return false
+  def started?
+    game ? true : false
   end
 end
