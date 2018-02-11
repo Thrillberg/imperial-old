@@ -2,7 +2,7 @@ class PreGamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @joinable_games = PreGame.all.reject(&:started)
+    @joinable_games = PreGame.all.reject(&:started?)
     @pre_game = PreGame.new
     @users = User.all
     @games = Game.all
@@ -19,10 +19,10 @@ class PreGamesController < ApplicationController
 
   def show
     @pre_game = PreGame.find(params[:id])
-    @game = Game.find_by(pre_game_id: params[:id])
+    @game = @pre_game.game
     @start_enabled = @pre_game.users.count > 1 &&
       current_user == @pre_game.creator
-    if @pre_game.started
+    if @pre_game.started?
       @current_investor = @game.investors.find_by(user: current_user)
       redirect_to game_investor_path(game_id: @game.id, id: @current_investor.id)
     end

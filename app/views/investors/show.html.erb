@@ -7,7 +7,7 @@
   <div class="investor">
     <%= investor.user.username %> has <%= investor.money %> monies.
     <% if investor.has_investor_card? %>
-      <div>^ HAS THE INVESTOR CARD</div>
+      <span class="investor-card">I</span>
     <% end %>
   </div>
 <% end %>

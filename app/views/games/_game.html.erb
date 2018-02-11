@@ -1,3 +1,3 @@
 <div id="game">
-  <%= link_to PreGame.find(game.pre_game_id).get_users, game_path(id: game.id) %>
+  <%= link_to game.pre_game.get_users, game_path(id: game.id) %>
 </div>

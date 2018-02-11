@@ -1,6 +1,6 @@
 class InvestorsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_common_instance_variables, only: [:show, :build_factory, :import, :maneuver, :maneuver_destination, :investor_turn, :turn]
+  before_action :set_common_instance_variables, only: [:show, :maneuver_destination, :investor_turn, :turn]
 
   def show
     @logs = @game.log_entries.last(3).reverse
@@ -53,11 +53,13 @@ class InvestorsController < ApplicationController
   end
 
   def build_factory
+    @game = Game.find(params[:game_id])
     @game.build_factory(params[:region])
     redirect_to game_investor_path
   end
 
   def import
+    @game = Game.find(params[:game_id])
     if params[:import_count].to_i < 3
       @game.import(params[:region])
       session[:import_count] = params[:import_count]
@@ -70,7 +72,7 @@ class InvestorsController < ApplicationController
   end
 
   def maneuver
-    @eligible_regions = helpers.eligible_regions(@current_country.step)
+    @eligible_regions = helpers.eligible_regions("maneuver")
 
     if (params[:origin_region])
       redirect_to maneuver_destination_game_investor_path(origin_region: params[:origin_region])
