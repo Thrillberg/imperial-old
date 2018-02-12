@@ -87,6 +87,12 @@ class Game < ApplicationRecord
     end
   end
 
+  def regions_with_factories
+    regions.where(has_factory: true).map do |country|
+      "#{country.name}-factory"
+    end
+  end
+
   def regions_with_pieces
     regions_with_pieces = regions.map do |region|
       if region.pieces.length > 0
@@ -130,6 +136,10 @@ class Game < ApplicationRecord
     country = region.country
     Army.create(region: region, country: country)
     country.update(money: country.money - 1)
+  end
+
+  def investor(user)
+    investors.find_by(user: user)
   end
 
   private

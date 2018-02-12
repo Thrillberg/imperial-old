@@ -72,6 +72,15 @@ describe InvestorsController do
     end
     let(:subject) { get :maneuver, params: params }
     let(:expected_regions) { ["blort", "blard"] }
+    let(:investor) { double("investor") }
+
+    before(:each) do
+      allow(game).to receive(:investor).with(user).and_return investor
+      allow(game).to receive(:regions_with_factories).and_return []
+      allow(game).to receive(:regions_with_pieces).and_return []
+      allow(game).to receive(:regions_with_flags).and_return []
+    end
+
 
     context "no origin region" do
       it "sets eligible regions" do

@@ -72,7 +72,12 @@ class InvestorsController < ApplicationController
   end
 
   def maneuver
+    @game = Game.find(params[:game_id])
     @eligible_regions = helpers.eligible_regions("maneuver")
+    @current_investor = @game.investor(current_user)
+    @factories = @game.regions_with_factories
+    @pieces = @game.regions_with_pieces
+    @flags = @game.regions_with_flags
 
     if (params[:origin_region])
       redirect_to maneuver_destination_game_investor_path(origin_region: params[:origin_region])
