@@ -39,15 +39,9 @@ describe InvestorsController do
     end
     let(:subject) { post :import, params: params }
 
-    context "import count is less than 3" do
-      before(:each) do
-        params[:import_count] = "1"
-      end
-
-      it "calls game#import" do
-        expect(game).to receive(:import).with(region_name)
-        subject
-      end
+    it "calls game#import" do
+      expect(game).to receive(:import).with(region_name)
+      subject
     end
 
     context "import count is 3" do
@@ -56,6 +50,7 @@ describe InvestorsController do
       end
 
       it "calls game#next_turn" do
+        allow(game).to receive(:import).with(region_name)
         expect(game).to receive(:next_turn)
         subject
         expect(response).to redirect_to game_investor_path
