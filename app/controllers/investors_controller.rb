@@ -60,8 +60,8 @@ class InvestorsController < ApplicationController
 
   def import
     @game = Game.find(params[:game_id])
+    @game.import(params[:region])
     if params[:import_count].to_i < 3
-      @game.import(params[:region])
       session[:import_count] = params[:import_count]
       redirect_back(fallback_location: game_investor_path)
     else
